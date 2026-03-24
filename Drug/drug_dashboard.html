@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drug Dashboard</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <main class="dashboard-shell">
+        <header class="page-intro">
+            <p class="intro-kicker">Drug Testing Dashboard</p>
+            <h1>Australian roadside drug testing trends</h1>
+            <p class="intro-copy">
+                This dashboard explores drug testing activity across Australian jurisdictions,
+                combining yearly testing volume, positive results, geographic comparison,
+                and age-group breakdowns from the latest detailed records.
+            </p>
+        </header>
+
+        <section class="filter-bar">
+            <div class="filter-group">
+                <label for="state-select">Select jurisdiction</label>
+                <select id="state-select"></select>
+            </div>
+            <div class="filter-group">
+                <label for="year-select">Select year</label>
+                <select id="year-select"></select>
+            </div>
+            <div class="filter-group">
+                <label for="rating-select">Select rating</label>
+                <select id="rating-select"></select>
+            </div>
+            <div class="filter-actions">
+                <button id="reset-button" type="button">Reset view</button>
+            </div>
+        </section>
+
+        <section class="hero-grid">
+            <aside class="stats-panel">
+                <div class="hero-metric">
+                    <strong id="headline-tests">-</strong>
+                    <span id="headline-label">Drug tests conducted</span>
+                </div>
+                <div class="feature-metric">
+                    <strong id="headline-rate">-</strong>
+                    <span>Positive drug tests</span>
+                </div>
+                <div class="detail-metrics">
+                    <div>
+                        <strong id="headline-fines">-</strong>
+                        <span>Fines</span>
+                    </div>
+                    <div>
+                        <strong id="headline-arrests">-</strong>
+                        <span>Arrests</span>
+                    </div>
+                    <div>
+                        <strong id="headline-charges">-</strong>
+                        <span>Charges</span>
+                    </div>
+                </div>
+            </aside>
+
+            <section class="chart-panel large-panel">
+                <div class="panel-header">
+                    <div>
+                        <p class="panel-kicker">Trend overview</p>
+                        <h2>Drug tests conducted vs positive results</h2>
+                    </div>
+                </div>
+                <div id="chart1" class="chart-container chart-large"></div>
+            </section>
+        </section>
+
+        <section class="bottom-grid">
+            <aside class="notes-panel">
+                <h3>Notes</h3>
+                <p>This dashboard is generated entirely from JavaScript after the page loads.</p>
+                <p>Each visualisation is in its own file so it is easier for you to edit and track.</p>
+                <p>Use the filters above to update all charts together.</p>
+            </aside>
+
+            <section class="chart-panel">
+                <div class="panel-header">
+                    <div>
+                        <p class="panel-kicker">Geo view</p>
+                        <h2>Positive results by jurisdiction</h2>
+                    </div>
+                </div>
+                <div id="chart2" class="chart-container chart-medium"></div>
+            </section>
+
+            <section class="chart-panel">
+                <div class="panel-header">
+                    <div>
+                        <p class="panel-kicker">Age breakdown</p>
+                        <h2>Age distribution in 2023 and 2024</h2>
+                    </div>
+                </div>
+                <div id="chart3" class="chart-container chart-medium"></div>
+            </section>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="./js/constants.js"></script>
+    <script src="./js/interactions.js"></script>
+    <script src="./js/trend-chart.js"></script>
+    <script src="./js/map-chart.js"></script>
+    <script src="./js/age-chart.js"></script>
+    <script src="./js/data.js"></script>
+</body>
+</html>
