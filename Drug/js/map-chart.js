@@ -1,5 +1,24 @@
 let cachedDrugGeoJson = null;
 
+function getTopBreakdownItem(rawValue) {
+  if (!rawValue) return null;
+  if (rawValue.startsWith("All ages")) return null;
+  if (rawValue.startsWith("All regions")) return null;
+
+  const matches = Array.from(rawValue.matchAll(/([^,]+?)\((\d+)\)/g));
+  if (!matches.length) return null;
+
+  const topItem = matches
+    .map((match) => ({
+      label: match[1].trim(),
+      count: +match[2],
+    }))
+    .filter((item) => item.label.toLowerCase() !== "unknown")
+    .sort((a, b) => d3.descending(a.count, b.count))[0];
+
+  return topItem || null;
+}
+
 function drawMapChart(data, elementId) {
   // The map needs GeoJSON, so we load it once and reuse it.
   if (cachedDrugGeoJson) {
@@ -17,6 +36,7 @@ function renderDrugGeoMap(data, elementId, geoData) {
   const container = document.getElementById(elementId);
   const chartWidth = container.clientWidth || 420;
   const chartHeight = 450;
+  const selectedState = document.getElementById("state-select")?.value || "all";
 
   d3.select(`#${elementId}`).selectAll("*").remove();
 
@@ -28,33 +48,66 @@ function renderDrugGeoMap(data, elementId, geoData) {
 
   const grouped = d3.rollup(
     data,
-    (values) => ({
-      jurisdiction: values[0][COLS.jurisdiction],
-      tests: d3.sum(values, (d) => d[COLS.totalTest]),
-      positives: d3.sum(values, (d) => d[COLS.totalPositive]),
-      positiveRate:
-        (d3.sum(values, (d) => d[COLS.totalPositive]) /
-          d3.sum(values, (d) => d[COLS.totalTest])) *
-        100,
-      fines: d3.sum(values, (d) => d[COLS.fines]),
-      arrests: d3.sum(values, (d) => d[COLS.arrests]),
-      charges: d3.sum(values, (d) => d[COLS.charges]),
-    }),
+    (values) => {
+      const latestRow = values
+        .slice()
+        .sort((a, b) => d3.descending(a[COLS.year], b[COLS.year]))[0];
+
+      return {
+        jurisdiction: values[0][COLS.jurisdiction],
+        tests: d3.sum(values, (d) => d[COLS.totalTest]),
+        positives: d3.sum(values, (d) => d[COLS.totalPositive]),
+        positiveRate:
+          (d3.sum(values, (d) => d[COLS.totalPositive]) /
+            d3.sum(values, (d) => d[COLS.totalTest])) *
+          100,
+        fines: d3.sum(values, (d) => d[COLS.fines]),
+        arrests: d3.sum(values, (d) => d[COLS.arrests]),
+        charges: d3.sum(values, (d) => d[COLS.charges]),
+        rating: latestRow[COLS.rating],
+        topAgeGroup: getTopBreakdownItem(latestRow[COLS.ageGroups]),
+        topLocation: getTopBreakdownItem(latestRow[COLS.location]),
+      };
+    },
     (d) => stateNameMap[d[COLS.jurisdiction]],
   );
 
-  const rateValues = Array.from(grouped.values())
-    .map((d) => d.positiveRate)
-    .filter((d) => Number.isFinite(d));
+  const reverseStateNameMap = Object.fromEntries(
+    Object.entries(stateNameMap).map(([shortName, fullName]) => [fullName, shortName]),
+  );
 
-  const color = d3
-    .scaleLinear()
-    .domain([d3.min(rateValues) || 0, d3.max(rateValues) || 1])
-    .range(["#f3e8d4", "#EE9B00"]);
+  function getStateFill(row) {
+    if (!row) return CHART_COLORS.neutral;
+    if (row.rating === "Effective") return CHART_COLORS.effective;
+    if (row.rating === "Moderate") return CHART_COLORS.moderate;
+    if (row.rating === "Ineffective") return CHART_COLORS.ineffective;
+    return CHART_COLORS.neutral;
+  }
 
-  const projection = d3
-    .geoMercator()
-    .fitSize([chartWidth - 24, chartHeight - 24], geoData);
+  // When a specific jurisdiction is selected, we fit the projection to only
+  // that state so the map "zooms in" to the chosen area.
+  // If "all" is selected, we fit the full Australia GeoJSON as usual.
+  const selectedStateName = stateNameMap[selectedState];
+  const selectedFeature =
+    selectedState === "all"
+      ? null
+      : geoData.features.find(
+          (feature) => feature.properties.STATE_NAME === selectedStateName,
+        );
+
+  const projection = d3.geoMercator();
+
+  if (selectedFeature) {
+    projection.fitExtent(
+      [
+        [24, 24],
+        [chartWidth - 24, chartHeight - 24],
+      ],
+      selectedFeature,
+    );
+  } else {
+    projection.fitSize([chartWidth - 24, chartHeight - 24], geoData);
+  }
 
   const path = d3.geoPath(projection);
 
@@ -69,11 +122,12 @@ function renderDrugGeoMap(data, elementId, geoData) {
     .style("opacity", 0)
     .attr("fill", (feature) => {
       const row = grouped.get(feature.properties.STATE_NAME);
-      return row ? color(row.positiveRate) : CHART_COLORS.neutral;
+      return getStateFill(row);
     })
     .attr("stroke", "#fffdf8")
     .attr("stroke-width", 1.2)
     .on("mouseenter", function (event, feature) {
+      d3.select(this).attr("stroke", "#000").attr("stroke-width", 2);
       const row = grouped.get(feature.properties.STATE_NAME);
 
       if (!row) {
@@ -93,12 +147,94 @@ function renderDrugGeoMap(data, elementId, geoData) {
          <div>Rate: ${formatPercent(row.positiveRate)}</div>
          <div>Fines: ${formatNumber(row.fines)}</div>
          <div>Arrests: ${formatNumber(row.arrests)}</div>
-         <div>Charges: ${formatNumber(row.charges)}</div>`,
+         <div>Charges: ${formatNumber(row.charges)}</div>
+         ${
+           row.topAgeGroup
+             ? `<div>Top age group: ${row.topAgeGroup.label} (${formatNumber(row.topAgeGroup.count)})</div>`
+             : ""
+         }
+         ${
+           row.topLocation
+             ? `<div>Top location: ${row.topLocation.label} (${formatNumber(row.topLocation.count)})</div>`
+             : ""
+         }`,
       );
     })
     .on("mousemove", moveTooltip)
-    .on("mouseleave", hideTooltip)
+    .on("mouseleave", function () {
+      d3.select(this).attr("stroke", "#fffdf8").attr("stroke-width", 1.2);
+      hideTooltip();
+    })
     .transition()
     .duration(500)
     .style("opacity", 1);
+
+  // Add a label at the visual center of each state.
+  // Using the short code keeps the map readable even for smaller regions.
+  svg
+    .selectAll(".map-label")
+    .data(
+      geoData.features.filter(
+        (feature) =>
+          grouped.has(feature.properties.STATE_NAME) || selectedState === "all",
+      ),
+    )
+    .enter()
+    .append("text")
+    .attr("class", "map-label")
+    .attr("transform", (feature) => {
+      const [x, y] = path.centroid(feature);
+      return `translate(${x + 12}, ${y + 12})`;
+    })
+    .text((feature) => reverseStateNameMap[feature.properties.STATE_NAME] || "")
+    .style("opacity", 0)
+    .transition()
+    .delay(180)
+    .duration(400)
+    .style("opacity", 1);
+
+  // Color legend for map rating categories.
+  const legendData = [
+    { label: "Effective", color: CHART_COLORS.effective },
+    { label: "Moderate", color: CHART_COLORS.moderate },
+    { label: "Ineffective", color: CHART_COLORS.ineffective },
+  ];
+
+  const legend = svg
+    .append("g")
+    .attr("transform", `translate(18, ${chartHeight - 100})`);
+
+  legend
+    .append("text")
+    .attr("x", 0)
+    .attr("y", -10)
+    .attr("fill", "#5C4D3C")
+    .attr("font-size", "12px")
+    .attr("font-weight", 700)
+    .text("Rating legend");
+
+  legend
+    .selectAll("rect.legend-swatch")
+    .data(legendData)
+    .enter()
+    .append("rect")
+    .attr("class", "legend-swatch")
+    .attr("x", 0)
+    .attr("y", (_, i) => i * 20)
+    .attr("width", 12)
+    .attr("height", 12)
+    .attr("rx", 2)
+    .attr("fill", (d) => d.color);
+
+  legend
+    .selectAll("text.legend-label")
+    .data(legendData)
+    .enter()
+    .append("text")
+    .attr("class", "legend-label")
+    .attr("x", 18)
+    .attr("y", (_, i) => i * 20 + 10)
+    .attr("fill", "#5C4D3C")
+    .attr("font-size", "12px")
+    .text((d) => d.label);
 }

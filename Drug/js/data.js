@@ -28,7 +28,7 @@ function populateDashboardFilters(data) {
     .join("");
 
   stateSelect.value = "all";
-  yearSelect.value = "2024";
+  yearSelect.value = "all";
   ratingSelect.value = "all";
 }
 
@@ -46,6 +46,20 @@ function getFilteredData(data) {
       selectedRating === "all" || d[COLS.rating] === selectedRating;
 
     return matchState && matchYear && matchRating;
+  });
+}
+
+function getTrendFilteredData(data) {
+  const selectedState = document.getElementById("state-select")?.value || "all";
+  const selectedRating = document.getElementById("rating-select")?.value || "all";
+
+  return data.filter((d) => {
+    const matchState =
+      selectedState === "all" || d[COLS.jurisdiction] === selectedState;
+    const matchRating =
+      selectedRating === "all" || d[COLS.rating] === selectedRating;
+
+    return matchState && matchRating;
   });
 }
 
@@ -72,12 +86,14 @@ function updateSummaryCards(data) {
 
 function renderDashboard() {
   const filteredData = getFilteredData(drugData);
+  const trendData = getTrendFilteredData(drugData);
   updateSummaryCards(filteredData);
   animateChartContainers();
 
-  drawTrendChart(drugData, "chart1");
+  // Pass filtered data to every chart so axes rescale based on the current selection.
+  drawTrendChart(trendData, "chart1");
   drawMapChart(filteredData, "chart2");
-  drawAgeChart(filteredData, "chart3");
+  drawAgeChart(drugData, "chart3");
 }
 
 function bindDashboardEvents() {
@@ -92,7 +108,7 @@ function bindDashboardEvents() {
 
   resetButton.addEventListener("click", function () {
     stateSelect.value = "all";
-    yearSelect.value = "2024";
+    yearSelect.value = "all";
     ratingSelect.value = "all";
     renderDashboard();
   });

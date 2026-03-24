@@ -5,8 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drug Dashboard</title>
     <link rel="stylesheet" href="./css/style.css">
+    <style>
+        .site-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            width: min(1200px, calc(100% - 20px));
+            margin: 20px auto 0;
+            padding: 12px 14px;
+            border: 1px solid rgba(92, 77, 60, 0.12);
+            border-bottom: none;
+            border-radius: 12px 12px 0 0;
+            background: linear-gradient(90deg, #fff6e4 0%, #f4ecdf 100%);
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #5c4d3c;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            border: 1px solid rgba(92, 77, 60, 0.12);
+            background: rgba(255, 255, 255, 0.65);
+        }
+
+        .nav-link:hover {
+            border-color: #ee9b00;
+            color: #7a5000;
+            background: #fff;
+        }
+
+        .nav-link.active {
+            background: #ee9b00;
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 8px 18px rgba(238, 155, 0, 0.25);
+        }
+
+        .site-footer {
+            width: min(1200px, calc(100% - 20px));
+            margin: 0 auto 20px;
+            padding: 12px 18px;
+            border-radius: 0 0 12px 12px;
+            background: #5c4d3c;
+            color: #f7f1e8;
+            font-size: 0.9rem;
+        }
+
+        .dashboard-shell {
+            margin-top: 0;
+            border-radius: 0;
+            border-top: none;
+        }
+    </style>
 </head>
 <body>
+    <nav class="site-nav">
+        <a class="nav-link" href="../index.html">Home</a>
+        <a class="nav-link" href="../about.html">About</a>
+        <a class="nav-link active" href="./drug_dashboard.html">Drug Dashboard</a>
+        <a class="nav-link" href="../Speeding/speeding_dashboard.html">Speeding Dashboard</a>
+    </nav>
+
     <main class="dashboard-shell">
         <header class="page-intro">
             <p class="intro-kicker">Drug Testing Dashboard</p>
@@ -94,14 +154,15 @@
             <section class="chart-panel">
                 <div class="panel-header">
                     <div>
-                        <p class="panel-kicker">Age breakdown</p>
-                        <h2>Age distribution in 2023 and 2024</h2>
+                        <p class="panel-kicker">Change vs previous year</p>
+                        <h2>Positive rate variation by jurisdiction</h2>
                     </div>
                 </div>
                 <div id="chart3" class="chart-container chart-medium"></div>
             </section>
         </section>
     </main>
+    <footer class="site-footer">Data Visual Project · Drug topic</footer>
 
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>

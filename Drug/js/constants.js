@@ -37,11 +37,14 @@ const stateNameMap = {
 };
 
 const CHART_COLORS = {
-  bar: "#5C4D3C",
+  bar: "#8e7961",
   line: "#EE9B00",
   lineSoft: "#c27d00",
   map: "#EE9B00",
   neutral: "#f1e7d6",
+  effective: "#4CAF50",
+  moderate: "#FFC107",
+  ineffective: "#FF5252",
   year2023: "#5C4D3C",
   year2024: "#EE9B00",
 };
