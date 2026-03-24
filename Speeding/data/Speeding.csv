@@ -1,0 +1,497 @@
+"YEAR","JURISDICTION","LOCATION","AGE_GROUP","DETECTION_TYPE","Sum(FINES)"
+2008,"NSW","All regions","All ages","Camera Issued",590408
+2008,"NT","All regions","All ages","Camera Issued",23865
+2008,"QLD","All regions","All ages","Camera Issued",502886
+2008,"SA","All regions","All ages","Camera Issued",119500
+2008,"TAS","All regions","All ages","Camera Issued",59962
+2008,"VIC","All regions","All ages","Camera Issued",1114036
+2008,"WA","All regions","All ages","Camera Issued",228822
+2009,"NSW","All regions","All ages","Camera Issued",513616
+2009,"NT","All regions","All ages","Camera Issued",19893
+2009,"QLD","All regions","All ages","Camera Issued",475870
+2009,"SA","All regions","All ages","Camera Issued",107676
+2009,"TAS","All regions","All ages","Camera Issued",67768
+2009,"VIC","All regions","All ages","Camera Issued",1136590
+2009,"WA","All regions","All ages","Camera Issued",254858
+2010,"ACT","All regions","All ages","Camera Issued",58705
+2010,"NSW","All regions","All ages","Camera Issued",390746
+2010,"NT","All regions","All ages","Camera Issued",26775
+2010,"QLD","All regions","All ages","Camera Issued",440622
+2010,"SA","All regions","All ages","Camera Issued",91335
+2010,"TAS","All regions","All ages","Camera Issued",37376
+2010,"VIC","All regions","All ages","Camera Issued",1172460
+2010,"WA","All regions","All ages","Camera Issued",300344
+2011,"ACT","All regions","All ages","Camera Issued",56719
+2011,"NSW","All regions","All ages","Camera Issued",389649
+2011,"NT","All regions","All ages","Camera Issued",24633
+2011,"QLD","All regions","All ages","Camera Issued",588714
+2011,"SA","All regions","All ages","Camera Issued",61859
+2011,"TAS","All regions","All ages","Camera Issued",24427
+2011,"VIC","All regions","All ages","Camera Issued",1151555
+2011,"WA","All regions","All ages","Camera Issued",558552
+2012,"ACT","All regions","All ages","Camera Issued",54201
+2012,"NSW","All regions","All ages","Camera Issued",432586
+2012,"NT","All regions","All ages","Camera Issued",27730
+2012,"QLD","All regions","All ages","Camera Issued",653679
+2012,"SA","All regions","All ages","Camera Issued",54773
+2012,"TAS","All regions","All ages","Camera Issued",7410
+2012,"VIC","All regions","All ages","Camera Issued",1185037
+2012,"WA","All regions","All ages","Camera Issued",588746
+2013,"ACT","All regions","All ages","Camera Issued",51948
+2013,"NSW","All regions","All ages","Camera Issued",426904
+2013,"NT","All regions","All ages","Camera Issued",24536
+2013,"QLD","All regions","All ages","Camera Issued",762905
+2013,"SA","All regions","All ages","Camera Issued",74391
+2013,"TAS","All regions","All ages","Camera Issued",7517
+2013,"VIC","All regions","All ages","Camera Issued",1015986
+2013,"WA","All regions","All ages","Camera Issued",543491
+2014,"ACT","All regions","All ages","Camera Issued",45120
+2014,"NSW","All regions","All ages","Camera Issued",468465
+2014,"NT","All regions","All ages","Camera Issued",22871
+2014,"QLD","All regions","All ages","Camera Issued",1004090
+2014,"SA","All regions","All ages","Camera Issued",100562
+2014,"TAS","All regions","All ages","Camera Issued",9250
+2014,"VIC","All regions","All ages","Camera Issued",1307924
+2014,"WA","All regions","All ages","Camera Issued",711518
+2015,"ACT","All regions","All ages","Camera Issued",50640
+2015,"NSW","All regions","All ages","Camera Issued",486571
+2015,"NT","All regions","All ages","Camera Issued",24928
+2015,"QLD","All regions","All ages","Camera Issued",1076622
+2015,"SA","All regions","All ages","Camera Issued",85282
+2015,"TAS","All regions","All ages","Camera Issued",15220
+2015,"VIC","All regions","All ages","Camera Issued",1306201
+2015,"WA","All regions","All ages","Camera Issued",752276
+2016,"ACT","All regions","All ages","Camera Issued",55750
+2016,"NSW","All regions","All ages","Camera Issued",494676
+2016,"NT","All regions","All ages","Camera Issued",22239
+2016,"QLD","All regions","All ages","Camera Issued",659305
+2016,"SA","All regions","All ages","Camera Issued",182856
+2016,"TAS","All regions","All ages","Camera Issued",15977
+2016,"VIC","All regions","All ages","Camera Issued",1266642
+2016,"WA","All regions","All ages","Camera Issued",567954
+2017,"ACT","All regions","All ages","Camera Issued",52913
+2017,"NSW","All regions","All ages","Camera Issued",478004
+2017,"NSW","All regions","All ages","Police Issued",253949
+2017,"NT","All regions","All ages","Camera Issued",22556
+2017,"QLD","All regions","All ages","Camera Issued",733717
+2017,"SA","All regions","All ages","Camera Issued",162804
+2017,"TAS","All regions","All ages","Camera Issued",13095
+2017,"VIC","All regions","All ages","Camera Issued",1220180
+2017,"WA","All regions","All ages","Camera Issued",646380
+2017,"WA","All regions","All ages","Police Issued",107803
+2018,"ACT","All regions","All ages","Camera Issued",66449
+2018,"NSW","All regions","All ages","Camera Issued",444372
+2018,"NSW","All regions","All ages","Police Issued",237017
+2018,"NT","All regions","All ages","Camera Issued",27639
+2018,"NT","All regions","All ages","Police Issued",9813
+2018,"QLD","All regions","All ages","Camera Issued",859691
+2018,"QLD","All regions","All ages","Police Issued",161732
+2018,"SA","All regions","All ages","Camera Issued",174731
+2018,"TAS","All regions","All ages","Camera Issued",8609
+2018,"VIC","All regions","All ages","Camera Issued",1600565
+2018,"WA","All regions","All ages","Camera Issued",573664
+2018,"WA","All regions","All ages","Police Issued",115534
+2019,"ACT","All regions","All ages","Camera Issued",59330
+2019,"NSW","All regions","All ages","Camera Issued",442556
+2019,"NSW","All regions","All ages","Police Issued",216237
+2019,"NT","All regions","All ages","Camera Issued",27208
+2019,"NT","All regions","All ages","Police Issued",12292
+2019,"QLD","All regions","All ages","Camera Issued",886731
+2019,"QLD","All regions","All ages","Police Issued",155049
+2019,"SA","All regions","All ages","Camera Issued",202914
+2019,"TAS","All regions","All ages","Camera Issued",6738
+2019,"VIC","All regions","All ages","Camera Issued",1004679
+2019,"WA","All regions","All ages","Camera Issued",580734
+2019,"WA","All regions","All ages","Police Issued",102262
+2020,"ACT","All regions","All ages","Camera Issued",57612
+2020,"NSW","All regions","All ages","Camera Issued",707453
+2020,"NSW","All regions","All ages","Police Issued",207863
+2020,"NT","All regions","All ages","Camera Issued",33009
+2020,"NT","All regions","All ages","Police Issued",7912
+2020,"QLD","All regions","All ages","Camera Issued",779069
+2020,"QLD","All regions","All ages","Police Issued",131789
+2020,"SA","All regions","All ages","Camera Issued",175237
+2020,"TAS","All regions","All ages","Camera Issued",5430
+2020,"TAS","All regions","All ages","Police Issued",35321
+2020,"VIC","All regions","All ages","Camera Issued",937192
+2020,"WA","All regions","All ages","Camera Issued",595363
+2020,"WA","All regions","All ages","Police Issued",100223
+2021,"ACT","All regions","All ages","Camera Issued",113807
+2021,"NSW","All regions","All ages","Camera Issued",1273155
+2021,"NSW","All regions","All ages","Police Issued",179465
+2021,"NT","All regions","All ages","Camera Issued",31997
+2021,"NT","All regions","All ages","Police Issued",6651
+2021,"QLD","All regions","All ages","Camera Issued",865513
+2021,"QLD","All regions","All ages","Police Issued",113413
+2021,"SA","All regions","All ages","Camera Issued",202693
+2021,"TAS","All regions","All ages","Camera Issued",4244
+2021,"TAS","All regions","All ages","Police Issued",34984
+2021,"VIC","All regions","All ages","Camera Issued",1231672
+2021,"WA","All regions","All ages","Camera Issued",734701
+2021,"WA","All regions","All ages","Police Issued",74843
+2022,"NSW","All regions","All ages","Camera Issued",1053321
+2022,"NSW","All regions","All ages","Police Issued",164275
+2022,"NT","All regions","All ages","Camera Issued",27390
+2022,"NT","All regions","All ages","Police Issued",6252
+2022,"QLD","All regions","All ages","Camera Issued",777226
+2022,"QLD","All regions","All ages","Police Issued",72173
+2022,"SA","All regions","All ages","Camera Issued",157432
+2022,"SA","All regions","All ages","Police Issued",28764
+2022,"TAS","All regions","All ages","Camera Issued",14023
+2022,"TAS","All regions","All ages","Police Issued",28714
+2022,"VIC","All regions","All ages","Camera Issued",1255302
+2022,"VIC","All regions","All ages","Police Issued",122929
+2022,"WA","All regions","All ages","Camera Issued",775750
+2022,"WA","All regions","All ages","Police Issued",67791
+2023,"ACT","Major Cities of Australia","0-16","Camera Issued",23
+2023,"ACT","Major Cities of Australia","0-16","Police Issued",35
+2023,"ACT","Major Cities of Australia","17-25","Camera Issued",8304
+2023,"ACT","Major Cities of Australia","17-25","Police Issued",703
+2023,"ACT","Major Cities of Australia","26-39","Camera Issued",19121
+2023,"ACT","Major Cities of Australia","26-39","Police Issued",829
+2023,"ACT","Major Cities of Australia","40-64","Camera Issued",31223
+2023,"ACT","Major Cities of Australia","40-64","Police Issued",613
+2023,"ACT","Major Cities of Australia","65 and over","Camera Issued",9870
+2023,"ACT","Major Cities of Australia","65 and over","Police Issued",55
+2023,"ACT","Major Cities of Australia","Unknown","Camera Issued",1185
+2023,"NSW","Inner Regional Australia","0-16","Police Issued",61
+2023,"NSW","Inner Regional Australia","17-25","Police Issued",17215
+2023,"NSW","Inner Regional Australia","26-39","Police Issued",26714
+2023,"NSW","Inner Regional Australia","40-64","Police Issued",27528
+2023,"NSW","Inner Regional Australia","65 and over","Police Issued",6294
+2023,"NSW","Major Cities of Australia","0-16","Police Issued",49
+2023,"NSW","Major Cities of Australia","17-25","Police Issued",21353
+2023,"NSW","Major Cities of Australia","26-39","Police Issued",24807
+2023,"NSW","Major Cities of Australia","40-64","Police Issued",21636
+2023,"NSW","Major Cities of Australia","65 and over","Police Issued",3070
+2023,"NSW","Outer Regional Australia","0-16","Police Issued",14
+2023,"NSW","Outer Regional Australia","17-25","Police Issued",4374
+2023,"NSW","Outer Regional Australia","26-39","Police Issued",7449
+2023,"NSW","Outer Regional Australia","40-64","Police Issued",8871
+2023,"NSW","Outer Regional Australia","65 and over","Police Issued",2346
+2023,"NSW","Remote Australia","17-25","Police Issued",282
+2023,"NSW","Remote Australia","26-39","Police Issued",555
+2023,"NSW","Remote Australia","40-64","Police Issued",664
+2023,"NSW","Remote Australia","65 and over","Police Issued",175
+2023,"NSW","Unknown","0-16","Police Issued",2
+2023,"NSW","Unknown","17-25","Police Issued",510
+2023,"NSW","Unknown","26-39","Police Issued",664
+2023,"NSW","Unknown","40-64","Police Issued",644
+2023,"NSW","Unknown","65 and over","Police Issued",130
+2023,"NSW","Unknown","Unknown","Camera Issued",705834
+2023,"NSW","Very Remote Australia","0-16","Police Issued",1
+2023,"NSW","Very Remote Australia","17-25","Police Issued",46
+2023,"NSW","Very Remote Australia","26-39","Police Issued",91
+2023,"NSW","Very Remote Australia","40-64","Police Issued",83
+2023,"NSW","Very Remote Australia","65 and over","Police Issued",21
+2023,"NT","Unknown","0-16","Camera Issued",42
+2023,"NT","Unknown","0-16","Police Issued",15
+2023,"NT","Unknown","17-25","Camera Issued",4976
+2023,"NT","Unknown","17-25","Police Issued",673
+2023,"NT","Unknown","26-39","Camera Issued",12975
+2023,"NT","Unknown","26-39","Police Issued",1308
+2023,"NT","Unknown","40-64","Camera Issued",16413
+2023,"NT","Unknown","40-64","Police Issued",1246
+2023,"NT","Unknown","65 and over","Camera Issued",3988
+2023,"NT","Unknown","65 and over","Police Issued",200
+2023,"NT","Unknown","Unknown","Camera Issued",1469
+2023,"NT","Unknown","Unknown","Police Issued",1
+2023,"QLD","Unknown","Unknown","Camera Issued",743514
+2023,"QLD","Unknown","Unknown","Police Issued",117112
+2023,"SA","Unknown","0-16","Camera Issued",10
+2023,"SA","Unknown","0-16","Other",0
+2023,"SA","Unknown","0-16","Police Issued",11
+2023,"SA","Unknown","17-25","Camera Issued",15820
+2023,"SA","Unknown","17-25","Other",1
+2023,"SA","Unknown","17-25","Police Issued",8543
+2023,"SA","Unknown","26-39","Camera Issued",41117
+2023,"SA","Unknown","26-39","Other",2
+2023,"SA","Unknown","26-39","Police Issued",15231
+2023,"SA","Unknown","40-64","Camera Issued",70746
+2023,"SA","Unknown","40-64","Other",1
+2023,"SA","Unknown","40-64","Police Issued",19290
+2023,"SA","Unknown","65 and over","Camera Issued",23259
+2023,"SA","Unknown","65 and over","Other",0
+2023,"SA","Unknown","65 and over","Police Issued",5121
+2023,"SA","Unknown","Unknown","Camera Issued",4410
+2023,"SA","Unknown","Unknown","Other",0
+2023,"SA","Unknown","Unknown","Police Issued",40
+2023,"TAS","Unknown","0-16","Camera Issued",15
+2023,"TAS","Unknown","0-16","Police Issued",3
+2023,"TAS","Unknown","17-25","Camera Issued",5525
+2023,"TAS","Unknown","17-25","Police Issued",3882
+2023,"TAS","Unknown","26-39","Camera Issued",13978
+2023,"TAS","Unknown","26-39","Police Issued",6308
+2023,"TAS","Unknown","40-64","Camera Issued",19045
+2023,"TAS","Unknown","40-64","Police Issued",7281
+2023,"TAS","Unknown","65 and over","Camera Issued",6820
+2023,"TAS","Unknown","65 and over","Police Issued",2148
+2023,"TAS","Unknown","Unknown","Camera Issued",23
+2023,"TAS","Unknown","Unknown","Police Issued",12
+2023,"VIC","Inner Regional Australia","0-16","Police Issued",6
+2023,"VIC","Inner Regional Australia","17-25","Camera Issued",10096
+2023,"VIC","Inner Regional Australia","17-25","Police Issued",8803
+2023,"VIC","Inner Regional Australia","26-39","Camera Issued",38326
+2023,"VIC","Inner Regional Australia","26-39","Police Issued",17044
+2023,"VIC","Inner Regional Australia","40-64","Camera Issued",62049
+2023,"VIC","Inner Regional Australia","40-64","Police Issued",21431
+2023,"VIC","Inner Regional Australia","65 and over","Camera Issued",24389
+2023,"VIC","Inner Regional Australia","65 and over","Police Issued",5524
+2023,"VIC","Inner Regional Australia","Unknown","Camera Issued",34600
+2023,"VIC","Inner Regional Australia","Unknown","Police Issued",23
+2023,"VIC","Major Cities of Australia","0-16","Police Issued",7
+2023,"VIC","Major Cities of Australia","17-25","Camera Issued",58027
+2023,"VIC","Major Cities of Australia","17-25","Police Issued",11668
+2023,"VIC","Major Cities of Australia","26-39","Camera Issued",222622
+2023,"VIC","Major Cities of Australia","26-39","Police Issued",21209
+2023,"VIC","Major Cities of Australia","40-64","Camera Issued",366109
+2023,"VIC","Major Cities of Australia","40-64","Police Issued",23577
+2023,"VIC","Major Cities of Australia","65 and over","Camera Issued",106396
+2023,"VIC","Major Cities of Australia","65 and over","Police Issued",4344
+2023,"VIC","Major Cities of Australia","Unknown","Camera Issued",214006
+2023,"VIC","Major Cities of Australia","Unknown","Police Issued",31
+2023,"VIC","Outer Regional Australia","0-16","Police Issued",2
+2023,"VIC","Outer Regional Australia","17-25","Camera Issued",1068
+2023,"VIC","Outer Regional Australia","17-25","Police Issued",1751
+2023,"VIC","Outer Regional Australia","26-39","Camera Issued",3967
+2023,"VIC","Outer Regional Australia","26-39","Police Issued",3717
+2023,"VIC","Outer Regional Australia","40-64","Camera Issued",6821
+2023,"VIC","Outer Regional Australia","40-64","Police Issued",4362
+2023,"VIC","Outer Regional Australia","65 and over","Camera Issued",3200
+2023,"VIC","Outer Regional Australia","65 and over","Police Issued",1053
+2023,"VIC","Outer Regional Australia","Unknown","Camera Issued",4042
+2023,"VIC","Outer Regional Australia","Unknown","Police Issued",7
+2023,"VIC","Remote Australia","17-25","Camera Issued",3
+2023,"VIC","Remote Australia","17-25","Police Issued",38
+2023,"VIC","Remote Australia","26-39","Camera Issued",3
+2023,"VIC","Remote Australia","26-39","Police Issued",97
+2023,"VIC","Remote Australia","40-64","Camera Issued",5
+2023,"VIC","Remote Australia","40-64","Police Issued",148
+2023,"VIC","Remote Australia","65 and over","Camera Issued",1
+2023,"VIC","Remote Australia","65 and over","Police Issued",72
+2023,"VIC","Remote Australia","Unknown","Camera Issued",2
+2023,"VIC","Unknown","17-25","Camera Issued",1449
+2023,"VIC","Unknown","17-25","Police Issued",254
+2023,"VIC","Unknown","26-39","Camera Issued",4892
+2023,"VIC","Unknown","26-39","Police Issued",531
+2023,"VIC","Unknown","40-64","Camera Issued",7521
+2023,"VIC","Unknown","40-64","Police Issued",606
+2023,"VIC","Unknown","65 and over","Camera Issued",2573
+2023,"VIC","Unknown","65 and over","Police Issued",153
+2023,"VIC","Unknown","Unknown","Camera Issued",4001
+2023,"VIC","Unknown","Unknown","Police Issued",2
+2023,"WA","Unknown","0-16","Camera Issued",31
+2023,"WA","Unknown","0-16","Other",0
+2023,"WA","Unknown","0-16","Police Issued",3
+2023,"WA","Unknown","17-25","Camera Issued",86755
+2023,"WA","Unknown","17-25","Other",0
+2023,"WA","Unknown","17-25","Police Issued",9154
+2023,"WA","Unknown","26-39","Camera Issued",228619
+2023,"WA","Unknown","26-39","Other",0
+2023,"WA","Unknown","26-39","Police Issued",17462
+2023,"WA","Unknown","40-64","Camera Issued",353126
+2023,"WA","Unknown","40-64","Other",0
+2023,"WA","Unknown","40-64","Police Issued",20366
+2023,"WA","Unknown","65 and over","Camera Issued",87658
+2023,"WA","Unknown","65 and over","Other",0
+2023,"WA","Unknown","65 and over","Police Issued",3941
+2023,"WA","Unknown","Unknown","Camera Issued",368
+2023,"WA","Unknown","Unknown","Police Issued",4
+2024,"ACT","Major Cities of Australia","0-16","Camera Issued",19
+2024,"ACT","Major Cities of Australia","0-16","Police Issued",24
+2024,"ACT","Major Cities of Australia","17-25","Camera Issued",8415
+2024,"ACT","Major Cities of Australia","17-25","Police Issued",776
+2024,"ACT","Major Cities of Australia","26-39","Camera Issued",18694
+2024,"ACT","Major Cities of Australia","26-39","Police Issued",1052
+2024,"ACT","Major Cities of Australia","40-64","Camera Issued",28638
+2024,"ACT","Major Cities of Australia","40-64","Police Issued",840
+2024,"ACT","Major Cities of Australia","65 and over","Camera Issued",8883
+2024,"ACT","Major Cities of Australia","65 and over","Police Issued",88
+2024,"ACT","Major Cities of Australia","Unknown","Camera Issued",1416
+2024,"ACT","Major Cities of Australia","Unknown","Police Issued",1
+2024,"NSW","Inner Regional Australia","0-16","Police Issued",69
+2024,"NSW","Inner Regional Australia","17-25","Police Issued",17978
+2024,"NSW","Inner Regional Australia","26-39","Police Issued",27145
+2024,"NSW","Inner Regional Australia","40-64","Police Issued",28798
+2024,"NSW","Inner Regional Australia","65 and over","Police Issued",6813
+2024,"NSW","Major Cities of Australia","0-16","Police Issued",71
+2024,"NSW","Major Cities of Australia","17-25","Police Issued",24295
+2024,"NSW","Major Cities of Australia","26-39","Police Issued",26273
+2024,"NSW","Major Cities of Australia","40-64","Police Issued",23249
+2024,"NSW","Major Cities of Australia","65 and over","Police Issued",3416
+2024,"NSW","Outer Regional Australia","0-16","Police Issued",17
+2024,"NSW","Outer Regional Australia","17-25","Police Issued",4555
+2024,"NSW","Outer Regional Australia","26-39","Police Issued",7498
+2024,"NSW","Outer Regional Australia","40-64","Police Issued",8788
+2024,"NSW","Outer Regional Australia","65 and over","Police Issued",2368
+2024,"NSW","Remote Australia","0-16","Police Issued",3
+2024,"NSW","Remote Australia","17-25","Police Issued",393
+2024,"NSW","Remote Australia","26-39","Police Issued",631
+2024,"NSW","Remote Australia","40-64","Police Issued",781
+2024,"NSW","Remote Australia","65 and over","Police Issued",229
+2024,"NSW","Unknown","0-16","Police Issued",4
+2024,"NSW","Unknown","17-25","Police Issued",873
+2024,"NSW","Unknown","26-39","Police Issued",1101
+2024,"NSW","Unknown","40-64","Police Issued",1104
+2024,"NSW","Unknown","65 and over","Police Issued",223
+2024,"NSW","Unknown","Unknown","Camera Issued",718805
+2024,"NSW","Unknown","Unknown","Other",1
+2024,"NSW","Very Remote Australia","17-25","Police Issued",31
+2024,"NSW","Very Remote Australia","26-39","Police Issued",59
+2024,"NSW","Very Remote Australia","40-64","Police Issued",79
+2024,"NSW","Very Remote Australia","65 and over","Police Issued",22
+2024,"NT","Unknown","0-16","Camera Issued",42
+2024,"NT","Unknown","0-16","Other",0
+2024,"NT","Unknown","0-16","Police Issued",17
+2024,"NT","Unknown","17-25","Camera Issued",5285
+2024,"NT","Unknown","17-25","Other",0
+2024,"NT","Unknown","17-25","Police Issued",757
+2024,"NT","Unknown","26-39","Camera Issued",14560
+2024,"NT","Unknown","26-39","Other",0
+2024,"NT","Unknown","26-39","Police Issued",1344
+2024,"NT","Unknown","40-64","Camera Issued",18613
+2024,"NT","Unknown","40-64","Other",0
+2024,"NT","Unknown","40-64","Police Issued",1410
+2024,"NT","Unknown","65 and over","Camera Issued",4122
+2024,"NT","Unknown","65 and over","Other",0
+2024,"NT","Unknown","65 and over","Police Issued",228
+2024,"NT","Unknown","Unknown","Camera Issued",1677
+2024,"QLD","Unknown","0-16","Camera Issued",18099
+2024,"QLD","Unknown","0-16","Police Issued",48
+2024,"QLD","Unknown","17-25","Camera Issued",95881
+2024,"QLD","Unknown","17-25","Police Issued",25748
+2024,"QLD","Unknown","26-39","Camera Issued",200668
+2024,"QLD","Unknown","26-39","Police Issued",36797
+2024,"QLD","Unknown","40-64","Camera Issued",289037
+2024,"QLD","Unknown","40-64","Police Issued",41397
+2024,"QLD","Unknown","65 and over","Camera Issued",76770
+2024,"QLD","Unknown","65 and over","Police Issued",8198
+2024,"QLD","Unknown","Unknown","Camera Issued",2230
+2024,"QLD","Unknown","Unknown","Police Issued",10
+2024,"SA","Inner Regional Australia","0-16","Police Issued",5
+2024,"SA","Inner Regional Australia","17-25","Camera Issued",1806
+2024,"SA","Inner Regional Australia","17-25","Police Issued",2441
+2024,"SA","Inner Regional Australia","26-39","Camera Issued",5159
+2024,"SA","Inner Regional Australia","26-39","Police Issued",4529
+2024,"SA","Inner Regional Australia","40-64","Camera Issued",9027
+2024,"SA","Inner Regional Australia","40-64","Police Issued",6018
+2024,"SA","Inner Regional Australia","65 and over","Camera Issued",4098
+2024,"SA","Inner Regional Australia","65 and over","Police Issued",1886
+2024,"SA","Inner Regional Australia","Unknown","Camera Issued",584
+2024,"SA","Inner Regional Australia","Unknown","Police Issued",35
+2024,"SA","Major Cities of Australia","0-16","Camera Issued",16
+2024,"SA","Major Cities of Australia","0-16","Police Issued",3
+2024,"SA","Major Cities of Australia","17-25","Camera Issued",10731
+2024,"SA","Major Cities of Australia","17-25","Police Issued",3756
+2024,"SA","Major Cities of Australia","26-39","Camera Issued",26308
+2024,"SA","Major Cities of Australia","26-39","Police Issued",5915
+2024,"SA","Major Cities of Australia","40-64","Camera Issued",46182
+2024,"SA","Major Cities of Australia","40-64","Police Issued",6539
+2024,"SA","Major Cities of Australia","65 and over","Camera Issued",15916
+2024,"SA","Major Cities of Australia","65 and over","Police Issued",1587
+2024,"SA","Major Cities of Australia","Unknown","Camera Issued",3082
+2024,"SA","Major Cities of Australia","Unknown","Police Issued",35
+2024,"SA","Outer Regional Australia","0-16","Camera Issued",1
+2024,"SA","Outer Regional Australia","0-16","Police Issued",10
+2024,"SA","Outer Regional Australia","17-25","Camera Issued",652
+2024,"SA","Outer Regional Australia","17-25","Police Issued",2382
+2024,"SA","Outer Regional Australia","26-39","Camera Issued",1640
+2024,"SA","Outer Regional Australia","26-39","Police Issued",4787
+2024,"SA","Outer Regional Australia","40-64","Camera Issued",2924
+2024,"SA","Outer Regional Australia","40-64","Other",1
+2024,"SA","Outer Regional Australia","40-64","Police Issued",6238
+2024,"SA","Outer Regional Australia","65 and over","Camera Issued",1304
+2024,"SA","Outer Regional Australia","65 and over","Police Issued",1859
+2024,"SA","Outer Regional Australia","Unknown","Camera Issued",157
+2024,"SA","Outer Regional Australia","Unknown","Police Issued",14
+2024,"SA","Remote Australia","0-16","Police Issued",2
+2024,"SA","Remote Australia","17-25","Camera Issued",36
+2024,"SA","Remote Australia","17-25","Police Issued",474
+2024,"SA","Remote Australia","26-39","Camera Issued",157
+2024,"SA","Remote Australia","26-39","Police Issued",971
+2024,"SA","Remote Australia","40-64","Camera Issued",271
+2024,"SA","Remote Australia","40-64","Police Issued",1172
+2024,"SA","Remote Australia","65 and over","Camera Issued",103
+2024,"SA","Remote Australia","65 and over","Police Issued",304
+2024,"SA","Remote Australia","Unknown","Camera Issued",14
+2024,"SA","Remote Australia","Unknown","Police Issued",1
+2024,"SA","Unknown","17-25","Camera Issued",6
+2024,"SA","Unknown","17-25","Police Issued",264
+2024,"SA","Unknown","26-39","Camera Issued",8
+2024,"SA","Unknown","26-39","Police Issued",472
+2024,"SA","Unknown","40-64","Camera Issued",28
+2024,"SA","Unknown","40-64","Police Issued",597
+2024,"SA","Unknown","65 and over","Camera Issued",13
+2024,"SA","Unknown","65 and over","Police Issued",193
+2024,"SA","Unknown","Unknown","Police Issued",1
+2024,"SA","Very Remote Australia","0-16","Police Issued",0
+2024,"SA","Very Remote Australia","17-25","Police Issued",282
+2024,"SA","Very Remote Australia","26-39","Police Issued",642
+2024,"SA","Very Remote Australia","40-64","Camera Issued",1
+2024,"SA","Very Remote Australia","40-64","Police Issued",761
+2024,"SA","Very Remote Australia","65 and over","Police Issued",178
+2024,"SA","Very Remote Australia","Unknown","Camera Issued",2
+2024,"SA","Very Remote Australia","Unknown","Police Issued",1
+2024,"TAS","Unknown","0-16","Camera Issued",8
+2024,"TAS","Unknown","0-16","Police Issued",0
+2024,"TAS","Unknown","17-25","Camera Issued",6176
+2024,"TAS","Unknown","17-25","Police Issued",4221
+2024,"TAS","Unknown","26-39","Camera Issued",16225
+2024,"TAS","Unknown","26-39","Police Issued",6390
+2024,"TAS","Unknown","40-64","Camera Issued",23272
+2024,"TAS","Unknown","40-64","Police Issued",7212
+2024,"TAS","Unknown","65 and over","Camera Issued",9211
+2024,"TAS","Unknown","65 and over","Police Issued",2257
+2024,"TAS","Unknown","Unknown","Camera Issued",19
+2024,"TAS","Unknown","Unknown","Police Issued",2
+2024,"VIC","Inner Regional Australia","0-16","Camera Issued",2
+2024,"VIC","Inner Regional Australia","17-25","Camera Issued",5870
+2024,"VIC","Inner Regional Australia","26-39","Camera Issued",18935
+2024,"VIC","Inner Regional Australia","40-64","Camera Issued",31619
+2024,"VIC","Inner Regional Australia","65 and over","Camera Issued",14426
+2024,"VIC","Inner Regional Australia","Unknown","Camera Issued",1202
+2024,"VIC","Major Cities of Australia","0-16","Camera Issued",0
+2024,"VIC","Major Cities of Australia","17-25","Camera Issued",45407
+2024,"VIC","Major Cities of Australia","26-39","Camera Issued",158080
+2024,"VIC","Major Cities of Australia","40-64","Camera Issued",258537
+2024,"VIC","Major Cities of Australia","65 and over","Camera Issued",76684
+2024,"VIC","Major Cities of Australia","Unknown","Camera Issued",12511
+2024,"VIC","Outer Regional Australia","0-16","Camera Issued",0
+2024,"VIC","Outer Regional Australia","17-25","Camera Issued",913
+2024,"VIC","Outer Regional Australia","26-39","Camera Issued",3018
+2024,"VIC","Outer Regional Australia","40-64","Camera Issued",4949
+2024,"VIC","Outer Regional Australia","65 and over","Camera Issued",2365
+2024,"VIC","Outer Regional Australia","Unknown","Camera Issued",301
+2024,"VIC","Remote Australia","0-16","Camera Issued",0
+2024,"VIC","Remote Australia","17-25","Camera Issued",0
+2024,"VIC","Remote Australia","26-39","Camera Issued",3
+2024,"VIC","Remote Australia","40-64","Camera Issued",4
+2024,"VIC","Remote Australia","65 and over","Camera Issued",1
+2024,"VIC","Remote Australia","Unknown","Camera Issued",0
+2024,"VIC","Unknown","0-16","Camera Issued",1
+2024,"VIC","Unknown","0-16","Police Issued",28
+2024,"VIC","Unknown","17-25","Camera Issued",4472
+2024,"VIC","Unknown","17-25","Police Issued",19437
+2024,"VIC","Unknown","26-39","Camera Issued",10187
+2024,"VIC","Unknown","26-39","Police Issued",36084
+2024,"VIC","Unknown","40-64","Camera Issued",12816
+2024,"VIC","Unknown","40-64","Police Issued",42361
+2024,"VIC","Unknown","65 and over","Camera Issued",2721
+2024,"VIC","Unknown","65 and over","Police Issued",9710
+2024,"VIC","Unknown","Unknown","Camera Issued",783
+2024,"VIC","Unknown","Unknown","Police Issued",43
+2024,"WA","Unknown","0-16","Camera Issued",1148
+2024,"WA","Unknown","0-16","Other",0
+2024,"WA","Unknown","0-16","Police Issued",5
+2024,"WA","Unknown","17-25","Camera Issued",47584
+2024,"WA","Unknown","17-25","Other",0
+2024,"WA","Unknown","17-25","Police Issued",10008
+2024,"WA","Unknown","26-39","Camera Issued",125384
+2024,"WA","Unknown","26-39","Other",0
+2024,"WA","Unknown","26-39","Police Issued",19212
+2024,"WA","Unknown","40-64","Camera Issued",192507
+2024,"WA","Unknown","40-64","Other",0
+2024,"WA","Unknown","40-64","Police Issued",22768
+2024,"WA","Unknown","65 and over","Camera Issued",49823
+2024,"WA","Unknown","65 and over","Other",0
+2024,"WA","Unknown","65 and over","Police Issued",4394

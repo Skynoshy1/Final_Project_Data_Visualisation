@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speeding Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+
+    <div class="grid-container">
+        <header class="header">
+            <h1> Australian Speeding Fines</h1>
+            <p>Comprehensive analysis of road safety enforcement, comparing jurisdictions, demographics, and detection methods.</p>
+        </header>
+
+        <div id="chart3-container" class="box">
+            <div class="chart-header-inline">
+                <h2> Camera vs Police Patrols</h2>
+                <div class="toggle-group" id="chart3-toggles">
+                    <button class="toggle-btn active" data-view="All">All</button>
+                    <button class="toggle-btn" data-view="Camera Issued">Camera</button>
+                    <button class="toggle-btn" data-view="Police Issued">Police</button>
+                </div>
+            </div>
+            <div id="chart3"></div> 
+        </div>
+
+        <div id="map-container" class="box">
+            <div class="map-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eae3db; margin-bottom: 10px; padding-bottom: 5px;">
+                <h2 style="margin: 0; border: none; padding: 0;">Filter</h2>
+            </div>
+            
+            <div class="extra-filters">
+                <div class="filter-item">
+                    <label>Year</label>
+                    <select id="yearSelect">
+                        <option value="All">All Years</option>
+                        </select>
+                </div>
+                <div class="filter-item">
+                    <label>Location</label>
+                    <select id="locationSelect">
+                        <option value="All">All Locations</option>
+                        </select>
+                </div>
+            </div>
+
+            <div id="map"></div>
+        </div>
+
+        <div id="chart1-container" class="box">
+            <h2> Overall Enforcement Trend</h2>
+            <div id="chart1"></div>
+        </div>
+
+        <div id="chart2-container" class="box">
+            <h2> Hotspots & Demographics</h2>
+            <div id="chart2"></div>
+        </div>
+    </div> <div id="tooltip" class="tooltip"></div>
+
+    <script src="js/script.js"></script> 
+</body>
+</html>
+    
+    <script src="js/scripts.js"></script>
+</body>
+</html>
