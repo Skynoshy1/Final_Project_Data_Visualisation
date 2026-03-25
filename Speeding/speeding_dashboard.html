@@ -6,106 +6,95 @@
     <title>Speeding Dashboard</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <style>
-        .site-nav {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            max-width: 1400px;
-            margin: 0 auto 16px;
-            padding: 12px 14px;
-            border: 1px solid rgba(92, 77, 60, 0.12);
-            border-radius: 12px;
-            background: linear-gradient(90deg, #fff6e4 0%, #f4ecdf 100%);
-        }
-
-        .nav-link {
-            text-decoration: none;
-            color: #5c4d3c;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-weight: 600;
-            border: 1px solid rgba(92, 77, 60, 0.12);
-            background: rgba(255, 255, 255, 0.65);
-        }
-
-        .nav-link:hover {
-            border-color: #ee9b00;
-            color: #7a5000;
-            background: #fff;
-        }
-
-        .nav-link.active {
-            background: #ee9b00;
-            color: #fff;
-            border-color: transparent;
-            box-shadow: 0 8px 18px rgba(238, 155, 0, 0.25);
-        }
-    </style>
 </head>
 <body>
-
-    <nav class="site-nav">
-        <a class="nav-link" href="../index.html">Home</a>
-        <a class="nav-link" href="../about.html">About</a>
-        <a class="nav-link" href="../Drug/drug_dashboard.html">Drug Dashboard</a>
-        <a class="nav-link active" href="./speeding_dashboard.html">Speeding Dashboard</a>
-    </nav>
-
-    <div class="grid-container">
-        <header class="header">
-            <h1> Australian Speeding Fines</h1>
-        </header>
-
-        <div id="chart3-container" class="box">
-            <div class="chart-header-inline">
-                <h2> Total Speeding Fines by Detection Methods </h2>
-                <div class="toggle-group" id="chart3-toggles">
-                    <button class="toggle-btn active" data-view="All">All</button>
-                    <button class="toggle-btn" data-view="Camera Issued">Camera</button>
-                    <button class="toggle-btn" data-view="Police Issued">Police</button>
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="brand" href="../index.html">
+                <div class="logo-mark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M5 19V9.5L12 5l7 4.5V19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M9 19v-4.5h6V19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M8 10.5h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                    </svg>
                 </div>
-            </div>
-            <div id="chart3"></div> 
-        </div>
+                <div class="brand-text">
+                    <p class="brand-kicker">Australia Traffic Safety</p>
+                    <h2 class="brand-title">RoadSafe Insights</h2>
+                </div>
+            </a>
 
-        <div id="map-container" class="box">
-            <div class="map-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eae3db; margin-bottom: 10px; padding-bottom: 5px;">
-                <h2 style="margin: 0; border: none; padding: 0;">Filter</h2>
+            <nav class="site-nav" aria-label="Primary navigation">
+                <a class="nav-link" href="../index.html">Home</a>
+                <a class="nav-link" href="../Drug/drug_dashboard.html">Drug</a>
+                <a class="nav-link active" href="./speeding_dashboard.html">Speeding</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="page-shell">
+        <div class="grid-container">
+            <header class="header">
+                <h1>Australian Speeding Fines</h1>
+            </header>
+
+            <div id="chart3-container" class="box">
+                <div class="chart-header-inline">
+                    <h2>Total Speeding Fines by Detection Methods</h2>
+                    <div class="toggle-group" id="chart3-toggles">
+                        <button class="toggle-btn active" data-view="All">All</button>
+                        <button class="toggle-btn" data-view="Camera Issued">Camera</button>
+                        <button class="toggle-btn" data-view="Police Issued">Police</button>
+                    </div>
+                </div>
+                <div id="chart3"></div>
             </div>
-            
-            <div class="extra-filters">
-                <div class="filter-item">
-                    <label>Year</label>
-                    <select id="yearSelect">
-                        <option value="All">All Years</option>
+
+            <div id="map-container" class="box">
+                <div class="map-header">
+                    <h2>Filter</h2>
+                </div>
+
+                <div class="extra-filters">
+                    <div class="filter-item">
+                        <label>Year</label>
+                        <select id="yearSelect">
+                            <option value="All">All Years</option>
                         </select>
+                    </div>
+                    <div class="filter-item">
+                        <label>Location</label>
+                        <select id="locationSelect"></select>
+                    </div>
                 </div>
-                <div class="filter-item">
-                    <label>Location</label>
-                    <select id="locationSelect">
-                        </select>
-                </div>
+
+                <div id="map"></div>
             </div>
 
-            <div id="map"></div>
-        </div>
+            <div id="chart1-container" class="box">
+                <h2>Annual Fine Trend</h2>
+                <div id="chart1"></div>
+            </div>
 
-        <div id="chart1-container" class="box">
-            <h2> Annual Fine Trend</h2>
-            <div id="chart1"></div>
+            <div id="chart2-container" class="box">
+                <h2>Total Fines By Locations</h2>
+                <div id="chart2"></div>
+            </div>
         </div>
+    </main>
 
-        <div id="chart2-container" class="box">
-            <h2> Total Fines By Locations</h2>
-            <div id="chart2"></div>
+    <div id="tooltip" class="tooltip"></div>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div>
+                <h3 class="footer-title">RoadSafe Insights Australia</h3>
+                <div class="footer-note">A visual introduction to traffic offender patterns across Australia.</div>
+            </div>
+            <div class="footer-note">Acknowledgement of GenAI Use</div>
         </div>
-    </div> <div id="tooltip" class="tooltip"></div>
+    </footer>
 
-    <script src="js/script.js"></script> 
-</body>
-</html>
-    
     <script src="js/scripts.js"></script>
 </body>
 </html>

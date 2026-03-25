@@ -5,77 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drug Dashboard</title>
     <link rel="stylesheet" href="./css/style.css">
-    <style>
-        .site-nav {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            width: min(1200px, calc(100% - 20px));
-            margin: 20px auto 0;
-            padding: 12px 14px;
-            border: 1px solid rgba(92, 77, 60, 0.12);
-            border-bottom: none;
-            border-radius: 12px 12px 0 0;
-            background: linear-gradient(90deg, #fff6e4 0%, #f4ecdf 100%);
-        }
-
-        .nav-link {
-            text-decoration: none;
-            color: #5c4d3c;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-weight: 600;
-            border: 1px solid rgba(92, 77, 60, 0.12);
-            background: rgba(255, 255, 255, 0.65);
-        }
-
-        .nav-link:hover {
-            border-color: #ee9b00;
-            color: #7a5000;
-            background: #fff;
-        }
-
-        .nav-link.active {
-            background: #ee9b00;
-            color: #fff;
-            border-color: transparent;
-            box-shadow: 0 8px 18px rgba(238, 155, 0, 0.25);
-        }
-
-        .site-footer {
-            width: min(1200px, calc(100% - 20px));
-            margin: 0 auto 20px;
-            padding: 12px 18px;
-            border-radius: 0 0 12px 12px;
-            background: #5c4d3c;
-            color: #f7f1e8;
-            font-size: 0.9rem;
-        }
-
-        .dashboard-shell {
-            margin-top: 0;
-            border-radius: 0;
-            border-top: none;
-        }
-    </style>
 </head>
 <body>
-    <nav class="site-nav">
-        <a class="nav-link" href="../index.html">Home</a>
-        <a class="nav-link" href="../about.html">About</a>
-        <a class="nav-link active" href="./drug_dashboard.html">Drug Dashboard</a>
-        <a class="nav-link" href="../Speeding/speeding_dashboard.html">Speeding Dashboard</a>
-    </nav>
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="brand" href="../index.html">
+                <div class="logo-mark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M5 19V9.5L12 5l7 4.5V19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M9 19v-4.5h6V19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M8 10.5h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <p class="brand-kicker">Australia Traffic Safety</p>
+                    <h2 class="brand-title">RoadSafe Insights</h2>
+                </div>
+            </a>
+
+            <nav class="site-nav" aria-label="Primary navigation">
+                <a class="nav-link" href="../index.html">Home</a>
+                <a class="nav-link active" href="./drug_dashboard.html">Drug</a>
+                <a class="nav-link" href="../Speeding/speeding_dashboard.html">Speeding</a>
+            </nav>
+        </div>
+    </header>
 
     <main class="dashboard-shell">
         <header class="page-intro">
-            <p class="intro-kicker">Drug Testing Dashboard</p>
-            <h1>Australian roadside drug testing trends</h1>
-            <p class="intro-copy">
-                This dashboard explores drug testing activity across Australian jurisdictions,
-                combining yearly testing volume, positive results, geographic comparison,
-                and age-group breakdowns from the latest detailed records.
-            </p>
+            <h1>Australian Drug Offence</h1>
         </header>
 
         <section class="filter-bar">
@@ -162,7 +120,16 @@
             </section>
         </section>
     </main>
-    <footer class="site-footer">Data Visual Project · Drug topic</footer>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div>
+                <h3 class="footer-title">RoadSafe Insights Australia</h3>
+                <div class="footer-note">A visual introduction to traffic offender patterns across Australia.</div>
+            </div>
+            <div class="footer-note">Acknowledgement of GenAI Use</div>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>

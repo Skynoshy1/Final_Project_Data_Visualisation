@@ -3,107 +3,480 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Data Visual Project</title>
+  <title>RoadSafe Insights Australia</title>
   <style>
     :root {
-      --bg: #f7f5f0;
-      --card: #ffffff;
-      --text: #2f2a24;
-      --muted: #6f665b;
-      --accent: #ee9b00;
-      --accent-dark: #c27d00;
-      --secondary: #5c4d3c;
-      --border: #e6dece;
+      --primary-color: #EE9B00;
+      --primary-dark: #c27d00;
+      --secondary-color: #5C4D3C;
+      --body-bg: #F7F5F0;
+      --card-bg: #FFFFFF;
+      --text-color: #3D3D3D;
+      --light-text: #7a7a7a;
+      --line: rgba(92, 77, 60, 0.12);
+      --shadow: 0 14px 32px rgba(92, 77, 60, 0.08);
+      --radius: 22px;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
+      color: var(--text-color);
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(180deg, #fffdf9 0%, var(--bg) 100%);
-      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(238, 155, 0, 0.12), transparent 26%),
+        linear-gradient(180deg, #fcfbf8 0%, var(--body-bg) 100%);
     }
 
-    .shell {
-      width: min(1100px, calc(100% - 24px));
-      margin: 20px auto;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(247, 245, 240, 0.94);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .header-inner,
+    .section-inner,
+    .footer-inner {
+      width: min(1160px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .header-inner {
+      min-height: 84px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 12px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-mark {
+      width: 50px;
+      height: 50px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      color: #fff;
+      background: linear-gradient(145deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      box-shadow: 0 10px 24px rgba(238, 155, 0, 0.2);
+    }
+
+    .logo-mark svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .brand-kicker {
+      margin: 0 0 2px;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--primary-color);
+      font-weight: 700;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 1.3rem;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--secondary-color);
     }
 
     .site-nav {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      padding: 12px 14px;
-      border-bottom: 1px solid rgba(92, 77, 60, 0.14);
-      background: linear-gradient(90deg, #fff6e4 0%, #f4ecdf 100%);
+      gap: 10px;
     }
 
     .nav-link {
-      text-decoration: none;
-      color: var(--secondary);
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-weight: 600;
-      border: 1px solid rgba(92, 77, 60, 0.12);
-      background: rgba(255, 255, 255, 0.65);
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: var(--secondary-color);
+      border: 1px solid transparent;
+      transition: 0.2s ease;
     }
 
-    .nav-link:hover {
-      border-color: var(--accent);
-      color: #7a5000;
-      background: #fff;
+    .nav-link:hover,
+    .nav-link:focus-visible {
+      background: rgba(255, 255, 255, 0.7);
+      border-color: var(--line);
     }
 
     .nav-link.active {
-      background: var(--accent);
       color: #fff;
-      border-color: transparent;
-      box-shadow: 0 8px 18px rgba(238, 155, 0, 0.25);
+      background: var(--primary-color);
+      box-shadow: 0 10px 22px rgba(238, 155, 0, 0.22);
     }
 
-    .content {
-      padding: 24px;
+    main {
+      padding: 28px 0 24px;
+    }
+
+    .section {
+      padding-top: 20px;
+    }
+
+    .section-panel,
+    .topic-card,
+    .member-card {
+      background: var(--card-bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .section-panel {
+      padding: 28px;
+    }
+
+    .intro-panel {
+      background:
+        radial-gradient(circle at top right, rgba(238, 155, 0, 0.12), transparent 24%),
+        var(--card-bg);
+    }
+
+    .intro-kicker,
+    .topic-tag,
+    .member-role {
+      display: inline-flex;
+      width: fit-content;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(238, 155, 0, 0.12);
+      color: var(--primary-dark);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .intro-kicker {
+      margin-bottom: 14px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
     }
 
     h1 {
-      margin: 0 0 8px;
-      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      margin-bottom: 14px;
+      font-size: clamp(2.35rem, 5vw, 4rem);
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--secondary-color);
     }
 
-    p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.6;
+    .intro-panel p,
+    .section-heading p,
+    .topic-card p,
+    .member-card p,
+    .footer-note {
+      color: var(--light-text);
+      line-height: 1.75;
+    }
+
+    .intro-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      transform: translateY(-2px);
+    }
+
+    .button-primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      box-shadow: 0 12px 24px rgba(238, 155, 0, 0.18);
+    }
+
+    .button-secondary {
+      color: var(--secondary-color);
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    .section-heading {
+      margin-bottom: 18px;
+    }
+
+    .section-heading h2 {
+      margin-bottom: 6px;
+      font-size: 1.75rem;
+      color: var(--secondary-color);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .topics-grid,
+    .members-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .topic-card,
+    .member-card {
+      padding: 22px;
+      min-height: 200px;
+    }
+
+    .topic-tag,
+    .member-role {
+      margin-bottom: 12px;
+      padding: 6px 11px;
+      font-size: 0.78rem;
+    }
+
+    .topic-card h3,
+    .member-card h3 {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+      color: var(--secondary-color);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .topic-card p {
+      margin-bottom: 18px;
+      flex: 1;
+    }
+
+    .card-link {
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .card-link.disabled {
+      color: #9a958d;
+      pointer-events: none;
     }
 
     .site-footer {
-      padding: 12px 18px;
-      background: var(--secondary);
-      color: #f7f1e8;
-      font-size: 0.9rem;
-      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      margin-top: 28px;
+      background: var(--secondary-color);
+      color: #fffaf4;
+    }
+
+    .footer-inner {
+      padding: 22px 0 28px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .footer-title {
+      margin: 0 0 6px;
+      font-size: 1.02rem;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .footer-note {
+      font-size: 0.94rem;
+      color: rgba(255, 250, 244, 0.78);
+    }
+
+    @media (max-width: 980px) {
+      .topics-grid,
+      .members-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .header-inner,
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .header-inner,
+      .section-inner,
+      .footer-inner {
+        width: min(100% - 28px, 1160px);
+      }
+
+      .section-panel,
+      .topic-card,
+      .member-card {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 12vw, 3.1rem);
+      }
     }
   </style>
 </head>
 <body>
-  <div class="shell">
-    <nav class="site-nav">
-      <a class="nav-link active" href="./index.html">Home</a>
-      <a class="nav-link" href="./about.html">About</a>
-      <a class="nav-link" href="./Drug/drug_dashboard.html">Drug Dashboard</a>
-      <a class="nav-link" href="./Speeding/speeding_dashboard.html">Speeding Dashboard</a>
-    </nav>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./index.html">
+        <div class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M5 19V9.5L12 5l7 4.5V19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M9 19v-4.5h6V19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M8 10.5h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+          </svg>
+        </div>
+        <div>
+          <p class="brand-kicker">Australia Traffic Safety</p>
+          <h2 class="brand-title">RoadSafe Insights</h2>
+        </div>
+      </a>
 
-    <main class="content">
-      <h1>Data Visual Project</h1>
-      <p>Select a dashboard from the navigation bar to explore each topic.</p>
-    </main>
-    <footer class="site-footer">Data Visual Project · Unified navigation theme</footer>
-  </div>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a class="nav-link active" href="./index.html">Home</a>
+        <a class="nav-link" href="./Drug/drug_dashboard.html">Drug</a>
+        <a class="nav-link" href="./Speeding/speeding_dashboard.html">Speeding</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-panel intro-panel">
+          <div class="intro-kicker">Introduction</div>
+          <h1>Visualizing traffic offenders across Australia</h1>
+          <p>
+            This website introduces a visual analytics project focused on traffic offenders in
+            Australia. It brings together dashboard-based storytelling around three main issue
+            areas: drug-related offences, speeding behaviour, and alcohol-related incidents.
+          </p>
+          <p style="margin-top: 12px;">
+            The goal is to make complex datasets easier to read, compare, and present through a
+            cleaner visual structure. You can begin with either of the two dashboards currently
+            available below.
+          </p>
+          <div class="intro-actions">
+            <a class="button button-primary" href="./Drug/drug_dashboard.html">Open Drug Dashboard</a>
+            <a class="button button-secondary" href="./Speeding/speeding_dashboard.html">Open Speeding Dashboard</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-panel">
+          <div class="section-heading">
+            <h2>Main Topics</h2>
+            <p>The project covers three key offender categories to support comparison and interpretation across Australian jurisdictions.</p>
+          </div>
+
+          <div class="topics-grid">
+            <article class="topic-card">
+              <div class="topic-tag">Topic 01</div>
+              <h3>Drug Offenders</h3>
+              <p>
+                Explore roadside drug testing trends, positive test results, and jurisdiction-level
+                comparisons through interactive data views.
+              </p>
+              <a class="card-link" href="./Drug/drug_dashboard.html">Open dashboard</a>
+            </article>
+
+            <article class="topic-card">
+              <div class="topic-tag">Topic 02</div>
+              <h3>Speeding Offenders</h3>
+              <p>
+                Review speeding fine patterns, annual trends, and differences in detection methods
+                across locations in Australia.
+              </p>
+              <a class="card-link" href="./Speeding/speeding_dashboard.html">Open dashboard</a>
+            </article>
+
+            <article class="topic-card">
+              <div class="topic-tag">Topic 03</div>
+              <h3>Alcohol Offenders</h3>
+              <p>
+                This topic is reserved for alcohol-related traffic offence analysis and can be added
+                later using the same design language as the existing dashboards.
+              </p>
+              <span class="card-link disabled">Coming soon</span>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-panel">
+          <div class="section-heading">
+            <h2>Contributors</h2>
+            <p>This section is kept separate from the project topics so the team information reads as its own area.</p>
+          </div>
+
+          <div class="members-grid">
+            <article class="member-card">
+              <div class="member-role">Member 01</div>
+              <h3>Your Name Here</h3>
+              <p>Contributed to project framing, structure, and presentation of the website introduction.</p>
+            </article>
+
+            <article class="member-card">
+              <div class="member-role">Member 02</div>
+              <h3>Your Name Here</h3>
+              <p>Contributed to dashboard planning, data handling, and the narrative behind the visualizations.</p>
+            </article>
+
+            <article class="member-card">
+              <div class="member-role">Member 03</div>
+              <h3>Your Name Here</h3>
+              <p>Contributed to visual styling, layout consistency, and connecting the project into one site.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <h3 class="footer-title">RoadSafe Insights Australia</h3>
+        <div class="footer-note">A visual introduction to traffic offender patterns across Australia.</div>
+      </div>
+      <div class="footer-note">Acknowledgement of GenAI Use</div>
+    </div>
+  </footer>
 </body>
 </html>
