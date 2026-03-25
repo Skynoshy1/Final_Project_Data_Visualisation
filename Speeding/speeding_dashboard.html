@@ -6,8 +6,51 @@
     <title>Speeding Dashboard</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .site-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            max-width: 1400px;
+            margin: 0 auto 16px;
+            padding: 12px 14px;
+            border: 1px solid rgba(92, 77, 60, 0.12);
+            border-radius: 12px;
+            background: linear-gradient(90deg, #fff6e4 0%, #f4ecdf 100%);
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #5c4d3c;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            border: 1px solid rgba(92, 77, 60, 0.12);
+            background: rgba(255, 255, 255, 0.65);
+        }
+
+        .nav-link:hover {
+            border-color: #ee9b00;
+            color: #7a5000;
+            background: #fff;
+        }
+
+        .nav-link.active {
+            background: #ee9b00;
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 8px 18px rgba(238, 155, 0, 0.25);
+        }
+    </style>
 </head>
 <body>
+
+    <nav class="site-nav">
+        <a class="nav-link" href="../index.html">Home</a>
+        <a class="nav-link" href="../about.html">About</a>
+        <a class="nav-link" href="../Drug/drug_dashboard.html">Drug Dashboard</a>
+        <a class="nav-link active" href="./speeding_dashboard.html">Speeding Dashboard</a>
+    </nav>
 
     <div class="grid-container">
         <header class="header">

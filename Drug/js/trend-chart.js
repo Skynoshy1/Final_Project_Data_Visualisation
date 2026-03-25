@@ -2,8 +2,8 @@ function drawTrendChart(data, elementId) {
   const state = document.getElementById("state-select")?.value || "all";
   const rating = document.getElementById("rating-select")?.value || "all";
 
-  // We intentionally ignore the year filter here because this chart is meant
-  // to show a trend across years.
+  // Start from the current filtered dataset.
+  // That means state / year / rating selections all affect the chart scale.
   let plotData = [...data];
 
   if (state !== "all") {
@@ -80,6 +80,15 @@ function drawTrendChart(data, elementId) {
     .nice()
     .range([currentInnerHeight, 0]);
 
+  // Highlight the top 5 bars with the highest test volume in the current view.
+  const topFiveYears = new Set(
+    plotData
+      .slice()
+      .sort((a, b) => d3.descending(a[COLS.totalTest], b[COLS.totalTest]))
+      .slice(0, 5)
+      .map((d) => d[COLS.year]),
+  );
+
   // Horizontal guide lines make the chart easier to read.
   svg
     .append("g")
@@ -103,7 +112,9 @@ function drawTrendChart(data, elementId) {
     .attr("y", (d) => yLeftScale(d[COLS.totalTest]))
     .attr("width", xScaleLocal.bandwidth())
     .attr("height", 0)
-    .attr("fill", CHART_COLORS.bar)
+    .attr("fill", (d) =>
+      topFiveYears.has(d[COLS.year]) ? CHART_COLORS.bar : "#d6c8b8",
+    )
     .on("mouseenter", function (event, d) {
       showTooltip(
         event,
@@ -178,28 +189,14 @@ function drawTrendChart(data, elementId) {
     .attr("transform", "rotate(-45)")
     .style("text-anchor", "end");
 
-  svg.append("g").call(
-    d3
-      .axisLeft(yLeftScale)
-      .tickValues(
-        d3.range(
-          0,
-          d3.max(plotData, (d) => d[COLS.totalTest]) + 100000,
-          100000,
-        ),
-      )
-      .tickFormat(d3.format(".2s")),
-  );
+  // Left axis rescales automatically based on the filtered total test values.
+  svg
+    .append("g")
+    .call(d3.axisLeft(yLeftScale).ticks(5).tickFormat(d3.format(".2s")));
 
   svg
     .append("g")
     .attr("transform", `translate(${currentInnerWidth},0)`)
-    .call(
-      d3
-        .axisRight(yRightScale)
-        .tickValues(
-          d3.range(0, d3.max(plotData, (d) => d[COLS.positiveRate]) + 2, 2),
-        )
-        .tickFormat((d) => `${d}%`),
-    );
+    // Right axis also rescales automatically based on filtered positive rate.
+    .call(d3.axisRight(yRightScale).ticks(5).tickFormat((d) => `${d}%`));
 }
