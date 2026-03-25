@@ -1,13 +1,9 @@
-// =========================================================================
-// 🧠 BỘ NÃO TRUNG TÂM (GLOBAL FILTER STATE)
-// =========================================================================
 const globalFilter = {
     jurisdiction: "All",
     year: "All",
     location: "All"
 };
 
-// Từ điển thông dịch Map -> CSV
 function matchJurisdiction(csvVal, filterVal) {
     if (filterVal === "All") return true;
     if (!csvVal) return false;
@@ -28,7 +24,6 @@ function matchJurisdiction(csvVal, filterVal) {
     return a === b || a === stateMap[b] || stateMap[a] === b;
 }
 
-// Hàm gào thét báo động toàn Dashboard
 function triggerGlobalUpdate() {
     if (typeof window.updateChart3 === "function") {
         const currentToggle = d3.select(".toggle-btn.active").attr("data-view") || "All";
@@ -38,9 +33,6 @@ function triggerGlobalUpdate() {
     if (typeof window.updateChart2 === "function") window.updateChart2();
 }
 
-// =========================================================================
-// 🗺️ VẼ BẢN ĐỒ ÚC (GEOJSON MAP)
-// =========================================================================
 const mapContainer = document.getElementById('map');
 const mapWidth = mapContainer.clientWidth;
 const mapHeight = 300; 
@@ -75,10 +67,6 @@ d3.json("data/au-states.geojson").then(function(geoData) {
     });
 }).catch(error => console.error("Lỗi load Map:", error));
 
-
-// =========================================================================
-// 🚀 LOAD CSV 1 LẦN DUY NHẤT & CHIA DATA CHO CÁC CHARTS
-// =========================================================================
 d3.csv("data/Speeding.csv").then(function(data) {
     
     data.forEach(d => {
@@ -96,7 +84,6 @@ d3.csv("data/Speeding.csv").then(function(data) {
     const formatNum = d3.format(",");
     const tooltip = d3.select("#tooltip");
 
-    // SETUP DROPDOWN FILTERS
     const uniqueYears = [...new Set(data.map(d => d.YEAR))].filter(Boolean).sort();
     const yearSelect = d3.select("#yearSelect");
     uniqueYears.forEach(y => { yearSelect.append("option").text(y).attr("value", y); });
@@ -108,9 +95,6 @@ d3.csv("data/Speeding.csv").then(function(data) {
     yearSelect.on("change", function() { globalFilter.year = this.value; triggerGlobalUpdate(); });
     locSelect.on("change", function() { globalFilter.location = this.value; triggerGlobalUpdate(); });
 
-    // ==========================================
-    // 📷 CHART 3: CAMERA VS POLICE
-    // ==========================================
     const chart3Container = document.getElementById('chart3');
     const width3 = chart3Container.clientWidth; const height3 = 380; 
     const margin3 = {top: 20, right: 120, bottom: 40, left: 80};
@@ -191,32 +175,25 @@ d3.csv("data/Speeding.csv").then(function(data) {
     }
     d3.selectAll(".toggle-btn").on("click", function() { d3.selectAll(".toggle-btn").classed("active", false); d3.select(this).classed("active", true); triggerGlobalUpdate(); });
 
-    // ==========================================
-    // 📊 CHART 1: OVERALL TREND (COMBO: DUAL AXIS BAR + LINE)
-    // ==========================================
     const chart1Container = document.getElementById('chart1');
     const width1 = chart1Container.clientWidth; const height1 = 300; 
-    // 🚨 Nới lề phải ra 60px để nhét cái trục Y thứ 2 vô
     const margin1 = {top: 30, right: 60, bottom: 40, left: 60};
     const innerW1 = width1 - margin1.left - margin1.right; const innerH1 = height1 - margin1.top - margin1.bottom;
 
     const svg1 = d3.select("#chart1").append("svg").attr("width", width1).attr("height", height1).append("g").attr("transform", `translate(${margin1.left},${margin1.top})`);
     
-    // Khai báo 2 Trục Y
     const x1 = d3.scaleBand().range([0, innerW1]).padding(0.3); 
-    const y1 = d3.scaleLinear().range([innerH1, 0]); // Trục Y Trái (Total Fines)
-    const y1_line = d3.scaleLinear().range([innerH1, 0]); // 🚨 Trục Y Phải (Severity Index)
+    const y1 = d3.scaleLinear().range([innerH1, 0]); 
+    const y1_line = d3.scaleLinear().range([innerH1, 0]); 
 
-    // Tạo các Group chứa biểu đồ để xếp lớp Z-index (Cột nằm dưới, Đường nằm trên)
     const xAxisGroup1 = svg1.append("g").attr("transform", `translate(0,${innerH1})`); 
     const yAxisGroup1 = svg1.append("g");
-    const yAxisGroup1Right = svg1.append("g").attr("transform", `translate(${innerW1},0)`); // 🚨 Group cho Trục Y phải
+    const yAxisGroup1Right = svg1.append("g").attr("transform", `translate(${innerW1},0)`); 
 
     const barsGroup = svg1.append("g").attr("class", "bars-layer");
     const lineGroup = svg1.append("g").attr("class", "line-layer");
     const dotsGroup = svg1.append("g").attr("class", "dots-layer");
 
-    // Khởi tạo sẵn đường Line
     const linePath1 = lineGroup.append("path").attr("fill", "none").attr("stroke", "#f39c12").attr("stroke-width", 3);
 
     window.updateChart1 = function() {
@@ -225,18 +202,16 @@ d3.csv("data/Speeding.csv").then(function(data) {
         if (globalFilter.jurisdiction !== "All") filteredData = filteredData.filter(d => matchJurisdiction(d.JURISDICTION, globalFilter.jurisdiction));
         if (globalFilter.location !== "All") filteredData = filteredData.filter(d => d.LOCATION === globalFilter.location);
 
-        // 🚨 TÍNH TOÁN DATA MỚI: SUM FINES và COUNT DÒNG
         const grouped = d3.rollup(filteredData, 
             v => ({
                 fines: d3.sum(v, d => d.FINES),
-                count: v.length, // Số lượng vé phạt
-                avg: v.length > 0 ? d3.sum(v, d => d.FINES) / v.length : 0 // Chỉ số nghiêm trọng
+                count: v.length, 
+                avg: v.length > 0 ? d3.sum(v, d => d.FINES) / v.length : 0 
             }), 
             d => d.YEAR
         );
         const plotData = Array.from(grouped, ([year, vals]) => ({year, fines: vals.fines, count: vals.count, avg: vals.avg})).sort((a, b) => a.year - b.year);
 
-        // 🚨 TÍNH TOÁN YOY GROWTH CỦA "SEVERITY INDEX"
         plotData.forEach((d, i) => {
             if (i === 0) {
                 d.yoyAvgText = `<span style="color: var(--light-text); font-size: 0.85em;"> First year</span>`;
@@ -269,16 +244,14 @@ d3.csv("data/Speeding.csv").then(function(data) {
         const maxFines = d3.max(plotData, d => d.fines);
         const maxAvg = d3.max(plotData, d => d.avg);
         
-        // 🚨 CẬP NHẬT 2 TRỤC Y
         x1.domain(plotData.map(d => d.year)); 
         y1.domain([0, maxFines * 1.1]); 
-        y1_line.domain([0, maxAvg * 1.1]); // Trục Y cho Line cao hơn xíu để đẹp
+        y1_line.domain([0, maxAvg * 1.1]); 
 
         xAxisGroup1.transition().duration(transitionTime).call(d3.axisBottom(x1)).selectAll("text").attr("transform", "rotate(-25)").style("text-anchor", "end").attr("dx", "-0.8em").attr("dy", "0.15em");
         yAxisGroup1.transition().duration(transitionTime).call(d3.axisLeft(y1).tickFormat(d3.format("~s")));
         yAxisGroup1Right.transition().duration(transitionTime).call(d3.axisRight(y1_line).tickFormat(d => "$" + d3.format(",.0f")(d))).selectAll("text").style("fill", "#000000").style("font-weight", "bold");
 
-        // === 1. MÚA CỘT BARS ===
         const bars = barsGroup.selectAll(".bar1").data(plotData, d => d.year);
         bars.exit().transition().duration(300).attr("y", innerH1).attr("height", 0).remove();
 
@@ -289,7 +262,7 @@ d3.csv("data/Speeding.csv").then(function(data) {
                 tooltip.style("visibility", "visible").style("opacity", 1).html(`
                     <div class="tooltip-header" style="color: var(--primary-color)"> Year: ${d.year}</div>
                     <div class="tooltip-body">
-                         Total Fines: <strong>${formatNum(d.fines)}</strong>
+                        Total Fines: <strong>${formatNum(d.fines)}</strong>
                     </div>
                 `); 
             })
@@ -307,9 +280,8 @@ d3.csv("data/Speeding.csv").then(function(data) {
             .attr("fill", d => { if (globalFilter.year === "All") return "var(--primary-color)"; return +globalFilter.year === d.year ? "var(--primary-color)" : "#e0d8d0"; })
             .style("opacity", d => { if (globalFilter.year !== "All") { return +globalFilter.year === d.year ? 1 : 0.4; } return d.fines === maxFines ? 1 : 0.5; });
 
-        // === 2. MÚA ĐƯỜNG LINE (SEVERITY INDEX) ===
         const lineGen = d3.line()
-            .x(d => x1(d.year) + x1.bandwidth() / 2) // Canh chính giữa cột
+            .x(d => x1(d.year) + x1.bandwidth() / 2) 
             .y(d => y1_line(d.avg))
             .curve(d3.curveMonotoneX);
 
@@ -317,7 +289,6 @@ d3.csv("data/Speeding.csv").then(function(data) {
             .transition().duration(transitionTime).ease(d3.easeCubicOut)
             .attr("d", lineGen);
 
-        // === 3. MÚA DOTS (CHẤM TRÒN LÊN ĐƯỜNG LINE) ===
         const dots = dotsGroup.selectAll(".dot-line").data(plotData, d => d.year);
         dots.exit().transition().duration(300).style("opacity", 0).remove();
 
@@ -325,14 +296,13 @@ d3.csv("data/Speeding.csv").then(function(data) {
             .attr("r", 4).attr("fill", "white").attr("stroke", "#000000").attr("stroke-width", 2)
             .style("cursor", "pointer")
             .on("mouseover", function(event, d) {
-                // 🚨 TOOLTIP DÀNH RIÊNG CHO ĐƯỜNG LINE HIỆN INSIGHT ĐỈNH KOUT
                 d3.select(this).attr("r", 6).style("stroke-width", 3);
                 tooltip.style("visibility", "visible").style("opacity", 1).html(`
                     <div class="tooltip-header" style="color: #f39c12"> Year: ${d.year}</div>
                     <div class="tooltip-body">
-                         Total Tickets: <strong>${formatNum(d.count)}</strong><br/>
-                         Total Fines: <strong>${formatNum(d.fines)}</strong><br/>
-                         Average Fine: <strong style="color: #f39c12">$${formatNum(d.avg.toFixed(0))}</strong><br/>
+                        Total Tickets: <strong>${formatNum(d.count)}</strong><br/>
+                        Total Fines: <strong>${formatNum(d.fines)}</strong><br/>
+                        Average Fine: <strong style="color: #f39c12">$${formatNum(d.avg.toFixed(0))}</strong><br/>
                         ${d.yoyAvgText} 
                     </div>
                 `); 
@@ -349,7 +319,6 @@ d3.csv("data/Speeding.csv").then(function(data) {
             .attr("cy", d => y1_line(d.avg));
     };
 
- 
     const chart2Container = document.getElementById('chart2');
     const width2 = chart2Container.clientWidth; const height2 = 300; 
     const margin2 = {top: 30, right: 60, bottom: 40, left: 160}; 
@@ -396,9 +365,9 @@ d3.csv("data/Speeding.csv").then(function(data) {
                 tooltip.style("visibility", "visible").style("opacity", 1).html(`
                     <div class="tooltip-header" style="color: var(--primary-color)"> ${d.location}</div>
                     <div class="tooltip-body">
-                         ${globalFilter.jurisdiction === "All" ? "All Australia" : globalFilter.jurisdiction}<br/>
-                         ${globalFilter.year === "All" ? "All Years" : "Year: " + globalFilter.year}<br/>
-                         Total Fines: <strong>${formatNum(d.fines)}</strong><br/>
+                        ${globalFilter.jurisdiction === "All" ? "All Australia" : globalFilter.jurisdiction}<br/>
+                        ${globalFilter.year === "All" ? "All Years" : "Year: " + globalFilter.year}<br/>
+                        Total Fines: <strong>${formatNum(d.fines)}</strong><br/>
                         <span style="color: var(--primary-color); font-size: 0.9em; font-weight: bold;">(Chiếm ${percent}% tổng số)</span>
                     </div>
                 `);
@@ -438,9 +407,6 @@ d3.csv("data/Speeding.csv").then(function(data) {
             .style("opacity", d => { if (globalFilter.location !== "All" && globalFilter.location !== d.location) return 0.2; return 1; });
     };
 
-    // ==========================================
-    // 🚀 KHỞI ĐỘNG HỆ THỐNG TOÀN CỤC
-    // ==========================================
     setTimeout(() => {
         triggerGlobalUpdate();
     }, 50);

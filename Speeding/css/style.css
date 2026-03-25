@@ -1,25 +1,19 @@
 :root {
-    /* Logo / Điểm nhấn */
-    --primary-color: #EE9B00;  /* Cam cháy */
+    --primary-color: #EE9B00;  
     --primary-dark: #c27d00;   
     
-    /* Màu header, tiêu đề  */
-    --secondary-color: #5C4D3C; /* Nâu trầm */
+    --secondary-color: #5C4D3C; 
   
-    /* Nền và Thẻ */
-    --body-bg: #F7F5F0;         /* Kem nhạt */
-    --card-bg: #FFFFFF;         /* Trắng tinh */
+    --body-bg: #F7F5F0;         
+    --card-bg: #FFFFFF;         
     
-    /* Màu chữ */
-    --text-color: #3D3D3D;      /* Xám đen */     
+    --text-color: #3D3D3D;           
     --light-text: #7a7a7a; 
     
-    /* Trạng thái */
     --success: #4CAF50;
     --warning: #FFC107; 
     --danger: #FF5252;  
 
-    /* Bo góc và Bóng đổ */
     --border-radius: 12px;
     --shadow: 0 10px 25px rgba(0,0,0,0.06);
 }
@@ -32,34 +26,33 @@
 
 body {
     font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--body-bg); /* Đổi nền thành màu Kem */
+    background-color: var(--body-bg); 
     color: var(--text-color);
     padding: 20px;
 }
 
-/* CHIA GRID ĐỈNH CAO CHỖ NÀY NÈ */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(6, 1fr); /* Chia 6 cột bằng nhau */
-    grid-template-rows: auto 450px 350px;  /* Dòng 1 Header, Dòng 2 cao 450, Dòng 3 cao 350 */
+    grid-template-columns: repeat(6, 1fr); 
+    grid-template-rows: auto 450px 350px;  
     gap: 20px;
     max-width: 1400px;
     margin: 0 auto;
 }
 
 .header {
-    grid-column: 1 / 7; /* Chiếm trọn 6 cột */
-    background: var(--secondary-color); /* Đổi sang Nâu trầm */
+    grid-column: 1 / 7; 
+    background: var(--secondary-color); 
     color: var(--body-bg);
     padding: 25px;
     border-radius: var(--border-radius);
     text-align: center;
     box-shadow: var(--shadow);
-    border-bottom: 5px solid var(--primary-color); /* Quẹt nhẹ đường cam cháy tạo điểm nhấn */
+    border-bottom: 5px solid var(--primary-color); 
 }
 
 .header p {
-    color: #d7d1cb; /* Màu chữ phụ mờ mờ cho sang */
+    color: #d7d1cb; 
     margin-top: 5px;
 }
 
@@ -68,11 +61,10 @@ body {
     padding: 20px;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
-    border: 1px solid rgba(0,0,0,0.02); /* Viền mỏng như tơ */
+    border: 1px solid rgba(0,0,0,0.02); 
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Thêm tí hiệu ứng lướt chuột vô cái hộp cho nó mượt */
 .box:hover {
     transform: translateY(-3px);
     box-shadow: 0 15px 30px rgba(0,0,0,0.1);
@@ -81,21 +73,19 @@ body {
 .box h2 {
     font-size: 1.2rem;
     margin-bottom: 15px;
-    color: var(--secondary-color); /* Chữ tiêu đề Nâu trầm */
+    color: var(--secondary-color); 
     border-bottom: 2px solid #eae3db;
     padding-bottom: 8px;
 }
 
-/* Ép vị trí cho từng đứa (Giữ nguyên layout) */
-#chart3-container { grid-column: 1 / 5; } /* 2/3 màn hình */
-#map-container    { grid-column: 5 / 7; } /* 1/3 màn hình */
-#chart1-container { grid-column: 1 / 4; } /* 1/2 màn hình */
-#chart2-container { grid-column: 4 / 7; } /* 1/2 màn hình */
+#chart3-container { grid-column: 1 / 5; } 
+#map-container    { grid-column: 5 / 7; } 
+#chart1-container { grid-column: 1 / 4; } 
+#chart2-container { grid-column: 4 / 7; } 
 
-/* ====== STYLE CHO ĐƯỜNG LINE D3 (Áp dụng Brand Color) ====== */
 .line-camera { 
     fill: none; 
-    stroke: #4CAF50; /* Camera màu Cam cháy rực rỡ */
+    stroke: #4CAF50; 
     stroke-width: 3.5px; 
     stroke-linecap: round;
 }
@@ -107,44 +97,40 @@ body {
     stroke-linecap: round;
 }
 
-/* 🚨 MỚI: Style cho dấu Chấm (Dots) trên biểu đồ */
 .dot {
     stroke-width: 2px;
-    fill: white; /* Nền trắng cho nổi */
+    fill: white; 
     cursor: pointer;
-    transition: r 0.1s ease-out, stroke-width 0.1s ease-out; /* Hiệu ứng mượt mà khi hover */
+    transition: r 0.1s ease-out, stroke-width 0.1s ease-out; 
 }
 
 .dot-camera { stroke: #3D3D3D }
 .dot-police { stroke: var(--secondary-color); }
 
-/* Hiệu ứng khi LƯỚT CHUỘT vô cái chấm: Bự lên và Stroke dày hơn */
 .dot:hover {
-    r: 7px; /* Bán kính mặc định là 5px, hover vô thành 7px */
+    r: 7px; 
     stroke-width: 3px;
 }
 
-/* 🚨 MỚI: Style cho cái Hộp Tooltip ma thuật */
 .tooltip {
     position: absolute;
-    visibility: hidden; /* Mặc định giấu đi */
+    visibility: hidden; 
     min-width: 150px;
-    background: rgba(43, 43, 43, 0.95); /* Đen xám trong suốt nhẹ */
-    color: var(--body-bg); /* Chữ màu Kem */
+    background: rgba(43, 43, 43, 0.95); 
+    color: var(--body-bg); 
     padding: 10px;
     border-radius: 8px;
     font-size: 13px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    pointer-events: none; /* Tránh cản chuột khi lướt */
+    pointer-events: none; 
     z-index: 1000;
     opacity: 0;
     transition: opacity 0.2s ease;
 }
 
-/* Style cho tiêu đề nhỏ trong tooltip */
 .tooltip-header {
     font-weight: bold;
-    color: var(--primary-color); /* Tiêu đề màu Cam cháy cho Camera */
+    color: var(--primary-color); 
     margin-bottom: 5px;
     border-bottom: 1px solid rgba(255,255,255,0.1);
     padding-bottom: 3px;
@@ -152,10 +138,9 @@ body {
 
 .tooltip-body strong {
     font-size: 1.1rem;
-    color: var(--success); /* Hiện số phạt màu Xanh lá cho tươi */
+    color: var(--success); 
 }
 
-/* ====== STYLE CHO NÚT BẤM FILTER CỦA CHART 3 ====== */
 .chart-header-inline {
     display: flex;
     justify-content: space-between;
@@ -166,7 +151,7 @@ body {
 }
 
 .chart-header-inline h2 {
-    margin-bottom: 0; /* Xóa margin cũ để nó canh giữa với nút */
+    margin-bottom: 0; 
     border-bottom: none;
     padding-bottom: 0;
 }
@@ -174,7 +159,7 @@ body {
 .toggle-group {
     display: flex;
     gap: 5px;
-    background: #eae3db; /* Nền xám nhạt cho nguyên cụm */
+    background: #eae3db; 
     padding: 4px;
     border-radius: 8px;
 }
@@ -190,12 +175,10 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Hiệu ứng khi lướt chuột */
 .toggle-btn:hover {
     color: var(--text-color);
 }
 
-/* Hiệu ứng khi được BẤM CHỌN (Active) */
 .toggle-btn.active[data-view="All"] { 
     background: white; 
     color: var(--text-color); 
@@ -213,38 +196,31 @@ body {
 }
 
 .state {
-    fill: #e0d8d0; /* Màu nền bang nhìn sang chảnh, hợp với màu Kem */
-    stroke: #ffffff; /* Viền ranh giới màu trắng */
+    fill: #e0d8d0; 
+    stroke: #ffffff; 
     stroke-width: 1.5px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-/* Khi lướt chuột qua */
 .state:hover {
-    fill: var(--primary-dark); /* Chuyển sang màu cam sậm */
+    fill: var(--primary-dark); 
     stroke-width: 2px;
 }
 
-/* Khi click CHỌN (Biến thành Filter) */
 .state.active {
-    fill: var(--primary-color); /* Cam cháy rực rỡ */
-    stroke: var(--secondary-color); /* Viền nâu trầm */
+    fill: var(--primary-color); 
+    stroke: var(--secondary-color); 
     stroke-width: 2.5px;
-    filter: drop-shadow(0px 4px 8px rgba(238, 155, 0, 0.4)); /* Bóng đổ phát sáng */
+    filter: drop-shadow(0px 4px 8px rgba(238, 155, 0, 0.4)); 
 }
 
-/* ==========================================
-   🚨 BÙA CHÚ FIX LỖI TRÀN BẢN ĐỒ & LAYOUT FILTER
-   ========================================== */
-   
 #map-container {
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Thằng nào dám lòi ra ngoài tao chặt! */
+    overflow: hidden; 
 }
 
-/* Ép cái map nằm ngay giữa khoảng trống còn lại */
 #map {
     flex: 1;
     display: flex;
@@ -252,11 +228,10 @@ body {
     align-items: center;
 }
 
-/* Style cho cục Filter Dropdown */
 .extra-filters {
     display: flex;
     gap: 15px;
-    margin-bottom: 5px; /* Giảm margin xuống cho gọn */
+    margin-bottom: 5px; 
     background: #faf8f5;
     padding: 10px;
     border-radius: 8px;
@@ -273,7 +248,7 @@ body {
 .filter-item label {
     font-size: 0.85rem;
     font-weight: bold;
-    color: var(--secondary-color); /* Nâu trầm */
+    color: var(--secondary-color); 
     text-transform: uppercase;
 }
 
