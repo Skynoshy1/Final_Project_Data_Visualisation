@@ -1,14 +1,5 @@
 let drugData = [];
-
-function formatNumber(num) {
-  if (!num && num !== 0) return "N/A";
-  return num.toLocaleString();
-}
-
-function formatPercent(num) {
-  if (!num && num !== 0) return "N/A";
-  return num.toFixed(2) + "%";
-}
+const { formatNumber, formatPercent, parseNumericFields } = window.SharedDashboardUtils || {};
 
 function populateDashboardFilters(data) {
   const stateSelect = document.getElementById("state-select");
@@ -123,16 +114,28 @@ Papa.parse("./data/drug.csv", {
   header: true,
   skipEmptyLines: true,
   complete: function (results) {
-    drugData = results.data.map((d) => ({
-      ...d,
-      YEAR: +d.YEAR,
-      Total_Test: +d.Total_Test,
-      Total_Positive: +d.Total_Positive,
-      Fines: +d.Fines,
-      Arrests: +d.Arrests,
-      Charges: +d.Charges,
-      Positive_Rate: +d.Positive_Rate,
-    }));
+    drugData = results.data.map((d) =>
+      parseNumericFields
+        ? parseNumericFields(d, [
+            "YEAR",
+            "Total_Test",
+            "Total_Positive",
+            "Fines",
+            "Arrests",
+            "Charges",
+            "Positive_Rate",
+          ])
+        : {
+            ...d,
+            YEAR: +d.YEAR,
+            Total_Test: +d.Total_Test,
+            Total_Positive: +d.Total_Positive,
+            Fines: +d.Fines,
+            Arrests: +d.Arrests,
+            Charges: +d.Charges,
+            Positive_Rate: +d.Positive_Rate,
+          },
+    );
 
     populateDashboardFilters(drugData);
     bindDashboardEvents();

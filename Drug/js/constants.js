@@ -1,6 +1,10 @@
-const margin = { top: 60, right: 70, bottom: 60, left: 70 };
-const width = 900;
-const height = 450;
+const sharedConstants = window.SharedDashboardConstants || {};
+const sharedLayout = sharedConstants.layout || {};
+const sharedBaseColors = sharedConstants.baseColors || {};
+
+const margin = sharedLayout.margin || { top: 60, right: 70, bottom: 60, left: 70 };
+const width = sharedLayout.width || 900;
+const height = sharedLayout.height || 450;
 
 const filters_jurisdiction = [
   { id: "all", label: "All jurisdictions", isActive: true },
@@ -25,7 +29,7 @@ const yearOptions = d3.range(2008, 2025);
 
 const geoJsonPath = "./data/au-states.geojson";
 
-const stateNameMap = {
+const stateNameMap = sharedConstants.australiaStateNameMap || {
   ACT: "Australian Capital Territory",
   NSW: "New South Wales",
   NT: "Northern Territory",
@@ -38,15 +42,15 @@ const stateNameMap = {
 
 const CHART_COLORS = {
   bar: "#8e7961",
-  line: "#EE9B00",
-  lineSoft: "#c27d00",
-  map: "#EE9B00",
-  neutral: "#f1e7d6",
-  effective: "#4CAF50",
-  moderate: "#FFC107",
-  ineffective: "#FF5252",
-  year2023: "#5C4D3C",
-  year2024: "#EE9B00",
+  line: sharedBaseColors.primary || "#EE9B00",
+  lineSoft: sharedBaseColors.primaryDark || "#c27d00",
+  map: sharedBaseColors.primary || "#EE9B00",
+  neutral: sharedBaseColors.neutral || "#f1e7d6",
+  effective: sharedBaseColors.effective || "#4CAF50",
+  moderate: sharedBaseColors.moderate || "#FFC107",
+  ineffective: sharedBaseColors.ineffective || "#FF5252",
+  year2023: sharedBaseColors.secondary || "#5C4D3C",
+  year2024: sharedBaseColors.primary || "#EE9B00",
 };
 
 const COLS = {
