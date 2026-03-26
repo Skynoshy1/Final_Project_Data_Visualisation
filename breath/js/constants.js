@@ -1,5 +1,21 @@
 "use strict";
 
+const sharedConstants = window.SharedDashboardConstants || {};
+const sharedStateCodeToName =
+  sharedConstants.australiaStateCodeToName || sharedConstants.australiaStateNameMap || {};
+const stateCodeToName = Object.keys(sharedStateCodeToName).length
+  ? sharedStateCodeToName
+  : {
+      ACT: "Australian Capital Territory",
+      NSW: "New South Wales",
+      NT: "Northern Territory",
+      QLD: "Queensland",
+      SA: "South Australia",
+      TAS: "Tasmania",
+      VIC: "Victoria",
+      WA: "Western Australia",
+    };
+
 window.BreathDashboardConfig = {
   COLORS: {
     neutralLight: "#A8B3C2",
@@ -8,17 +24,8 @@ window.BreathDashboardConfig = {
     riskScale: ["#F6C36B", "#E89A2E", "#C96A12", "#8A3F00"],
     missing: "#D1D5DB",
   },
-  STATE_CODE_TO_NAME: {
-    ACT: "Australian Capital Territory",
-    NSW: "New South Wales",
-    NT: "Northern Territory",
-    QLD: "Queensland",
-    SA: "South Australia",
-    TAS: "Tasmania",
-    VIC: "Victoria",
-    WA: "Western Australia",
-  },
-  STATE_ORDER: ["WA", "NT", "SA", "QLD", "NSW", "VIC", "TAS", "ACT"],
+  STATE_CODE_TO_NAME: stateCodeToName,
+  STATE_ORDER: sharedConstants.australiaStateOrder || ["WA", "NT", "SA", "QLD", "NSW", "VIC", "TAS", "ACT"],
   FALLBACK_MAP_SHAPES: [
     { code: "WA", path: "M40,120 L250,120 L250,320 L135,410 L40,320 Z", label: [130, 255] },
     { code: "NT", path: "M250,120 L390,120 L390,230 L250,230 Z", label: [320, 178] },
@@ -31,6 +38,8 @@ window.BreathDashboardConfig = {
   ],
 };
 
-window.BreathDashboardConfig.STATE_NAME_TO_CODE = Object.fromEntries(
-  Object.entries(window.BreathDashboardConfig.STATE_CODE_TO_NAME).map(([code, name]) => [name, code]),
-);
+window.BreathDashboardConfig.STATE_NAME_TO_CODE =
+  sharedConstants.australiaStateNameToCode ||
+  Object.fromEntries(
+    Object.entries(window.BreathDashboardConfig.STATE_CODE_TO_NAME).map(([code, name]) => [name, code]),
+  );

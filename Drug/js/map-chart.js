@@ -76,6 +76,16 @@ function renderDrugGeoMap(data, elementId, geoData) {
     Object.entries(stateNameMap).map(([shortName, fullName]) => [fullName, shortName]),
   );
 
+  function selectJurisdictionByFeature(feature) {
+    const stateCode = reverseStateNameMap[feature.properties.STATE_NAME];
+    const stateSelect = document.getElementById("state-select");
+
+    if (!stateCode || !stateSelect) return;
+
+    stateSelect.value = stateSelect.value === stateCode ? "all" : stateCode;
+    stateSelect.dispatchEvent(new Event("change", { bubbles: true }));
+  }
+
   function getStateFill(row) {
     if (!row) return CHART_COLORS.neutral;
     if (row.rating === "Effective") return CHART_COLORS.effective;
@@ -119,6 +129,7 @@ function renderDrugGeoMap(data, elementId, geoData) {
     .append("path")
     .attr("d", path)
     .attr("transform", "translate(12,12)")
+    .style("cursor", "pointer")
     .style("opacity", 0)
     .attr("fill", (feature) => {
       const row = grouped.get(feature.properties.STATE_NAME);
@@ -165,6 +176,9 @@ function renderDrugGeoMap(data, elementId, geoData) {
       d3.select(this).attr("stroke", "#fffdf8").attr("stroke-width", 1.2);
       hideTooltip();
     })
+    .on("click", function (_, feature) {
+      selectJurisdictionByFeature(feature);
+    })
     .transition()
     .duration(500)
     .style("opacity", 1);
@@ -187,6 +201,10 @@ function renderDrugGeoMap(data, elementId, geoData) {
       return `translate(${x + 12}, ${y + 12})`;
     })
     .text((feature) => reverseStateNameMap[feature.properties.STATE_NAME] || "")
+    .style("cursor", "pointer")
+    .on("click", function (_, feature) {
+      selectJurisdictionByFeature(feature);
+    })
     .style("opacity", 0)
     .transition()
     .delay(180)
