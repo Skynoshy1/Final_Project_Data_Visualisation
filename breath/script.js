@@ -152,12 +152,12 @@ function updateRankingToggleStyles() {
   const isRate = app.state.rankingMetric === "POSITIVE_RATE";
 
   app.refs.rankRateBtn.className = isRate
-    ? "rounded-md bg-white px-3 py-1.5 text-xs font-semibold text-[#5C4D3C] shadow-sm"
-    : "rounded-md px-3 py-1.5 text-xs font-semibold text-[#7B6F62]";
+    ? "rounded-md bg-white px-3 py-1.5 text-sm font-semibold text-[#5C4D3C] shadow-sm"
+    : "rounded-md px-3 py-1.5 text-sm font-semibold text-[#7B6F62]";
 
   app.refs.rankTotalBtn.className = !isRate
-    ? "rounded-md bg-white px-3 py-1.5 text-xs font-semibold text-[#5C4D3C] shadow-sm"
-    : "rounded-md px-3 py-1.5 text-xs font-semibold text-[#7B6F62]";
+    ? "rounded-md bg-white px-3 py-1.5 text-sm font-semibold text-[#5C4D3C] shadow-sm"
+    : "rounded-md px-3 py-1.5 text-sm font-semibold text-[#7B6F62]";
 }
 
 function updateScenario3ToggleStyles() {
@@ -166,15 +166,15 @@ function updateScenario3ToggleStyles() {
   if (app.refs.scenario3Year2023Btn) {
     app.refs.scenario3Year2023Btn.className =
       year === 2023
-        ? "rounded-md bg-white px-3 py-1.5 text-xs font-semibold text-[#5C4D3C] shadow-sm"
-        : "rounded-md px-3 py-1.5 text-xs font-semibold text-[#7B6F62]";
+        ? "rounded-md bg-white px-3 py-1.5 text-sm font-semibold text-[#5C4D3C] shadow-sm"
+        : "rounded-md px-3 py-1.5 text-sm font-semibold text-[#7B6F62]";
   }
 
   if (app.refs.scenario3Year2024Btn) {
     app.refs.scenario3Year2024Btn.className =
       year === 2024
-        ? "rounded-md bg-white px-3 py-1.5 text-xs font-semibold text-[#5C4D3C] shadow-sm"
-        : "rounded-md px-3 py-1.5 text-xs font-semibold text-[#7B6F62]";
+        ? "rounded-md bg-white px-3 py-1.5 text-sm font-semibold text-[#5C4D3C] shadow-sm"
+        : "rounded-md px-3 py-1.5 text-sm font-semibold text-[#7B6F62]";
   }
 }
 

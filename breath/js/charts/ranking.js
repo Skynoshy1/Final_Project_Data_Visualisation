@@ -20,7 +20,7 @@
     if (!data.length) {
       renderEmptyState(
         container,
-        "No ranking data is available for the selected year and jurisdiction filters.",
+        "No ranking data for the current filters.",
       );
       return;
     }
@@ -30,8 +30,8 @@
       return;
     }
 
-    const width = Math.max(320, container.clientWidth || 320);
-    const height = Math.max(320, 28 * data.length + 84);
+    const width = Math.max(360, container.clientWidth || 360);
+    const height = Math.max(410, 32 * data.length + 122);
     const margin = { top: 10, right: 20, bottom: 40, left: 184 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
@@ -75,19 +75,19 @@
               : formatAxisCompact,
           ),
       )
-      .call((axis) => axis.selectAll("text").attr("fill", "#6B7280").attr("font-size", 11))
+      .call((axis) => axis.selectAll("text").attr("fill", "#6B7280").attr("font-size", 12))
       .call((axis) => axis.selectAll("line").attr("stroke", "#E5DED2"))
       .call((axis) => axis.select(".domain").attr("stroke", "#D8CCBA"));
 
     g.append("g")
       .attr("class", "axis-y")
-      .call(d3.axisLeft(y).tickSize(0).tickPadding(10))
+      .call(d3.axisLeft(y).tickSize(0))
       .call((axis) =>
         axis
           .selectAll("text")
           .text((code) => formatStateLabel(code))
           .attr("fill", "#4B5563")
-          .attr("font-size", 11)
+          .attr("font-size", 12)
           .attr("font-weight", 700),
       )
       .call((axis) => axis.select(".domain").remove());
@@ -140,10 +140,10 @@
       .data(data, (row) => row.jurisdiction)
       .join("text")
       .attr("class", "rank-value")
-      .attr("x", (row) => Math.min(Math.max(x(row.metricValue) + 12, 28), innerWidth - 4))
+      .attr("x", (row) => Math.min(x(row.metricValue) + 6, innerWidth - 4))
       .attr("y", (row) => y(row.jurisdiction) + y.bandwidth() / 2 + 4)
       .attr("text-anchor", "start")
-      .attr("font-size", 11)
+      .attr("font-size", 12)
       .attr("font-weight", 700)
       .attr("fill", "#374151")
       .attr("opacity", 0)
@@ -186,43 +186,40 @@
         : d3.mean(comparison, (item) => item.metricValue);
 
     const title = document.createElement("p");
-    title.className = "text-xs font-semibold uppercase tracking-[0.08em] text-[#7B6F62]";
-    title.textContent = "Single jurisdiction view";
+    title.className = "text-sm font-bold uppercase tracking-[0.08em] text-[#7B6F62]";
+    title.textContent = "Selected jurisdiction";
     wrapper.appendChild(title);
 
     const scope = document.createElement("p");
-    scope.className = "mt-1 text-sm font-medium text-[#5C4D3C]";
+    scope.className = "mt-1 text-base font-semibold text-[#5C4D3C]";
     scope.textContent = formatStateLabel(row.jurisdiction);
     wrapper.appendChild(scope);
 
     const value = document.createElement("p");
-    value.className = "mt-3 text-3xl font-semibold text-[#4B5563]";
+    value.className = "mt-3 text-3xl font-bold text-[#4B5563]";
     value.textContent = metricValue;
     wrapper.appendChild(value);
 
     const valueLabel = document.createElement("p");
-    valueLabel.className = "mt-1 text-xs text-[#7B6F62]";
+    valueLabel.className = "mt-1 text-sm font-medium text-[#7B6F62]";
     valueLabel.textContent = metricLabel;
     wrapper.appendChild(valueLabel);
 
     const subMetrics = document.createElement("p");
-    subMetrics.className = "mt-3 text-xs text-[#6B7280]";
+    subMetrics.className = "mt-3 text-sm font-medium text-[#6B7280]";
     subMetrics.textContent =
-      `Total tests ${formatNumber(row.countTotal)} · Positive rate ${formatPercent(row.positiveRate)}`;
+      `Total tests ${formatNumber(row.countTotal)} - Positive rate ${formatPercent(row.positiveRate)}`;
     wrapper.appendChild(subMetrics);
 
     const insightGrid = document.createElement("div");
     insightGrid.className = "mt-3 grid gap-2 md:grid-cols-3";
     wrapper.appendChild(insightGrid);
     insightGrid.appendChild(
-      createInsightChip(
-        "Rank position",
-        rankPosition ? `Rank ${rankPosition} / ${totalRanks}` : "N/A",
-      ),
+      createInsightChip("Rank", rankPosition ? `${rankPosition} / ${totalRanks}` : "N/A"),
     );
     insightGrid.appendChild(
       createInsightChip(
-        "vs national average",
+        "vs national",
         formatMetricDelta(row.metricValue, nationalMetric, rankingMetric),
       ),
     );
@@ -235,7 +232,7 @@
     wrapper.appendChild(sparklineWrap);
 
     const width = Math.max(280, container.clientWidth - 40);
-    const height = 90;
+    const height = 140;
     const margin = { top: 8, right: 8, bottom: 12, left: 8 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
@@ -302,7 +299,7 @@
         .append("text")
         .attr("x", x(peak.year) + 4)
         .attr("y", y(peak.countTotal) - 6)
-        .attr("font-size", 9)
+        .attr("font-size", 10)
         .attr("fill", "#7B6F62")
         .text(`Peak ${peak.year}`);
     }
@@ -320,7 +317,7 @@
           .append("text")
           .attr("x", Math.max(margin.left, x(latest.year) - 90))
           .attr("y", y(latest.countTotal) - 6)
-          .attr("font-size", 9)
+          .attr("font-size", 10)
           .attr("fill", "#7B6F62")
           .text(`Drop from peak ${dropFromPeakPct.toFixed(1)}%`);
       }
@@ -330,9 +327,9 @@
       .append("text")
       .attr("x", margin.left)
       .attr("y", height - 2)
-      .attr("font-size", 10)
+      .attr("font-size", 11)
       .attr("fill", "#7B6F62")
-      .text(`Trend sparkline (${context.aggregatePeriodLabel})`);
+      .text(`Trend ${context.aggregatePeriodLabel}`);
   }
 
   function createInsightChip(label, value) {
@@ -340,12 +337,12 @@
     card.className = "rounded-md border border-[#e7ddce] bg-white px-2.5 py-2";
 
     const title = document.createElement("p");
-    title.className = "text-[10px] uppercase tracking-[0.06em] text-[#7B6F62]";
+    title.className = "text-sm font-semibold uppercase tracking-[0.06em] text-[#7B6F62]";
     title.textContent = label;
     card.appendChild(title);
 
     const metric = document.createElement("p");
-    metric.className = "mt-1 text-sm font-semibold text-[#5C4D3C]";
+    metric.className = "mt-1 text-base font-semibold text-[#5C4D3C]";
     metric.textContent = value;
     card.appendChild(metric);
 
@@ -377,7 +374,7 @@
 
     return `
       <div class="font-semibold">${escapeHtml(formatStateLabel(row.jurisdiction))}</div>
-      <div class="mt-1 text-[11px] text-slate-200">Period: ${periodLabel || "N/A"}</div>
+      <div class="mt-1 text-xs text-slate-200">Period: ${periodLabel || "N/A"}</div>
       <div class="mt-1">${metricLabel}: <span class="font-semibold">${metricValue}</span></div>
       <div>Total tests: <span class="font-semibold">${formatNumber(row.countTotal)}</span></div>
       <div>Positive rate: <span class="font-semibold">${formatPercent(row.positiveRate)}</span></div>

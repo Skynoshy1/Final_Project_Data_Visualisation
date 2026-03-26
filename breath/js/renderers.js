@@ -27,9 +27,12 @@
     } = context;
 
     const scopeLabel = formatScopeLabel(kpiScope);
-    const yearText = isAllYears
-      ? `${scopeLabel} - ${context.snapshotDisplayLabel}`
-      : `${scopeLabel} - ${selectedYear}`;
+    const yearText =
+      isAllYears && kpiScope === "ALL"
+        ? ""
+        : isAllYears
+          ? `${scopeLabel} - ${context.snapshotDisplayLabel}`
+          : `${scopeLabel} - ${selectedYear}`;
 
     refs.kpiTotalTestsYear.textContent = yearText;
     refs.kpiPositiveRateYear.textContent = yearText;
@@ -106,31 +109,26 @@
   }
 
   function updateContextLabels(context, refs, rankingMetric) {
-    const jurisdictionLabel =
-      context.jurisdiction === "ALL"
-        ? "All jurisdictions"
-        : formatStateLabel(context.jurisdiction);
-
     if (context.isSingleJurisdiction) {
       refs.mapContextLabel.textContent =
-        `Showing selected jurisdiction in context of Australia · ${context.snapshotDisplayLabel}`;
+        `${formatStateLabel(context.jurisdiction)} - ${context.snapshotDisplayLabel}`;
     } else if (context.selectedState) {
       refs.mapContextLabel.textContent =
-        `${formatStateLabel(context.selectedState)} selected · ${context.snapshotDisplayLabel}`;
+        `${formatStateLabel(context.selectedState)} - ${context.snapshotDisplayLabel}`;
     } else {
-      refs.mapContextLabel.textContent = `${jurisdictionLabel} · ${context.snapshotDisplayLabel}`;
+      refs.mapContextLabel.textContent = `Australia - ${context.snapshotDisplayLabel}`;
     }
 
     if (refs.mapNote) {
       refs.mapNote.textContent = context.isSingleJurisdiction
-        ? "Other states are shown in neutral to keep Australia-wide context."
-        : "Greyed-out states indicate unavailable or unreliable data.";
+        ? "Other states stay neutral for context."
+        : "Grey = unavailable.";
     }
 
     const rankingMetricLabel = rankingMetric === "POSITIVE_RATE" ? "positive rate" : "total tests";
     refs.rankingContextLabel.textContent = context.isSingleJurisdiction
-      ? "Single jurisdiction view"
-      : `${jurisdictionLabel} · ${context.snapshotDisplayLabel} · ranked by ${rankingMetricLabel}`;
+      ? "Compared with all states"
+      : `${context.snapshotDisplayLabel} - ${rankingMetricLabel}`;
 
     const trendScopeLabel = formatScopeLabel(context.trendScope);
     const yearInTrendRange =
@@ -138,11 +136,9 @@
       context.selectedYear >= context.mainYearStart &&
       context.selectedYear <= context.mainYearEnd;
     const yearContext = yearInTrendRange
-      ? `highlight ${context.selectedYear}`
-      : `${context.aggregatePeriodLabel} timeline`;
-    refs.trendFocusLabel.textContent = context.trendScope !== "ALL"
-      ? `${trendScopeLabel} · ${yearContext} · Scale adjusted for selected jurisdiction`
-      : `${trendScopeLabel} · ${yearContext}`;
+      ? `Focus ${context.selectedYear}`
+      : `Timeline ${context.aggregatePeriodLabel}`;
+    refs.trendFocusLabel.textContent = `${trendScopeLabel} - ${yearContext}`;
   }
 
   function updateDynamicTitles(context, refs, rankingMetric) {
@@ -152,25 +148,18 @@
         : formatStateLabel(context.jurisdiction);
     const rankMetricLabel = rankingMetric === "POSITIVE_RATE" ? "Positive Rate" : "Total Tests";
 
-    refs.mapTitle.textContent = context.isAllYears
-      ? `Where are higher positive rates by state? (${context.snapshotDisplayLabel})`
-      : `Where are higher positive rates by state? (${context.selectedYear})`;
+    refs.mapTitle.textContent = `Positive Rate by State (${context.snapshotDisplayLabel})`;
     refs.rankingTitle.textContent = context.isSingleJurisdiction
-      ? `Single Jurisdiction Snapshot - ${scopeShort}`
-      : `Which states rank highest by ${rankMetricLabel}? (${context.snapshotDisplayLabel})`;
+      ? `Snapshot - ${scopeShort}`
+      : `State Ranking by ${rankMetricLabel}`;
 
     const trendScope = formatScopeLabel(context.trendScope);
-    const yearInTrendRange =
-      Number.isFinite(context.selectedYear) &&
-      context.selectedYear >= context.mainYearStart &&
-      context.selectedYear <= context.mainYearEnd;
-    refs.trendTitle.textContent =
-      yearInTrendRange
-        ? `Testing volume vs positive rate over time - ${trendScope} (highlight ${context.selectedYear})`
-        : `Testing volume vs positive rate over time - ${trendScope}`;
+    refs.trendTitle.textContent = `Testing Volume vs Positive Rate - ${trendScope}`;
 
     refs.scatterTitle.textContent =
-      `Recent Location Comparison (${context.scenario3Year}) - ${scopeShort}`;
+      scopeShort === "All jurisdictions"
+        ? `Recent Location Comparison (${context.scenario3Year})`
+        : `Recent Location Comparison - ${scopeShort} (${context.scenario3Year})`;
   }
 
   function hideTooltip(refs) {
@@ -202,4 +191,3 @@
     renderGlobalError,
   };
 })();
-

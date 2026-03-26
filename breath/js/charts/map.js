@@ -9,8 +9,8 @@
     const container = refs.mapChart;
     container.innerHTML = "";
 
-    const width = Math.max(320, container.clientWidth || 320);
-    const height = Math.max(320, Math.round(width * 0.62));
+    const width = Math.max(360, container.clientWidth || 360);
+    const height = Math.max(410, Math.round(width * 0.68));
     const svg = d3
       .select(container)
       .append("svg")
@@ -103,7 +103,7 @@
       .attr("x", (d) => d.centroid[0])
       .attr("y", (d) => d.centroid[1])
       .attr("text-anchor", "middle")
-      .attr("font-size", 11)
+      .attr("font-size", 12)
       .attr("font-weight", 700)
       .attr("fill", "#374151")
       .attr("opacity", 0)
@@ -148,7 +148,7 @@
       .attr("x", labelX)
       .attr("y", labelY)
       .attr("text-anchor", "start")
-      .attr("font-size", 11)
+      .attr("font-size", 12)
       .attr("font-weight", 700)
       .attr("fill", "#374151")
       .attr("opacity", 0)
@@ -292,14 +292,14 @@
     if (!record) {
       return `
         <div class="font-semibold">${escapeHtml(stateName)}</div>
-        <div class="mt-1 text-[11px] text-slate-200">${periodLabel}: ${yearLabel}</div>
+        <div class="mt-1 text-xs text-slate-200">${periodLabel}: ${yearLabel}</div>
         <div class="mt-1">No data available for current filters.</div>
       `;
     }
 
     return `
       <div class="font-semibold">${escapeHtml(stateName)}</div>
-      <div class="mt-1 text-[11px] text-slate-200">${periodLabel}: ${yearLabel}</div>
+      <div class="mt-1 text-xs text-slate-200">${periodLabel}: ${yearLabel}</div>
       <div class="mt-1">Total tests: <span class="font-semibold">${formatNumber(record.countTotal)}</span></div>
       <div>Positive rate: <span class="font-semibold">${formatPercent(record.positiveRate)}</span></div>
     `;

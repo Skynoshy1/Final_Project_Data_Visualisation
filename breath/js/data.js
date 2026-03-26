@@ -149,9 +149,7 @@
 
     const isAllYears = selectedYear === "ALL";
     const snapshotYear = isAllYears ? null : selectedYear;
-    const snapshotDisplayLabel = isAllYears
-      ? `${aggregatePeriodLabel} (aggregated)`
-      : String(selectedYear);
+    const snapshotDisplayLabel = isAllYears ? aggregatePeriodLabel : String(selectedYear);
     const isSingleJurisdiction = jurisdiction !== "ALL";
     const mapFocusState = isSingleJurisdiction ? jurisdiction : selectedState;
 

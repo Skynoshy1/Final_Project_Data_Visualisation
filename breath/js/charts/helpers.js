@@ -39,7 +39,7 @@
     container.innerHTML = "";
     const empty = document.createElement("div");
     empty.className =
-      "flex min-h-[220px] items-center justify-center rounded-lg border border-dashed border-[#e7ddce] bg-[#fbf8f2] px-4 text-center text-sm text-[#7B6F62]";
+      "flex min-h-[220px] items-center justify-center rounded-lg border border-dashed border-[#e7ddce] bg-[#fbf8f2] px-4 text-center text-base font-medium text-[#7B6F62]";
     empty.textContent = message;
     container.appendChild(empty);
   }

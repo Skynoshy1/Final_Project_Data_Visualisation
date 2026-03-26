@@ -21,7 +21,7 @@
 
     if (refs.scenario3AvailabilityNote) {
       refs.scenario3AvailabilityNote.textContent = context.scenario3GlobalYearMismatch
-        ? "Detailed location analysis is available for 2023-2024 only. Scenario 3 uses its own year toggle."
+        ? "Scenario 3 uses 2023-2024 only."
         : "";
     }
 
@@ -36,7 +36,7 @@
     const data = context.scenario3Data || [];
     const hasAnyData = data.some((row) => row && row.hasData);
     if (!data.length || !hasAnyData) {
-      renderEmptyState(container, "No location rows match the current jurisdiction filter for this year.");
+      renderEmptyState(container, "No location data for the current filter.");
       return;
     }
 
@@ -44,8 +44,8 @@
     chartsGrid.className = "grid gap-4 lg:grid-cols-2";
     container.appendChild(chartsGrid);
 
-    const testsChart = createScenario3Card("Total tests by location type");
-    const rateChart = createScenario3Card("Positive rate by location type");
+    const testsChart = createScenario3Card("Total tests");
+    const rateChart = createScenario3Card("Positive rate");
     chartsGrid.appendChild(testsChart.card);
     chartsGrid.appendChild(rateChart.card);
 
@@ -95,12 +95,12 @@
     card.className = "overflow-hidden rounded-lg border border-[#efe6d8] bg-[#fcfaf6] p-3";
 
     const title = document.createElement("p");
-    title.className = "text-xs font-semibold uppercase tracking-[0.08em] text-[#7B6F62]";
+    title.className = "text-sm font-bold uppercase tracking-[0.08em] text-[#7B6F62]";
     title.textContent = titleText;
     card.appendChild(title);
 
     const plot = document.createElement("div");
-    plot.className = "mt-2 min-h-[250px] w-full";
+    plot.className = "mt-2 min-h-[300px] w-full";
     card.appendChild(plot);
 
     return { card, plot };
@@ -141,7 +141,7 @@
       mountNode.parentElement?.getBoundingClientRect().width || 0,
     );
     const width = measuredWidth || parentWidth || 300;
-    const height = 260;
+    const height = 350;
     const margin = { top: 12, right: 14, bottom: 44, left: 56 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
@@ -244,7 +244,7 @@
       .attr("x", (row) => x(row.locationCategory) + x.bandwidth() / 2)
       .attr("y", (row) => y(row.metricValue) - 6)
       .attr("text-anchor", "middle")
-      .attr("font-size", 10)
+      .attr("font-size", 11)
       .attr("font-weight", 600)
       .attr("fill", "#5C4D3C")
       .attr("opacity", 0)
@@ -258,13 +258,13 @@
     g.append("g")
       .attr("transform", `translate(0,${innerHeight})`)
       .call(d3.axisBottom(x))
-      .call((axis) => axis.selectAll("text").attr("fill", "#6B7280").attr("font-size", 11))
+      .call((axis) => axis.selectAll("text").attr("fill", "#6B7280").attr("font-size", 12))
       .call((axis) => axis.selectAll("line").attr("stroke", "#D8CCBA"))
       .call((axis) => axis.select(".domain").attr("stroke", "#D8CCBA"));
 
     g.append("g")
       .call(d3.axisLeft(y).ticks(5).tickFormat(yTickFormatter))
-      .call((axis) => axis.selectAll("text").attr("fill", "#6B7280").attr("font-size", 11))
+      .call((axis) => axis.selectAll("text").attr("fill", "#6B7280").attr("font-size", 12))
       .call((axis) => axis.selectAll("line").attr("stroke", "#D8CCBA"))
       .call((axis) => axis.select(".domain").attr("stroke", "#D8CCBA"));
 
@@ -273,7 +273,7 @@
       .attr("y", -42)
       .attr("transform", "rotate(-90)")
       .attr("text-anchor", "middle")
-      .attr("font-size", 11)
+      .attr("font-size", 12)
       .attr("fill", "#4B5563")
       .text(yAxisLabel);
   }
@@ -282,19 +282,19 @@
     if (!row.hasData) {
       return `
         <div class="font-semibold">${escapeHtml(row.locationCategory)}</div>
-        <div class="mt-1 text-[11px] text-slate-200">${escapeHtml(scopeLabel)}</div>
+        <div class="mt-1 text-xs text-slate-200">${escapeHtml(scopeLabel)}</div>
         <div class="mt-1">No data available for this location type.</div>
       `;
     }
 
     const regionalNote =
       row.locationCategory === "Regional"
-        ? `<div class="text-[11px] text-slate-200">Includes inner and outer regional areas.</div>`
+        ? `<div class="text-xs text-slate-200">Includes inner and outer regional areas.</div>`
         : "";
 
     return `
       <div class="font-semibold">${escapeHtml(row.locationCategory)}</div>
-      <div class="mt-1 text-[11px] text-slate-200">${escapeHtml(scopeLabel)}</div>
+      <div class="mt-1 text-xs text-slate-200">${escapeHtml(scopeLabel)}</div>
       ${regionalNote}
       <div class="mt-1">${metricLabel}: <span class="font-semibold">${metricFormatter(row.metricValue)}</span></div>
       <div>Total tests: <span class="font-semibold">${formatNumber(row.countTotalSum)}</span></div>
@@ -313,7 +313,7 @@
     );
 
     if (!validRows.length) {
-      return "Location-level comparison is unavailable for the selected filters.";
+      return "Location comparison is unavailable for the current filter.";
     }
 
     const byCategory = new Map(validRows.map((row) => [row.locationCategory, row]));
@@ -333,7 +333,6 @@
     const remote = byCategory.get("Remote");
     const rateSpread = highestRate.locationPositiveRate - lowestRate.locationPositiveRate;
 
-    let volumeText = "";
     if (
       major &&
       secondVolume &&
@@ -341,23 +340,17 @@
       highestVolume.locationCategory === "Major Cities"
     ) {
       const ratio = major.countTotalSum / secondVolume.countTotalSum;
-      volumeText = `Major Cities conduct about ${ratio.toFixed(1)}x more tests than ${secondVolume.locationCategory}.`;
-    } else if (highestVolume) {
-      volumeText = `${highestVolume.locationCategory} carries the largest testing volume.`;
-    }
-
-    let rateText = "";
-    if (rateSpread < 0.2) {
-      rateText = `Positive rates stay relatively similar across location types (${formatPercentReadable(lowestRate.locationPositiveRate)} to ${formatPercentReadable(highestRate.locationPositiveRate)}).`;
-    } else {
-      rateText = `${highestRate.locationCategory} records the highest positive rate (${formatPercentReadable(highestRate.locationPositiveRate)}), compared with ${lowestRate.locationCategory} at ${formatPercentReadable(lowestRate.locationPositiveRate)}.`;
+      if (rateSpread < 0.2) {
+        return `Major Cities run about ${ratio.toFixed(1)}x more tests, while rates stay similar across location types.`;
+      }
+      return `Major Cities lead testing volume, while ${highestRate.locationCategory} shows the highest positive rate.`;
     }
 
     if (remote && Number.isFinite(remote.locationPositiveRate) && remote.locationPositiveRate < 0.01) {
-      rateText = `${rateText} Remote remains very low at ${formatPercentReadable(remote.locationPositiveRate)}.`;
+      return `${highestVolume.locationCategory} leads testing volume, while Remote remains very low in positive rate.`;
     }
 
-    return `${volumeText} ${rateText}`.trim();
+    return `${highestVolume.locationCategory} leads testing volume, while ${highestRate.locationCategory} has the highest positive rate.`;
   }
 
   window.BreathScenario3Chart = {

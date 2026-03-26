@@ -12,13 +12,13 @@
     if (!data.length) {
       renderEmptyState(
         container,
-        "No trend data is available for the current state/jurisdiction selection.",
+        "No trend data for the current selection.",
       );
       return;
     }
 
     const width = Math.max(360, container.clientWidth || 360);
-    const height = 360;
+    const height = 450;
     const margin = { top: 22, right: 72, bottom: 46, left: 60 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
@@ -82,18 +82,10 @@
         .attr("x", disruptionX + disruptionW / 2)
         .attr("y", 14)
         .attr("text-anchor", "middle")
-        .attr("font-size", 11)
+        .attr("font-size", 12)
         .attr("font-weight", 700)
         .attr("fill", "#8A3F00")
-        .text("2020-2021 disruption years");
-
-      g.append("text")
-        .attr("x", disruptionX + disruptionW / 2)
-        .attr("y", 30)
-        .attr("text-anchor", "middle")
-        .attr("font-size", 10)
-        .attr("fill", "#7B6F62")
-        .text("Sharp drop in testing volume, temporary spike in rate");
+        .text("COVID disruption (2020-2021)");
     }
 
     const trendBars = g.selectAll("rect.trend-bar")
@@ -149,10 +141,10 @@
       g.append("text")
         .attr("x", baselineTextX)
         .attr("y", baselineTextY)
-        .attr("font-size", 10)
+        .attr("font-size", 11)
         .attr("font-weight", 600)
         .attr("fill", "#7B6F62")
-        .text("Peak baseline before long-term decline");
+        .text("2008 baseline peak");
     }
 
     const lineGenerator = d3
@@ -214,39 +206,29 @@
       g.append("text")
         .attr("x", selectedCenter + 4)
         .attr("y", innerHeight - 6)
-        .attr("font-size", 10)
+        .attr("font-size", 11)
         .attr("font-weight", 600)
         .attr("fill", "#8A3F00")
         .text(`Focus ${context.selectedYear}`);
     }
 
-    if (context.trendScope !== "ALL") {
-      g.append("text")
-        .attr("x", innerWidth - 2)
-        .attr("y", innerHeight + 38)
-        .attr("text-anchor", "end")
-        .attr("font-size", 10)
-        .attr("fill", "#7B6F62")
-        .text("Scale adjusted for selected jurisdiction");
-    }
-
     g.append("g")
       .attr("transform", `translate(0,${innerHeight})`)
       .call(d3.axisBottom(x).tickFormat(d3.format("d")))
-      .call((axis) => axis.selectAll("text").attr("fill", "#6B7280").attr("font-size", 11))
+      .call((axis) => axis.selectAll("text").attr("fill", "#6B7280").attr("font-size", 12))
       .call((axis) => axis.selectAll("line").attr("stroke", "#D8CCBA"))
       .call((axis) => axis.select(".domain").attr("stroke", "#D8CCBA"));
 
     g.append("g")
       .call(d3.axisLeft(yLeft).ticks(5).tickFormat(formatAxisCompact))
-      .call((axis) => axis.selectAll("text").attr("fill", "#6B7280").attr("font-size", 11))
+      .call((axis) => axis.selectAll("text").attr("fill", "#6B7280").attr("font-size", 12))
       .call((axis) => axis.selectAll("line").attr("stroke", "#D8CCBA"))
       .call((axis) => axis.select(".domain").attr("stroke", "#D8CCBA"));
 
     g.append("g")
       .attr("transform", `translate(${innerWidth},0)`)
       .call(d3.axisRight(yRight).ticks(5).tickFormat((value) => `${value.toFixed(1)}%`))
-      .call((axis) => axis.selectAll("text").attr("fill", trendLineDark).attr("font-size", 11))
+      .call((axis) => axis.selectAll("text").attr("fill", trendLineDark).attr("font-size", 12))
       .call((axis) => axis.selectAll("line").attr("stroke", "#D8CCBA"))
       .call((axis) => axis.select(".domain").attr("stroke", "#D8CCBA"));
 
@@ -255,7 +237,7 @@
       .attr("y", -44)
       .attr("transform", "rotate(-90)")
       .attr("text-anchor", "middle")
-      .attr("font-size", 11)
+      .attr("font-size", 12)
       .attr("fill", "#4B5563")
       .text("Total tests");
 
@@ -263,7 +245,7 @@
       .attr("x", innerWidth + 46)
       .attr("y", -10)
       .attr("text-anchor", "middle")
-      .attr("font-size", 11)
+      .attr("font-size", 12)
       .attr("fill", trendLineDark)
       .text("Rate (%)");
   }
@@ -271,12 +253,12 @@
   function buildTrendTooltipHtml(row, scope, selectedYear) {
     const selectedYearNote =
       Number.isFinite(selectedYear) && row.year === selectedYear
-        ? `<div class="mt-1 text-[11px] font-semibold text-amber-200">Selected year focus</div>`
+        ? `<div class="mt-1 text-xs font-semibold text-amber-200">Selected year focus</div>`
         : "";
 
     return `
       <div class="font-semibold">${formatScopeLabel(scope)}</div>
-      <div class="mt-1 text-[11px] text-slate-200">Year: ${row.year}</div>
+      <div class="mt-1 text-xs text-slate-200">Year: ${row.year}</div>
       ${selectedYearNote}
       <div class="mt-1">Total tests: <span class="font-semibold">${formatNumber(row.countTotal)}</span></div>
       <div>Positive cases: <span class="font-semibold">${formatNumber(row.countPositive)}</span></div>
