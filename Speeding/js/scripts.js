@@ -49,7 +49,7 @@ d3.json("data/au-states.geojson").then(function(geoData) {
         .on("mouseover", function(event, d) {
             const stateName = d.properties.STATE_NAME || d.properties.ste_name || d.properties.name || d.properties.STATE || "Unknown State";
             mapTooltip.style("visibility", "visible").style("opacity", 1).html(`
-                <div class="tooltip-header" style="color: var(--primary-color)">📍 Jurisdiction</div>
+                <div class="tooltip-header" style="color: var(--primary-color)"> Jurisdiction</div>
                 <div class="tooltip-body"><strong>${stateName}</strong></div>
             `);
         })
@@ -65,7 +65,7 @@ d3.json("data/au-states.geojson").then(function(geoData) {
         }
         triggerGlobalUpdate();
     });
-}).catch(error => console.error("Lỗi load Map:", error));
+}).catch(error => console.error("Map Loading Error:", error));
 
 d3.csv("data/Speeding.csv").then(function(data) {
     
@@ -96,7 +96,7 @@ d3.csv("data/Speeding.csv").then(function(data) {
     locSelect.on("change", function() { globalFilter.location = this.value; triggerGlobalUpdate(); });
 
     const chart3Container = document.getElementById('chart3');
-    const width3 = chart3Container.clientWidth; const height3 = 380; 
+    const width3 = chart3Container.clientWidth; const height3 = 320; 
     const margin3 = {top: 20, right: 120, bottom: 40, left: 80};
     const innerW3 = width3 - margin3.left - margin3.right; const innerH3 = height3 - margin3.top - margin3.bottom;
 
@@ -117,7 +117,7 @@ d3.csv("data/Speeding.csv").then(function(data) {
 
         if (chartData.length === 0 || currentData.length === 0) {
             svg3.selectAll(".line-path").remove(); svg3.selectAll(".dot").remove(); svg3.selectAll(".line-label").remove(); svg3.selectAll(".max-label").remove();
-            svg3.selectAll(".no-data").data([1]).join("text").attr("class", "no-data").attr("x", innerW3/2).attr("y", innerH3/2).attr("text-anchor", "middle").text("No data available 🥲").style("fill", "var(--light-text)");
+            svg3.selectAll(".no-data").data([1]).join("text").attr("class", "no-data").attr("x", innerW3/2).attr("y", innerH3/2).attr("text-anchor", "middle").text("No data available").style("fill", "var(--light-text)");
             return;
         } else { svg3.selectAll(".no-data").remove(); }
 
@@ -223,9 +223,9 @@ d3.csv("data/Speeding.csv").then(function(data) {
                 } else {
                     const yoy = ((d.avg - prevAvg) / prevAvg) * 100;
                     if (yoy > 0) {
-                        d.yoyAvgText = `<span style="color: var(--danger); font-size: 0.9em;"> Increased <strong>${yoy.toFixed(1)}%</strong> vs ${prevYear}</span>`;
+                        d.yoyAvgText = `<span style="color: var(--success); font-size: 0.9em;"> Increased <strong>${yoy.toFixed(1)}%</strong> vs ${prevYear}</span>`;
                     } else if (yoy < 0) {
-                        d.yoyAvgText = `<span style="color: var(--success); font-size: 0.9em;"> Decreased <strong>${yoy.toFixed(1)}%</strong> vs ${prevYear}</span>`;
+                        d.yoyAvgText = `<span style="color: var(--danger); font-size: 0.9em;"> Decreased <strong>${yoy.toFixed(1)}%</strong> vs ${prevYear}</span>`;
                     } else {
                         d.yoyAvgText = `<span style="color: var(--light-text); font-size: 0.9em;"> No change vs ${prevYear}</span>`;
                     }
@@ -245,8 +245,8 @@ d3.csv("data/Speeding.csv").then(function(data) {
         const maxAvg = d3.max(plotData, d => d.avg);
         
         x1.domain(plotData.map(d => d.year)); 
-        y1.domain([0, maxFines * 1.1]); 
-        y1_line.domain([0, maxAvg * 1.1]); 
+        y1.domain([0, maxFines * 1.02]).nice(); 
+        y1_line.domain([0, maxAvg * 1.02]).nice(); 
 
         xAxisGroup1.transition().duration(transitionTime).call(d3.axisBottom(x1)).selectAll("text").attr("transform", "rotate(-25)").style("text-anchor", "end").attr("dx", "-0.8em").attr("dy", "0.15em");
         yAxisGroup1.transition().duration(transitionTime).call(d3.axisLeft(y1).tickFormat(d3.format("~s")));
@@ -300,9 +300,9 @@ d3.csv("data/Speeding.csv").then(function(data) {
                 tooltip.style("visibility", "visible").style("opacity", 1).html(`
                     <div class="tooltip-header" style="color: #f39c12"> Year: ${d.year}</div>
                     <div class="tooltip-body">
-                        Total Tickets: <strong>${formatNum(d.count)}</strong><br/>
-                        Total Fines: <strong>${formatNum(d.fines)}</strong><br/>
-                        Average Fine: <strong style="color: #f39c12">$${formatNum(d.avg.toFixed(0))}</strong><br/>
+                         Total Tickets: <strong>${formatNum(d.count)}</strong><br/>
+                         Total Fines: <strong>${formatNum(d.fines)}</strong><br/>
+                         Average Fine: <strong style="color: #f39c12">$${formatNum(d.avg.toFixed(0))}</strong><br/>
                         ${d.yoyAvgText} 
                     </div>
                 `); 
@@ -334,15 +334,21 @@ d3.csv("data/Speeding.csv").then(function(data) {
         if (globalFilter.jurisdiction !== "All") filteredData = filteredData.filter(d => matchJurisdiction(d.JURISDICTION, globalFilter.jurisdiction));
         if (globalFilter.year !== "All") filteredData = filteredData.filter(d => d.YEAR === +globalFilter.year);
 
-        const grouped = d3.rollup(filteredData, v => d3.sum(v, d => d.FINES), d => d.LOCATION);
-        const plotData = Array.from(grouped, ([location, fines]) => ({location, fines})).sort((a, b) => b.fines - a.fines);
+        const grouped = d3.rollup(filteredData, 
+            v => ({
+                fines: d3.sum(v, d => d.FINES),
+                count: v.length
+            }), 
+            d => d.LOCATION
+        );
+        const plotData = Array.from(grouped, ([location, vals]) => ({location, fines: vals.fines, count: vals.count})).sort((a, b) => b.fines - a.fines);
 
         const totalAllLocations = d3.sum(plotData, d => d.fines);
 
         if(plotData.length === 0) {
             svg2.selectAll(".bar2").transition().duration(300).attr("width", 0).remove(); svg2.selectAll(".bar-label").transition().duration(300).style("opacity", 0).remove(); 
             xAxisGroup2.selectAll("*").remove(); yAxisGroup2.selectAll("*").remove();
-            svg2.selectAll(".no-data").data([1]).join("text").attr("class", "no-data").attr("x", innerW2/2).attr("y", innerH2/2).attr("text-anchor", "middle").text("No data for this filter ").style("fill", "var(--light-text)");
+            svg2.selectAll(".no-data").data([1]).join("text").attr("class", "no-data").attr("x", innerW2/2).attr("y", innerH2/2).attr("text-anchor", "middle").text("No data for this filter").style("fill", "var(--light-text)");
             return;
         } else { svg2.selectAll(".no-data").remove(); }
 
@@ -367,8 +373,9 @@ d3.csv("data/Speeding.csv").then(function(data) {
                     <div class="tooltip-body">
                         ${globalFilter.jurisdiction === "All" ? "All Australia" : globalFilter.jurisdiction}<br/>
                         ${globalFilter.year === "All" ? "All Years" : "Year: " + globalFilter.year}<br/>
-                        Total Fines: <strong>${formatNum(d.fines)}</strong><br/>
-                        <span style="color: var(--primary-color); font-size: 0.9em; font-weight: bold;">(Chiếm ${percent}% tổng số)</span>
+                         Total Tickets: <strong>${formatNum(d.count)}</strong><br/>
+                         Total Fines: <strong>${formatNum(d.fines)}</strong><br/>
+                        <span style="color: var(--primary-color); font-size: 1; font-weight: bold;">(${percent}% of total fines)</span>
                     </div>
                 `);
             })

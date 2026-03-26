@@ -146,7 +146,7 @@ body {
 .grid-container {
     display: grid;
     grid-template-columns: repeat(6, 1fr); 
-    grid-template-rows: auto 450px 350px;  
+    grid-template-rows: auto 450px 400px;  
     gap: 20px;
     max-width: 1400px;
     margin: 0 auto;
@@ -432,4 +432,25 @@ body {
     .site-nav {
         justify-content: flex-start;
     }
+}
+
+.title-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Chà nhám cái Phụ đề */
+.chart-desc {
+    font-size: 1; 
+    color: var(--light-text); 
+    font-weight: 400;
+    font-style: italic; 
+    margin-bottom: 0;
+}
+
+
+h2 + .chart-desc {
+    margin-top:10px;
+    /* margin-bottom: 15px; Đẩy cái biểu đồ ở dưới ra xa xíu */
 }
