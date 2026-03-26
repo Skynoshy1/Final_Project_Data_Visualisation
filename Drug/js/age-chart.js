@@ -8,7 +8,7 @@ function drawAgeChart(data, elementId) {
   const container = document.getElementById(elementId);
   const chartWidth = container.clientWidth || 420;
   const chartHeight = 450;
-  const chartMargin = { top: 36, right: 24, bottom: 46, left: 78 };
+  const chartMargin = { top: 36, right: 56, bottom: 46, left: 96 };
   const currentInnerWidth = chartWidth - chartMargin.left - chartMargin.right;
   const currentInnerHeight = chartHeight - chartMargin.top - chartMargin.bottom;
 
@@ -167,14 +167,30 @@ function drawAgeChart(data, elementId) {
     .enter()
     .append("text")
     .attr("class", "change-label")
-    .attr("x", (d) =>
-      d.deltaPercent >= 0
-        ? xScaleLocal(d.deltaPercent) + 6
-        : xScaleLocal(d.deltaPercent) - 6,
-    )
+    .attr("x", (d) => {
+      const negativeBarStart = xScaleLocal(d.deltaPercent);
+      const needsInsideLabel = d.deltaPercent < 0 && negativeBarStart < 44;
+
+      if (d.deltaPercent >= 0) {
+        return Math.max(xScaleLocal(d.deltaPercent) + 10, xScaleLocal(0) + 12);
+      }
+
+      return needsInsideLabel ? negativeBarStart + 8 : negativeBarStart - 8;
+    })
     .attr("y", (d) => yScaleLocal(d.jurisdiction) + yScaleLocal.bandwidth() / 2 + 4)
-    .attr("text-anchor", (d) => (d.deltaPercent >= 0 ? "start" : "end"))
-    .attr("fill", "#5C4D3C")
+    .attr("text-anchor", (d) => {
+      const negativeBarStart = xScaleLocal(d.deltaPercent);
+      const needsInsideLabel = d.deltaPercent < 0 && negativeBarStart < 44;
+      if (d.deltaPercent >= 0) {
+        return "start";
+      }
+      return needsInsideLabel ? "start" : "end";
+    })
+    .attr("fill", (d) => {
+      const negativeBarStart = xScaleLocal(d.deltaPercent);
+      const needsInsideLabel = d.deltaPercent < 0 && negativeBarStart < 44;
+      return needsInsideLabel ? "#fffaf4" : "#5C4D3C";
+    })
     .attr("font-size", "11px")
     .attr("font-weight", 700)
     .style("opacity", 0)
@@ -184,7 +200,7 @@ function drawAgeChart(data, elementId) {
     .duration(300)
     .style("opacity", 1);
 
-  svg.append("g").call(d3.axisLeft(yScaleLocal).tickSize(0));
+  svg.append("g").call(d3.axisLeft(yScaleLocal).tickSize(0).tickPadding(10));
 
   svg
     .append("g")

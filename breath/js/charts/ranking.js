@@ -81,7 +81,7 @@
 
     g.append("g")
       .attr("class", "axis-y")
-      .call(d3.axisLeft(y).tickSize(0))
+      .call(d3.axisLeft(y).tickSize(0).tickPadding(10))
       .call((axis) =>
         axis
           .selectAll("text")
@@ -140,7 +140,7 @@
       .data(data, (row) => row.jurisdiction)
       .join("text")
       .attr("class", "rank-value")
-      .attr("x", (row) => Math.min(x(row.metricValue) + 6, innerWidth - 4))
+      .attr("x", (row) => Math.min(Math.max(x(row.metricValue) + 12, 28), innerWidth - 4))
       .attr("y", (row) => y(row.jurisdiction) + y.bandwidth() / 2 + 4)
       .attr("text-anchor", "start")
       .attr("font-size", 11)

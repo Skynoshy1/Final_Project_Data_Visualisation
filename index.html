@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -231,6 +231,20 @@
       line-height: 1.75;
     }
 
+    .audience-list {
+      margin: 10px 0 0;
+      padding-left: 20px;
+      color: var(--light-text);
+      line-height: 1.75;
+    }
+
+    .topic-insight-list {
+      margin: 0 0 18px;
+      padding-left: 20px;
+      color: var(--light-text);
+      line-height: 1.7;
+    }
+
     .intro-actions {
       display: contents;
     }
@@ -269,7 +283,7 @@
 
     .section-heading h2 {
       margin-bottom: 6px;
-      font-size: 1.75rem;
+      font-size: 2.5rem;
       color: var(--secondary-color);
       font-family: Georgia, "Times New Roman", serif;
     }
@@ -287,6 +301,30 @@
       min-height: 200px;
     }
 
+    .member-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .member-photo-slot {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      margin-bottom: 16px;
+      border: 1px dashed rgba(92, 77, 60, 0.22);
+      border-radius: 18px;
+      background:
+        linear-gradient(135deg, rgba(238, 155, 0, 0.08), rgba(92, 77, 60, 0.05)),
+        #f8f4ed;
+      display: grid;
+      place-items: center;
+      color: #8f7f6b;
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
     .topic-tag,
     .member-role {
       margin-bottom: 12px;
@@ -300,6 +338,11 @@
       font-size: 1.2rem;
       color: var(--secondary-color);
       font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .member-card h3,
+    .member-card p {
+      text-align: center;
     }
 
     .topic-card p {
@@ -441,28 +484,42 @@
       <div class="section-inner">
         <div class="section-panel">
           <div class="section-heading">
-            <h2>Main Topics</h2>
+            <h1>Main Contents</h1>
             <p>The project covers three key offender categories to support comparison and interpretation across Australian jurisdictions.</p>
+            <h2>Target Audiences</h2>
+            <ul class="audience-list">
+              <li>Traffic police officers who monitor roadside offences and enforce traffic laws.</li>
+              <li>Road safety analysts who examine offender trends and compare patterns across jurisdictions.</li>
+              <li>Government transport agencies that plan policy, campaigns, and enforcement strategies.</li>
+              <li>Researchers and students studying traffic behaviour, public safety, and visual data analysis.</li>
+              <li>Community awareness teams and educators who communicate road safety risks to the public.</li>
+            </ul>
           </div>
 
           <div class="topics-grid">
             <article class="topic-card">
               <div class="topic-tag">Topic 01</div>
               <h3>Drug Offenders</h3>
-              <p>
-                Explore roadside drug testing trends, positive test results, and jurisdiction-level
-                comparisons through interactive data views.
-              </p>
+              <ul class="topic-insight-list">
+                <li>Tasmania is a chronic hotspot, with positive rates consistently around 45 to 62 percent across 16 years.</li>
+                <li>Testing volume does not equal detection rate: Victoria tests the most, while Tasmania records the highest positive rate.</li>
+                <li>Queensland's rise from 4.7 percent in 2012 to 21.3 percent in 2024 suggests a genuine increase in prevalence.</li>
+                <li>Year-on-year change shows momentum, with Tasmania and WA worsening while Victoria and SA are improving.</li>
+                <li>Young adults aged 17 to 39 account for roughly 70 to 80 percent of positive tests.</li>
+              </ul>
               <a class="card-link" href="./Drug/drug_dashboard.html">Open dashboard</a>
             </article>
 
             <article class="topic-card">
               <div class="topic-tag">Topic 02</div>
               <h3>Speeding Offenders</h3>
-              <p>
-                Review speeding fine patterns, annual trends, and differences in detection methods
-                across locations in Australia.
-              </p>
+              <ul class="topic-insight-list">
+                <li>Camera fines are much higher than police fines, with camera-issued fines exceeding 2 million while police peaks are just above 500K.</li>
+                <li>Annual total fines are rising while the average cost per ticket is falling, suggesting the number of speeding tickets is decreasing over time.</li>
+                <li>Most speeding fines are concentrated in major cities, showing that violations are more likely in urban areas.</li>
+                <li>Automation is a clear future trend, as the rise in camera-issued fines shows growing dominance over manual enforcement.</li>
+                <li>More serious incidents tend to happen in urban areas, where similar ticket counts still produce higher total fines than remote areas.</li>
+              </ul>
               <a class="card-link" href="./Speeding/speeding_dashboard.html">Open dashboard</a>
             </article>
 
@@ -491,20 +548,32 @@
           <div class="members-grid">
             <article class="member-card">
               <div class="member-role">Member 01</div>
-              <h3>Your Name Here</h3>
-              <p>Contributed to project framing, structure, and presentation of the website introduction.</p>
+              <div class="member-photo-slot">
+                <img src="images/khang.jpg" alt="Khang">
+              </div>
+              <h3>Nguyễn Hữu Thiên Khang</h3> 
+              <h3>105543416</h3>
+              <p>Analyze and build dashboard for speeding offender data.</p>
             </article>
 
             <article class="member-card">
               <div class="member-role">Member 02</div>
-              <h3>Your Name Here</h3>
-              <p>Contributed to dashboard planning, data handling, and the narrative behind the visualizations.</p>
+              <div class="member-photo-slot">
+                <img src="images/duy.jpg" alt="Duy">
+              </div>
+              <h3>Đỗ Đức Duy</h3> 
+              <h3>105550034</h3>
+              <p>Analyze and build dashboard for drug offender data.</p>
             </article>
 
             <article class="member-card">
               <div class="member-role">Member 03</div>
-              <h3>Your Name Here</h3>
-              <p>Contributed to visual styling, layout consistency, and connecting the project into one site.</p>
+              <div class="member-photo-slot">
+                <img src="images/long.jpg" alt="Long">
+              </div>
+              <h3>Nguyễn Hoàng Long</h3> 
+              <h3>105556692</h3>
+              <p>Analyze and build dashboard for alcohol offender data.</p>
             </article>
           </div>
         </div>

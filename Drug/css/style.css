@@ -241,6 +241,7 @@ body {
 .chart-panel,
 .notes-panel {
     background: transparent;
+    min-width: 0;
 }
 
 .hero-metric strong,
@@ -328,11 +329,24 @@ body {
     font-weight: 700;
 }
 
+.panel-question {
+    margin: 8px 0 0;
+    color: var(--light-text);
+    font-size: 0.94rem;
+    line-height: 1.55;
+}
+
 .panel-header h2,
 .notes-panel h3 {
     margin: 0;
     color: var(--secondary-color);
     font-family: Georgia, "Times New Roman", serif;
+}
+
+.panel-header h2 {
+    font-size: clamp(1.35rem, 2.2vw, 2rem);
+    line-height: 1.15;
+    overflow-wrap: anywhere;
 }
 
 .panel-header > div {
@@ -395,7 +409,7 @@ body {
 
 .bottom-grid {
     display: grid;
-    grid-template-columns: 220px 1fr 1fr;
+    grid-template-columns: 220px minmax(0, 1fr) minmax(0, 1fr);
     gap: 20px;
     padding: 0 14px 18px;
 }
