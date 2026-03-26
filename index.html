@@ -155,6 +155,38 @@
         var(--card-bg);
     }
 
+    .intro-showcase {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .intro-showcase-item {
+      display: grid;
+      justify-items: center;
+      gap: 14px;
+    }
+
+    .intro-media-card {
+      width: min(100%, 240px);
+      overflow: hidden;
+      min-height: 150px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(92, 77, 60, 0.02) 0%, rgba(92, 77, 60, 0.12) 100%),
+        #f4ecdf;
+      box-shadow: 0 10px 24px rgba(92, 77, 60, 0.08);
+    }
+
+    .intro-media-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
     .intro-kicker,
     .topic-tag,
     .member-role {
@@ -200,10 +232,7 @@
     }
 
     .intro-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 22px;
+      display: contents;
     }
 
     .button {
@@ -314,6 +343,7 @@
     }
 
     @media (max-width: 980px) {
+      .intro-showcase,
       .topics-grid,
       .members-grid {
         grid-template-columns: 1fr;
@@ -337,6 +367,11 @@
       .topic-card,
       .member-card {
         padding: 20px;
+      }
+
+      .intro-media-card {
+        width: min(100%, 280px);
+        min-height: 170px;
       }
 
       h1 {
@@ -378,19 +413,25 @@
         <div class="section-panel intro-panel">
           <div class="intro-kicker">Introduction</div>
           <h1>Visualizing traffic offenders across Australia</h1>
-          <p>
-            This website introduces a visual analytics project focused on traffic offenders in
-            Australia. It brings together dashboard-based storytelling around three main issue
-            areas: drug-related offences, speeding behaviour, and alcohol-related incidents.
-          </p>
-          <p style="margin-top: 12px;">
-            The goal is to make complex datasets easier to read, compare, and present through a
-            cleaner visual structure. You can begin with either of the two dashboards currently
-            available below.
-          </p>
-          <div class="intro-actions">
-            <a class="button button-primary" href="./Drug/drug_dashboard.html">Open Drug Dashboard</a>
-            <a class="button button-secondary" href="./Speeding/speeding_dashboard.html">Open Speeding Dashboard</a>
+          <div class="intro-showcase" aria-label="Project topic previews">
+            <div class="intro-showcase-item">
+              <div class="intro-media-card">
+                <img src="./images/drug.png" alt="Preview image for the drug offender dashboard" />
+              </div>
+              <a class="button button-primary" href="./Drug/drug_dashboard.html">Open Drug Dashboard</a>
+            </div>
+            <div class="intro-showcase-item">
+              <div class="intro-media-card">
+                <img src="./images/speeding.png" alt="Preview image for the speeding offender dashboard" />
+              </div>
+              <a class="button button-primary" href="./Speeding/speeding_dashboard.html">Open Speeding Dashboard</a>
+            </div>
+            <div class="intro-showcase-item">
+              <div class="intro-media-card">
+                <img src="./images/alcohol.png" alt="Preview image for the alcohol offender dashboard" />
+              </div>
+              <a class="button button-primary" href="./breath/index.html">Open Alcohol Dashboard</a>
+            </div>
           </div>
         </div>
       </div>
@@ -432,7 +473,7 @@
                 This topic is reserved for alcohol-related traffic offence analysis and can be added
                 later using the same design language as the existing dashboards.
               </p>
-              <span class="card-link disabled">Coming soon</span>
+              <a class="card-link" href="./breath/index.html">Open dashboard</a>
             </article>
           </div>
         </div>

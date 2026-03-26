@@ -8,14 +8,30 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
   </head>
   <body>
-    <nav class="site-nav">
-      <a class="nav-link" href="../index.html">Home</a>
-      <a class="nav-link" href="../about.html">About</a>
-      <a class="nav-link" href="../Drug/drug_dashboard.html">Drug Dashboard</a>
-      <a class="nav-link active" href="./speeding_dashboard.html"
-        >Speeding Dashboard</a
-      >
-    </nav>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="../index.html">
+          <div class="logo-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M5 19V9.5L12 5l7 4.5V19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M9 19v-4.5h6V19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M8 10.5h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="brand-text">
+            <p class="brand-kicker">Australia Traffic Safety</p>
+            <h2 class="brand-title">RoadSafe Insights</h2>
+          </div>
+        </a>
+
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a class="nav-link" href="../index.html">Home</a>
+          <a class="nav-link" href="../Drug/drug_dashboard.html">Drug</a>
+          <a class="nav-link active" href="./speeding_dashboard.html">Speeding</a>
+          <a class="nav-link" href="../breath/index.html">Alcohol</a>
+        </nav>
+      </div>
+    </header>
 
     <main class="page-shell">
       <div class="grid-container">
