@@ -417,4 +417,4 @@ d3.csv("data/Speeding.csv").then(function(data) {
     setTimeout(() => {
         triggerGlobalUpdate();
     }, 50);
-});
+});Total 

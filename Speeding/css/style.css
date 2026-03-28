@@ -195,6 +195,16 @@ body {
 #chart1-container { grid-column: 1 / 4; } 
 #chart2-container { grid-column: 4 / 7; } 
 
+#chart1 svg,
+#chart2 svg,
+#chart3 svg,
+#map svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+}
+
 .line-camera { 
     fill: none; 
     stroke: #4CAF50; 
@@ -438,8 +448,9 @@ body {
     }
 
     .grid-container {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        grid-template-rows: auto auto auto;
+        grid-template-columns: 1fr;
+        grid-template-rows: none;
+        gap: 18px;
     }
 
     .header,
@@ -459,16 +470,7 @@ body {
     #chart2-container,
     #map-container {
         min-width: 0;
-    }
-
-    #chart3-container {
         grid-column: 1 / -1;
-    }
-
-    #chart1-container,
-    #chart2-container,
-    #map-container {
-        grid-column: span 1;
     }
 
     .chart-header-inline {
