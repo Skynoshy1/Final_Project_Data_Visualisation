@@ -489,11 +489,82 @@ body {
         justify-content: flex-start;
     }
 
-    .page-intro,
     .hero-grid,
     .bottom-grid,
     .filter-bar {
         grid-template-columns: 1fr;
+    }
+
+    .dashboard-shell {
+        width: min(100% - 24px, 1200px);
+    }
+
+    .hero-grid,
+    .bottom-grid {
+        gap: 16px;
+    }
+
+    .notes-panel {
+        order: 3;
+    }
+}
+
+@media (max-width: 640px) {
+    .header-inner,
+    .footer-inner {
+        width: min(100% - 28px, 1180px);
+    }
+
+    .site-nav {
+        width: 100%;
+        gap: 8px;
+    }
+
+    .nav-link {
+        width: 100%;
+        text-align: center;
+    }
+
+    .dashboard-shell {
+        width: min(100% - 16px, 1200px);
+        margin: 16px auto;
+        border-radius: 18px;
+    }
+
+    .page-intro {
+        padding: 20px 16px;
+    }
+
+    .filter-bar,
+    .hero-grid,
+    .bottom-grid {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .filter-bar {
+        gap: 12px;
+    }
+
+    .filter-group select,
+    .filter-actions button {
+        height: 44px;
+    }
+
+    .hero-metric strong {
+        font-size: clamp(1.9rem, 10vw, 2.6rem);
+    }
+
+    .feature-metric strong {
+        font-size: 1.75rem;
+    }
+
+    .chart-large {
+        min-height: 260px;
+    }
+
+    .chart-medium {
+        min-height: 240px;
     }
 }
 

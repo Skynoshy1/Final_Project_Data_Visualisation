@@ -432,6 +432,123 @@ body {
     .site-nav {
         justify-content: flex-start;
     }
+
+    .page-shell {
+        padding: 20px 16px 0;
+    }
+
+    .grid-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: auto auto auto;
+    }
+
+    .header,
+    #chart3-container,
+    #map-container,
+    #chart1-container,
+    #chart2-container {
+        grid-column: auto;
+    }
+
+    .header {
+        grid-column: 1 / -1;
+    }
+
+    #chart3-container,
+    #chart1-container,
+    #chart2-container,
+    #map-container {
+        min-width: 0;
+    }
+
+    #chart3-container {
+        grid-column: 1 / -1;
+    }
+
+    #chart1-container,
+    #chart2-container,
+    #map-container {
+        grid-column: span 1;
+    }
+
+    .chart-header-inline {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .toggle-group {
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .toggle-btn {
+        flex: 1 1 120px;
+        text-align: center;
+    }
+
+    .extra-filters {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 640px) {
+    .header-inner,
+    .footer-inner {
+        width: min(100% - 28px, 1180px);
+    }
+
+    .site-nav {
+        width: 100%;
+        gap: 8px;
+    }
+
+    .nav-link {
+        width: 100%;
+        text-align: center;
+    }
+
+    .page-shell {
+        padding: 16px 10px 0;
+    }
+
+    .grid-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: none;
+        gap: 16px;
+    }
+
+    .box,
+    .header {
+        padding: 16px;
+    }
+
+    .header h1 {
+        font-size: clamp(1.8rem, 9vw, 2.4rem);
+    }
+
+    #chart3-container,
+    #chart1-container,
+    #chart2-container,
+    #map-container,
+    .header {
+        grid-column: 1 / -1;
+    }
+
+    .chart-header-inline,
+    .map-header {
+        align-items: flex-start;
+    }
+
+    .toggle-group {
+        padding: 3px;
+    }
+
+    .toggle-btn {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
 }
 
 .title-wrap {
