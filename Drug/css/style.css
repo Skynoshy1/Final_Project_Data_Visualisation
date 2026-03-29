@@ -382,6 +382,14 @@ body {
     background: var(--secondary-color);
 }
 
+.legend-dot-positive {
+    background: var(--primary-color);
+}
+
+.legend-dot-negative {
+    background: #8e7961;
+}
+
 .legend-line {
     width: 28px;
     height: 3px;
@@ -415,14 +423,24 @@ body {
 }
 
 .notes-panel {
-    color: var(--text-color);
-    font-size: 0.88rem;
-    line-height: 1.45;
+    color: var(--secondary-color);
+    font-size: 1.05rem;
+    line-height: 1.5;
 }
 
 .notes-panel p {
-    margin: 10px 0 0;
-    color: var(--light-text);
+    margin: 14px 0 0;
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
+.notes-panel strong {
+    font-weight: 800;
+}
+
+.notes-panel h3 {
+    font-size: 2rem;
+    color: var(--secondary-color);
 }
 
 .axis text,
