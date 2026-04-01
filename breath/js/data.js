@@ -13,9 +13,12 @@
     const arrayBuffer = await response.arrayBuffer();
     const workbook = XLSX.read(arrayBuffer, { type: "array" });
 
+    console.log("Available sheets:", Object.keys(workbook.Sheets));
+
     const mainSheet = workbook.Sheets.ALL_REGIONS_RATE_CORRECT;
     const locationSheet = workbook.Sheets.LOCATION_2023_2024_FIXED;
     if (!mainSheet || !locationSheet) {
+      console.error("Missing sheets:", { mainSheet, locationSheet });
       throw new Error("Required sheet missing from workbook.");
     }
 
@@ -118,14 +121,12 @@
     });
     refs.yearFilter.value = "ALL";
 
-    refs.jurisdictionFilter.innerHTML = "";
-    refs.jurisdictionFilter.appendChild(createOption("ALL", "All jurisdictions"));
-    STATE_ORDER.forEach((code) => {
-      refs.jurisdictionFilter.appendChild(
-        createOption(code, `${STATE_CODE_TO_NAME[code]} (${code})`),
-      );
+    refs.locationFilter.innerHTML = "";
+    refs.locationFilter.appendChild(createOption("ALL", "All regions"));
+    ["Major Cities", "Regional", "Remote"].forEach((location) => {
+      refs.locationFilter.appendChild(createOption(location, location));
     });
-    refs.jurisdictionFilter.value = "ALL";
+    refs.locationFilter.value = "ALL";
   }
 
   function createOption(value, text) {
@@ -138,6 +139,7 @@
   function buildContext(app) {
     const { state, mainRecords, locationRecords, mainYearStateIndex } = app;
     const selectedYear = state.selectedYear;
+    const selectedLocation = state.selectedLocation || "ALL";
     const jurisdiction = state.jurisdiction;
     const selectedState = state.selectedState;
     const scenario3Year = state.scenario3Year;
@@ -203,6 +205,7 @@
     const scenario3Data = buildScenario3LocationData(
       scenario3Year,
       jurisdiction,
+      selectedLocation,
       locationRecords,
     );
     const scenario3GlobalYearMismatch =
@@ -210,6 +213,7 @@
 
     return {
       selectedYear,
+      selectedLocation,
       isAllYears,
       snapshotYear,
       snapshotDisplayLabel,
@@ -364,11 +368,15 @@
       }));
   }
 
-  function buildScenario3LocationData(selectedYear, jurisdiction, locationRecords) {
+  function buildScenario3LocationData(selectedYear, jurisdiction, selectedLocation, locationRecords) {
     const categoryOrder = ["Major Cities", "Regional", "Remote"];
     const filteredRows = locationRecords
       .filter((row) => row.year === selectedYear)
-      .filter((row) => jurisdiction === "ALL" || row.jurisdiction === jurisdiction);
+      .filter((row) => jurisdiction === "ALL" || row.jurisdiction === jurisdiction)
+      .filter((row) => {
+        if (selectedLocation === "ALL") return true;
+        return toLocationCategory(row.location) === selectedLocation;
+      });
 
     const scopedRows = filteredRows.filter((row) => row.rateReliable);
 

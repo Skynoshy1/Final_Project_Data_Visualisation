@@ -115,13 +115,19 @@ function drawTrendChart(data, elementId) {
     .attr("fill", (d) =>
       topFiveYears.has(d[COLS.year]) ? CHART_COLORS.bar : "#d6c8b8",
     )
+    .attr("rx", 3)
+    .attr("ry", 3)
+    .attr("stroke", "#5C4D3C")
+    .attr("stroke-width", 1)
     .on("mouseenter", function (event, d) {
       showTooltip(
         event,
-        `<strong>${d[COLS.year]}</strong>
-         <div>Drug tests: ${formatNumber(d[COLS.totalTest])}</div>
-         <div>Positive results: ${formatNumber(d[COLS.totalPositive])}</div>
-         <div>Positive rate: ${formatPercent(d[COLS.positiveRate])}</div>`,
+        `<div class="tooltip-header" style="color: var(--primary-color); font-weight: bold; font-size: 1.1em;">Year: ${d[COLS.year]}</div>
+         <div class="tooltip-body" style="color: white; font-weight: bold;">
+             <span style="color: white">Drug tests: <span style="color: #f1c40f">${formatNumber(d[COLS.totalTest])}</span></span><br/>
+             <span style="color: white">Positive results: <span style="color: #f1c40f">${formatNumber(d[COLS.totalPositive])}</span></span><br/>
+             <span style="color: white">Positive rate: <span style="color: #f1c40f">${formatPercent(d[COLS.positiveRate])}</span></span>
+         </div>`
       );
     })
     .on("mousemove", moveTooltip)
@@ -161,21 +167,31 @@ function drawTrendChart(data, elementId) {
     .data(plotData)
     .enter()
     .append("circle")
+    .attr("class", "circle")
     .attr("cx", (d) => xScaleLocal(d[COLS.year]) + xScaleLocal.bandwidth() / 2)
     .attr("cy", (d) => yRightScale(d[COLS.positiveRate]))
     .attr("r", 0)
-    .attr("fill", CHART_COLORS.line)
+    .attr("fill", "white")
+    .attr("stroke", "#000000")
+    .attr("stroke-width", 2)
+    .style("cursor", "pointer")
     .on("mouseenter", function (event, d) {
+      d3.select(this).attr("r", 6).style("stroke-width", 3);
       showTooltip(
         event,
-        `<strong>${d[COLS.year]}</strong>
-         <div>Drug tests: ${formatNumber(d[COLS.totalTest])}</div>
-         <div>Positive results: ${formatNumber(d[COLS.totalPositive])}</div>
-         <div>Positive rate: ${formatPercent(d[COLS.positiveRate])}</div>`,
+        `<div class="tooltip-header" style="color: var(--primary-color); font-weight: bold; font-size: 1.1em;">Year: ${d[COLS.year]}</div>
+         <div class="tooltip-body" style="color: white; font-weight: bold;">
+             <span style="color: white">Drug tests: <span style="color: #f1c40f">${formatNumber(d[COLS.totalTest])}</span></span><br/>
+             <span style="color: white">Positive results: <span style="color: #f1c40f">${formatNumber(d[COLS.totalPositive])}</span></span><br/>
+             <span style="color: white">Positive rate: <span style="color: #f1c40f">${formatPercent(d[COLS.positiveRate])}</span></span>
+         </div>`
       );
     })
     .on("mousemove", moveTooltip)
-    .on("mouseleave", hideTooltip)
+    .on("mouseleave", function() {
+      d3.select(this).attr("r", 4).style("stroke-width", 2);
+      hideTooltip();
+    })
     .transition()
     .delay(350)
     .duration(400)

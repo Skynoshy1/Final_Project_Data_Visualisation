@@ -2,13 +2,8 @@ let drugData = [];
 const { formatNumber, formatPercent, parseNumericFields } = window.SharedDashboardUtils || {};
 
 function populateDashboardFilters(data) {
-  const stateSelect = document.getElementById("state-select");
   const yearSelect = document.getElementById("year-select");
   const ratingSelect = document.getElementById("rating-select");
-
-  stateSelect.innerHTML = filters_jurisdiction
-    .map((item) => `<option value="${item.id}">${item.label}</option>`)
-    .join("");
 
   yearSelect.innerHTML = [`<option value="all">All years</option>`]
     .concat(yearOptions.map((year) => `<option value="${year}">${year}</option>`))
@@ -18,39 +13,32 @@ function populateDashboardFilters(data) {
     .map((item) => `<option value="${item.id}">${item.label}</option>`)
     .join("");
 
-  stateSelect.value = "all";
   yearSelect.value = "all";
   ratingSelect.value = "all";
 }
 
 function getFilteredData(data) {
-  const selectedState = document.getElementById("state-select")?.value || "all";
   const selectedYear = document.getElementById("year-select")?.value || "all";
   const selectedRating = document.getElementById("rating-select")?.value || "all";
 
   return data.filter((d) => {
-    const matchState =
-      selectedState === "all" || d[COLS.jurisdiction] === selectedState;
     const matchYear =
       selectedYear === "all" || d[COLS.year] === +selectedYear;
     const matchRating =
       selectedRating === "all" || d[COLS.rating] === selectedRating;
 
-    return matchState && matchYear && matchRating;
+    return matchYear && matchRating;
   });
 }
 
 function getTrendFilteredData(data) {
-  const selectedState = document.getElementById("state-select")?.value || "all";
   const selectedRating = document.getElementById("rating-select")?.value || "all";
 
   return data.filter((d) => {
-    const matchState =
-      selectedState === "all" || d[COLS.jurisdiction] === selectedState;
     const matchRating =
       selectedRating === "all" || d[COLS.rating] === selectedRating;
 
-    return matchState && matchRating;
+    return matchRating;
   });
 }
 
@@ -88,17 +76,15 @@ function renderDashboard() {
 }
 
 function bindDashboardEvents() {
-  const stateSelect = document.getElementById("state-select");
   const yearSelect = document.getElementById("year-select");
   const ratingSelect = document.getElementById("rating-select");
   const resetButton = document.getElementById("reset-button");
 
-  [stateSelect, yearSelect, ratingSelect].forEach((element) => {
+  [yearSelect, ratingSelect].forEach((element) => {
     element.addEventListener("change", renderDashboard);
   });
 
   resetButton.addEventListener("click", function () {
-    stateSelect.value = "all";
     yearSelect.value = "all";
     ratingSelect.value = "all";
     renderDashboard();

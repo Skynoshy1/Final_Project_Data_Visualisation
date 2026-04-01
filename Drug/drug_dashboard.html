@@ -39,10 +39,6 @@
 
         <section class="filter-bar">
             <div class="filter-group">
-                <label for="state-select">Select jurisdiction</label>
-                <select id="state-select"></select>
-            </div>
-            <div class="filter-group">
                 <label for="year-select">Select year</label>
                 <select id="year-select"></select>
             </div>
@@ -119,9 +115,15 @@
                         <p class="panel-kicker">Change vs previous year</p>
                         <h2>Positive rate variation by jurisdiction</h2>
                         <p class="panel-question">Which jurisdictions are improving, and which ones are worsening compared with the previous year?</p>
-                        <div class="legend-inline" aria-label="Diverging chart legend">
-                            <span><i class="legend-dot legend-dot-positive" aria-hidden="true"></i> Orange = positive</span>
-                            <span><i class="legend-dot legend-dot-negative" aria-hidden="true"></i> Brown = negative</span>
+                        <div class="custom-legend" style="display: flex; gap: 15px; font-size: 0.95em; font-weight: bold; color: var(--text-color, #333); margin-top: 10px;">
+                          <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: #8e7961;"></span>
+                            Brown (dark) = positive
+                          </div>
+                          <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: #d6c8b8;"></span>
+                            Beige (light) = negative
+                          </div>
                         </div>
                     </div>
                 </div>

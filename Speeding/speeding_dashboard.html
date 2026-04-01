@@ -33,64 +33,123 @@
       </div>
     </header>
 
-    <main class="page-shell">
-      <div class="grid-container">
-        <header class="header">
-          <h1>Australian Speeding Fines</h1>
-        </header>
+    <main class="dashboard-shell">
+      <header class="page-intro">
+        <h1>Australian Speeding Fines</h1>
+      </header>
 
-        <div id="chart3-container" class="box">
-          <div class="chart-header-inline">
-            <div class="description">
+      <section class="filter-bar">
+        <div class="filter-group">
+          <label for="yearSelect">Select year</label>
+          <select id="yearSelect">
+            <option value="All">All Years</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="locationSelect">Select location</label>
+          <select id="locationSelect"></select>
+        </div>
+        <div class="filter-actions">
+          <button id="reset-button" type="button">Reset view</button>
+        </div>
+      </section>
+
+      <section class="hero-grid">
+        <aside class="stats-panel">
+          <div class="hero-metric">
+            <strong id="headline-fines">-</strong>
+            <span id="headline-label">Total fines, all years</span>
+          </div>
+          <div class="feature-metric">
+            <strong id="headline-severity">-</strong>
+            <span>Severity index</span>
+          </div>
+          <div class="detail-metrics">
+            <div>
+              <strong id="headline-camera">-</strong>
+              <span>Camera</span>
+            </div>
+            <div>
+              <strong id="headline-police">-</strong>
+              <span>Police patrol</span>
+            </div>
+          </div>
+        </aside>
+
+        <section class="chart-panel large-panel">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">Overview</p>
               <h2>Total Speeding Fines by Detection Methods</h2>
-              <p class="chart-desc">Is camera detection more effective than police patrol?</p>
+              <p class="panel-question">Is camera detection more effective than police patrol?</p>
             </div>
-            <div class="toggle-group" id="chart3-toggles">
+          </div>
+          <div class="controls-and-legend" style="display: flex; align-items: center; gap: 20px; margin-bottom: 10px; flex-wrap: wrap;">
+            <div class="toggle-group" id="chart3-toggles" style="margin-bottom: 0;">
               <button class="toggle-btn active" data-view="All">All</button>
-              <button class="toggle-btn" data-view="Camera Issued">
+              <button class="toggle-btn" data-view="Camera Issued">Camera</button>
+              <button class="toggle-btn" data-view="Police Issued">Police</button>
+            </div>
+            
+            <div class="custom-legend" style="display: flex; gap: 15px; font-size: 0.95em; font-weight: bold; color: var(--text-color, #333);">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: var(--primary-color, #f39c12);"></span>
                 Camera
-              </button>
-              <button class="toggle-btn" data-view="Police Issued">
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: var(--secondary-color, #8e7961);"></span>
                 Police
-              </button>
+              </div>
             </div>
           </div>
-          <div id="chart3"></div>
-        </div>
+          <div id="chart3" class="chart-container chart-large"></div>
+        </section>
+      </section>
 
-        <div id="map-container" class="box">
-          <div class="map-header">
-            <h2>Filter</h2>
-          </div>
+      <section class="bottom-grid">
+        <aside class="notes-panel">
+          <h3>Notes</h3>
+          <p><strong>New South Wales:</strong> Up to 2019, speed camera fines issued include only fixed and mobile cameras and excludes fines issued by red light or speed cameras identified as red-light camera offences.</p>
+          <p><strong>Victoria: </strong> Protected Industrial Action (PIA) is the cause of low volumes recorded between September and December 2024.</p>
+          <p><strong>Queensland: </strong>Detections from cameras are assessed by an accredited Traffic Camera Office staff member, so not all detections from road safety cameras result in an infringement notice.</p>
+          <p><strong>Tasmania: </strong>In 2012, civilian speed camera operators were not used. Additionally, aged equipment and software issues has impacted on the number of speed camera detections.</p>
+        </aside>
 
-          <div class="extra-filters">
-            <div class="filter-item">
-              <label>Year</label>
-              <select id="yearSelect">
-                <option value="All">All Years</option>
-              </select>
+        <section class="chart-panel">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">Geo view</p>
+              <h2>Speeding by Jurisdiction</h2>
+              <p class="panel-question">Which states have higher speeding incidents?</p>
             </div>
-            <div class="filter-item">
-              <label>Location</label>
-              <select id="locationSelect"></select>
+          </div>
+          <div id="map" class="chart-container chart-medium"></div>
+        </section>
+      </section>
+
+      <section class="bottom-grid-trend">
+        <section class="chart-panel">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">Trend analysis</p>
+              <h2>Annual Fine Trend</h2>
+              <p class="panel-question">How do speeding fines change over time?</p>
             </div>
           </div>
+          <div id="chart1" class="chart-container chart-medium"></div>
+        </section>
 
-          <div id="map"></div>
-        </div>
-
-        <div id="chart1-container" class="box">
-          <h2>Annual Fine Trend</h2>
-          <p class="chart-desc">Does driving behavior of driver become better each year?</p>
-          <div id="chart1"></div>
-        </div>
-
-        <div id="chart2-container" class="box">
-          <h2>Total Fines By Locations</h2>
-          <p class="chart-desc">Which part of the jurisdiction is more likely to commit speeding?</p>
-          <div id="chart2"></div>
-        </div>
-      </div>
+        <section class="chart-panel">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">Location analysis</p>
+              <h2>Total Fines by Location</h2>
+              <p class="panel-question">Which location has the most speeding fines?</p>
+            </div>
+          </div>
+          <div id="chart2" class="chart-container chart-medium"></div>
+        </section>
+      </section>
     </main>
 
     <div id="tooltip" class="tooltip"></div>

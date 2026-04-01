@@ -86,6 +86,8 @@ function drawAgeChart(data, elementId) {
     .attr("height", chartHeight)
     .append("g")
     .attr("transform", `translate(${chartMargin.left},${chartMargin.top})`);
+  const positiveVariationColor = CHART_COLORS.bar;
+  const negativeVariationColor = "#d6c8b8";
 
   const xExtent = d3.extent(changeData, (d) => d.deltaPercent);
   const maxAbs = Math.max(Math.abs(xExtent[0] || 0), Math.abs(xExtent[1] || 0));
@@ -138,17 +140,21 @@ function drawAgeChart(data, elementId) {
     .attr("height", yScaleLocal.bandwidth())
     .attr("rx", 4)
     .attr("fill", (d) =>
-      d.deltaPercent >= 0 ? CHART_COLORS.line : CHART_COLORS.bar,
+      d.deltaPercent >= 0 ? positiveVariationColor : negativeVariationColor,
     )
+    .attr("stroke", "#5C4D3C")
+    .attr("stroke-width", 1)
     .on("mouseenter", function (event, d) {
       const direction = d.deltaPercent >= 0 ? "Increase" : "Decrease";
 
       showTooltip(
         event,
-        `<strong>${d.jurisdiction}</strong>
-         <div>${d.previousYear}: ${formatPercent(d.previousRate)}</div>
-         <div>${d.currentYear}: ${formatPercent(d.currentRate)}</div>
-         <div>${direction}: ${formatPercent(Math.abs(d.deltaPercent))}</div>`,
+        `<div class="tooltip-header" style="color: var(--primary-color); font-weight: bold; font-size: 1.1em;">${d.jurisdiction}</div>
+         <div class="tooltip-body" style="color: white; font-weight: bold;">
+             <span style="color: white">${d.previousYear}: <span style="color: #f1c40f">${formatPercent(d.previousRate)}</span></span><br/>
+             <span style="color: white">${d.currentYear}: <span style="color: #f1c40f">${formatPercent(d.currentRate)}</span></span><br/>
+             <span style="color: white">${direction}: <span style="color: #f1c40f">${formatPercent(Math.abs(d.deltaPercent))}</span></span>
+         </div>`
       );
     })
     .on("mousemove", moveTooltip)
@@ -187,9 +193,7 @@ function drawAgeChart(data, elementId) {
       return needsInsideLabel ? "start" : "end";
     })
     .attr("fill", (d) => {
-      const negativeBarStart = xScaleLocal(d.deltaPercent);
-      const needsInsideLabel = d.deltaPercent < 0 && negativeBarStart < 44;
-      return needsInsideLabel ? "#fffaf4" : "#5C4D3C";
+      return "#5C4D3C";
     })
     .attr("font-size", "11px")
     .attr("font-weight", 700)

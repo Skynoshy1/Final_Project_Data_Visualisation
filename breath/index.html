@@ -32,6 +32,110 @@
     <script defer src="./js/data.js"></script>
     <script defer src="./js/renderers.js"></script>
     <script defer src="./script.js"></script>
+    <style>
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: 20px;
+        padding: 18px 14px 14px;
+      }
+      .hero-metric strong,
+      .feature-metric strong,
+      .detail-metrics strong {
+        display: block;
+        line-height: 1;
+      }
+      .hero-metric {
+        margin-bottom: 10px;
+      }
+      .hero-metric strong {
+        font-size: clamp(1.95rem, 4.2vw, 3rem);
+        font-weight: 800;
+        color: #5c4d3c;
+        white-space: nowrap;
+        display: block;
+        line-height: 1;
+      }
+      .hero-metric span {
+        display: block;
+        margin-top: 6px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #5c4d3c;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      .feature-metric {
+        background: #5c4d3c;
+        color: #fff;
+        padding: 12px 12px 6px;
+        margin-bottom: 4px;
+        border-radius: 12px 12px 0 0;
+      }
+      .feature-metric strong {
+        font-size: 2rem;
+        font-weight: 800;
+      }
+      .feature-metric span {
+        display: block;
+        margin-top: 4px;
+        font-size: 0.85rem;
+        font-weight: 700;
+      }
+      .detail-metrics {
+        background: #8d7b67;
+        color: #fff;
+        padding: 12px;
+        border-radius: 0 0 12px 12px;
+      }
+      .detail-metrics div + div {
+        margin-top: 10px;
+      }
+      .detail-metrics strong {
+        font-size: 1.2rem;
+        font-weight: 800;
+      }
+      .detail-metrics span {
+        display: block;
+        margin-top: 2px;
+        font-size: 0.95rem;
+        font-weight: 700;
+      }
+      .notes-panel {
+        padding: 10px 2px 2px;
+      }
+      .notes-panel h3 {
+        margin: 0 0 10px;
+        color: #5c4d3c;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(1.8rem, 2.6vw, 2.5rem);
+      }
+      .notes-panel p {
+        margin: 0;
+        color: #5c4d3c;
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+      .notes-panel p + p {
+        margin-top: 14px;
+      }
+      .scenario1-grid {
+        display: grid;
+        gap: 14px;
+        grid-template-columns: minmax(240px, 0.62fr) minmax(390px, 1fr) minmax(390px, 1fr);
+      }
+      .scenario1-grid .notes-panel {
+        min-height: 520px;
+      }
+      @media (max-width: 1120px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+        }
+        .scenario1-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
   </head>
   <body class="min-h-screen bg-[#F7F5F0] text-[#3D3D3D]">
     <header
@@ -120,7 +224,7 @@
       </div>
     </header>
 
-    <div class="mx-auto w-[min(1320px,calc(100%-24px))] py-5">
+    <div class="mx-auto w-[min(1200px,calc(100%-20px))] py-5">
       <main
         class="overflow-hidden rounded-xl border border-[#eadfce] bg-white shadow-card"
       >
@@ -132,129 +236,85 @@
             style="font-family: Georgia, 'Times New Roman', serif"
           >
             Australian Breath Tests
-          </h1>
-          <p class="mb-0 mt-[5px] pb-0 text-base text-[#d7d1cb] md:text-lg">
-            Explore breath testing volume and positive rates across Australian
-            jurisdictions.
-          </p>
+          </h1> 
         </header>
 
         <section
-          class="grid gap-4 border-b border-[rgba(92,77,60,0.08)] bg-[#F3EEE6] p-4 md:grid-cols-[1fr_1fr_auto]"
-        >
+          class="grid gap-4 border-b border-[rgba(92,77,60,0.08)] bg-[#F3EEE6] p-[14px] md:grid-cols-[1fr_1fr_160px]">
           <label class="block">
-            <span class="mb-1 block text-sm font-semibold text-[#5C4D3C]">
-              Year
+            <span class="mb-[6px] block text-sm font-semibold text-[#5C4D3C]">
+              Select year
             </span>
             <select
               id="year-filter"
-              class="h-10 w-full rounded-lg border border-[rgba(92,77,60,0.16)] bg-white px-3 text-base text-[#3D3D3D] outline-none focus:border-[#EE9B00] focus:ring-2 focus:ring-[#EE9B00]/20"
+              class="h-[40px] w-full rounded-lg border border-[rgba(92,77,60,0.14)] bg-white px-3 text-base text-[#3D3D3D] outline-none focus:border-[#EE9B00] focus:ring-2 focus:ring-[#EE9B00]/20"
             ></select>
           </label>
           <label class="block">
-            <span class="mb-1 block text-sm font-semibold text-[#5C4D3C]">
-              Jurisdiction
+            <span class="mb-[6px] block text-sm font-semibold text-[#5C4D3C]">
+              Select location
             </span>
             <select
-              id="jurisdiction-filter"
-              class="h-10 w-full rounded-lg border border-[rgba(92,77,60,0.16)] bg-white px-3 text-base text-[#3D3D3D] outline-none focus:border-[#EE9B00] focus:ring-2 focus:ring-[#EE9B00]/20"
+              id="location-filter"
+              class="h-[40px] w-full rounded-lg border border-[rgba(92,77,60,0.14)] bg-white px-3 text-base text-[#3D3D3D] outline-none focus:border-[#EE9B00] focus:ring-2 focus:ring-[#EE9B00]/20"
             ></select>
           </label>
           <button
             id="reset-button"
-            class="h-10 self-end rounded-lg bg-[#EE9B00] px-5 text-sm font-semibold uppercase tracking-[0.04em] text-white shadow-[0_8px_18px_rgba(238,155,0,0.22)] transition hover:bg-[#C96A12]"
+            class="h-[40px] self-end rounded-lg bg-[#EE9B00] px-5 text-sm font-semibold uppercase tracking-[0.03em] text-white shadow-[0_8px_18px_rgba(238,155,0,0.22)] transition hover:bg-[#C96A12]"
           >
-            Reset
+            Reset view
           </button>
         </section>
 
-        <section
-          class="grid gap-4 border-b border-[rgba(92,77,60,0.08)] p-4 md:grid-cols-3"
-        >
-          <article
-            class="rounded-xl border border-[#d6dde6] bg-[#f8fbff] p-4 shadow-sm"
-          >
-            <p
-              class="text-sm font-bold uppercase tracking-[0.08em] text-[#4B5563]"
-            >
-              Total Breath Tests
-            </p>
-            <p
-              id="kpi-total-tests"
-              class="mt-2 text-3xl font-bold text-[#4B5563]"
-            >
-              -
-            </p>
-            <p
-              id="kpi-total-tests-year"
-              class="mt-1 text-sm font-medium text-[#6B7280]"
-            >
-              -
-            </p>
-            <p
-              id="kpi-total-tests-delta"
-              class="mt-2 text-base font-semibold text-[#4B5563]"
-            >
-              -
-            </p>
-          </article>
-          <article
-            class="rounded-xl border border-[#f2d9b3] bg-[#fff9ef] p-4 shadow-sm"
-          >
-            <p
-              class="text-sm font-bold uppercase tracking-[0.08em] text-[#8A3F00]"
-            >
-              Positive Rate
-            </p>
-            <p
-              id="kpi-positive-rate"
-              class="mt-2 text-3xl font-bold text-[#C96A12]"
-            >
-              -
-            </p>
-            <p
-              id="kpi-positive-rate-year"
-              class="mt-1 text-sm font-medium text-[#9a6b3f]"
-            >
-              -
-            </p>
-            <p
-              id="kpi-positive-rate-delta"
-              class="mt-2 text-base font-semibold text-[#8A3F00]"
-            >
-              -
-            </p>
-          </article>
-          <article
-            class="rounded-xl border border-[#d6dde6] bg-[#f8fbff] p-4 shadow-sm"
-          >
-            <p
-              class="text-sm font-bold uppercase tracking-[0.08em] text-[#4B5563]"
-            >
-              Positive Cases
-            </p>
-            <p
-              id="kpi-positive-cases"
-              class="mt-2 text-3xl font-bold text-[#4B5563]"
-            >
-              -
-            </p>
-            <p
-              id="kpi-positive-cases-year"
-              class="mt-1 text-sm font-medium text-[#6B7280]"
-            >
-              -
-            </p>
-            <p
-              id="kpi-positive-cases-delta"
-              class="mt-2 text-base font-semibold text-[#4B5563]"
-            >
-              -
-            </p>
-          </article>
+        <section class="hero-grid border-b border-[rgba(92,77,60,0.08)]">
+          <aside class="stats-panel">
+            <div class="hero-metric">
+              <span id="kpi-total-tests-year">Total breath tests</span>
+              <strong id="kpi-total-tests">-</strong>
+            </div>
+            <div class="feature-metric">
+              <strong id="kpi-positive-rate">-</strong>
+              <span id="kpi-positive-rate-year">Positive rate</span>
+            </div>
+            <div class="detail-metrics">
+              <div>
+                <strong id="kpi-positive-cases">-</strong>
+                <span id="kpi-positive-cases-year">Positive cases</span>
+              </div>
+              <div>
+                <strong id="kpi-positive-cases-delta">-</strong>
+              </div>
+            </div>
+          </aside>
+
+          <section class="chart-panel large-panel rounded-xl border border-[#efe6d8] bg-white p-4 shadow-sm">
+            <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p class="text-sm font-bold uppercase tracking-[0.08em] text-[#EE9B00]">Scenario 2</p>
+                <h2 id="trend-title" class="text-xl font-bold text-[#5C4D3C]">Testing Volume vs Positive Rate</h2>
+              </div>
+              <span
+                id="trend-focus-label"
+                class="rounded-md bg-[#f4ecdf] px-2 py-1 text-sm font-semibold text-[#5C4D3C]"
+              >
+                -
+              </span>
+            </div>
+            <div id="trend-chart" class="mx-auto min-h-[440px] w-full max-w-[980px] rounded-lg border border-[#efe6d8] bg-[#fffdf8] p-2"></div>
+          </section>
         </section>
 
-        <section class="grid gap-4 p-4 lg:grid-cols-[1.15fr_1fr]">
+        <section class="p-4">
+          <div class="scenario1-grid">
+          <aside class="notes-panel">
+            <h3>Notes</h3>
+            <p><strong>Victoria:</strong> The number of random breath tests conducted before 2019 are not reliable. From September to December 2024. Protected Industrial Axtion took place, so there were low volumes of random breath tests conducted</p>
+            <p><strong>Tasmania:</strong> Positive counts of random breath tests was not provided fromm 2020, so they have been excluded from national calculations</p>
+            <p><strong>Western Australia: </strong> there was reduced breath testing operations from 2020 and 2021 due to COVID-19 pandemic</p>
+
+          </aside>
+
           <article
             class="rounded-xl border border-[#efe6d8] bg-white p-4 shadow-sm"
           >
@@ -350,32 +410,7 @@
             </p>
             <div id="ranking-chart" class="min-h-[410px] w-full"></div>
           </article>
-        </section>
-
-        <section class="px-4 pb-4">
-          <article
-            class="rounded-xl border border-[#efe6d8] bg-white p-4 shadow-sm"
-          >
-            <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <p
-                  class="text-sm font-bold uppercase tracking-[0.08em] text-[#EE9B00]"
-                >
-                  Scenario 2
-                </p>
-                <h2 id="trend-title" class="text-xl font-bold text-[#5C4D3C]">
-                  Testing Volume vs Positive Rate
-                </h2>
-              </div>
-              <span
-                id="trend-focus-label"
-                class="rounded-md bg-[#f4ecdf] px-2 py-1 text-sm font-semibold text-[#5C4D3C]"
-              >
-                -
-              </span>
-            </div>
-            <div id="trend-chart" class="min-h-[450px] w-full"></div>
-          </article>
+          </div>
         </section>
 
         <section

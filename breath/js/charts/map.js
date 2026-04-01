@@ -3,7 +3,7 @@
 (function setupMapChart() {
   const { COLORS, STATE_NAME_TO_CODE, FALLBACK_MAP_SHAPES } = window.BreathDashboardConfig;
   const { formatNumber, formatPercent, formatStateLabel, escapeHtml } = window.BreathDashboardUtils;
-  const { showTooltip, hideTooltip, MOTION } = window.BreathChartHelpers;
+  const { showTooltip, hideTooltip, buildStandardTooltip, MOTION } = window.BreathChartHelpers;
 
   function renderMap(context, refs, geoJson, onSelectState) {
     const container = refs.mapChart;
@@ -37,17 +37,32 @@
     const features = geoJson.features.filter((feature) =>
       Boolean(STATE_NAME_TO_CODE[feature.properties.STATE_NAME]),
     );
+    const activeState = context.mapFocusState || context.selectedState;
 
-    const projection = d3.geoMercator().fitExtent(
-      [
-        [16, 16],
-        [width - 16, height - 16],
-      ],
-      { type: "FeatureCollection", features },
-    );
+    const selectedFeature =
+      activeState && activeState !== "ALL"
+        ? features.find((feature) => STATE_NAME_TO_CODE[feature.properties.STATE_NAME] === activeState)
+        : null;
+    const projection = d3.geoMercator();
+    if (selectedFeature) {
+      projection.fitExtent(
+        [
+          [24, 24],
+          [width - 24, height - 24],
+        ],
+        selectedFeature,
+      );
+    } else {
+      projection.fitExtent(
+        [
+          [16, 16],
+          [width - 16, height - 16],
+        ],
+        { type: "FeatureCollection", features },
+      );
+    }
     const path = d3.geoPath(projection);
     const colorScale = getRiskScale();
-    const activeState = context.mapFocusState || context.selectedState;
 
     const statePaths = svg
       .selectAll("path.state")
@@ -55,24 +70,6 @@
       .join("path")
       .attr("d", path)
       .attr("cursor", "pointer")
-      .on("mousemove", (event, feature) => {
-        const code = STATE_NAME_TO_CODE[feature.properties.STATE_NAME];
-        showTooltip(event, buildMapTooltipHtml(code, context), refs);
-      })
-      .on("mouseleave", () => hideTooltip(refs))
-      .on("click", (_, feature) => {
-        const code = STATE_NAME_TO_CODE[feature.properties.STATE_NAME];
-        onSelectState(code);
-      });
-
-    statePaths
-      .attr("fill", COLORS.missing)
-      .attr("stroke", "#ffffff")
-      .attr("stroke-width", 1.2)
-      .attr("opacity", 0)
-      .transition()
-      .duration(MOTION.durationSlow)
-      .ease(MOTION.ease)
       .attr("fill", (feature) => {
         const code = STATE_NAME_TO_CODE[feature.properties.STATE_NAME];
         return getStateFill(code, context.mapData, colorScale, context, activeState);
@@ -88,7 +85,30 @@
       .attr("opacity", (feature) => {
         const code = STATE_NAME_TO_CODE[feature.properties.STATE_NAME];
         return getStateOpacity(code, context, activeState);
+      })
+      .on("mousemove", (event, feature) => {
+        const code = STATE_NAME_TO_CODE[feature.properties.STATE_NAME];
+        showTooltip(event, buildMapTooltipHtml(code, context), refs);
+      })
+      .on("mouseleave", () => hideTooltip(refs))
+      .on("mouseenter", function () {
+        d3.select(this).attr("stroke-width", 2.8);
+      })
+      .on("mouseout", function (_, feature) {
+        const code = STATE_NAME_TO_CODE[feature.properties.STATE_NAME];
+        d3.select(this).attr("stroke-width", code === activeState ? 2.8 : 1.2);
+      })
+      .on("click", (_, feature) => {
+        const code = STATE_NAME_TO_CODE[feature.properties.STATE_NAME];
+        onSelectState(code);
       });
+
+    statePaths
+      .style("opacity", 0)
+      .transition()
+      .duration(220)
+      .ease(d3.easeCubicOut)
+      .style("opacity", 1);
 
     const labelData = features.map((feature) => ({
       feature,
@@ -104,8 +124,8 @@
       .attr("y", (d) => d.centroid[1])
       .attr("text-anchor", "middle")
       .attr("font-size", 12)
-      .attr("font-weight", 700)
-      .attr("fill", "#374151")
+      .attr("font-weight", 800)
+      .attr("fill", "#4A4A4A")
       .attr("opacity", 0)
       .attr("pointer-events", "none")
       .text((d) => d.code)
@@ -149,8 +169,8 @@
       .attr("y", labelY)
       .attr("text-anchor", "start")
       .attr("font-size", 12)
-      .attr("font-weight", 700)
-      .attr("fill", "#374151")
+      .attr("font-weight", 800)
+      .attr("fill", "#4A4A4A")
       .attr("opacity", 0)
       .attr("pointer-events", "none")
       .text("TAS")
@@ -202,8 +222,8 @@
       .attr("y", (shape) => shape.label[1])
       .attr("text-anchor", "middle")
       .attr("font-size", 12)
-      .attr("font-weight", 700)
-      .attr("fill", "#374151")
+      .attr("font-weight", 800)
+      .attr("fill", "#4A4A4A")
       .attr("opacity", 0)
       .attr("pointer-events", "none")
       .text((shape) => shape.code)
@@ -247,8 +267,8 @@
       .attr("y", labelY)
       .attr("text-anchor", "start")
       .attr("font-size", 12)
-      .attr("font-weight", 700)
-      .attr("fill", "#374151")
+      .attr("font-weight", 800)
+      .attr("fill", "#4A4A4A")
       .attr("opacity", 0)
       .attr("pointer-events", "none")
       .text("TAS")
@@ -290,19 +310,17 @@
     const periodLabel = context.isAllYears ? "Period" : "Year";
 
     if (!record) {
-      return `
-        <div class="font-semibold">${escapeHtml(stateName)}</div>
-        <div class="mt-1 text-xs text-slate-200">${periodLabel}: ${yearLabel}</div>
-        <div class="mt-1">No data available for current filters.</div>
-      `;
-    }
+    return buildStandardTooltip(escapeHtml(stateName), [
+      `<span style="color: white">${periodLabel}: <span style="color: #f1c40f">${escapeHtml(yearLabel)}</span></span>`,
+      `<span style="color: white">No data available for current filters.</span>`,
+    ]);
+  }
 
-    return `
-      <div class="font-semibold">${escapeHtml(stateName)}</div>
-      <div class="mt-1 text-xs text-slate-200">${periodLabel}: ${yearLabel}</div>
-      <div class="mt-1">Total tests: <span class="font-semibold">${formatNumber(record.countTotal)}</span></div>
-      <div>Positive rate: <span class="font-semibold">${formatPercent(record.positiveRate)}</span></div>
-    `;
+    return buildStandardTooltip(escapeHtml(stateName), [
+      `<span style="color: white">${periodLabel}: <span style="color: #f1c40f">${escapeHtml(yearLabel)}</span></span>`,
+      `<span style="color: white">Total tests: <span style="color: #f1c40f">${formatNumber(record.countTotal)}</span></span>`,
+      `<span style="color: white">Positive rate: <span style="color: #f1c40f">${formatPercent(record.positiveRate)}</span></span>`,
+    ]);
   }
 
   window.BreathMapChart = {

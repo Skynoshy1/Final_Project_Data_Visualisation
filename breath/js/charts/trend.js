@@ -2,7 +2,7 @@
 
 (function setupTrendChart() {
   const { formatAxisCompact, formatNumber, formatPercent, formatScopeLabel } = window.BreathDashboardUtils;
-  const { showTooltip, hideTooltip, renderEmptyState, MOTION } = window.BreathChartHelpers;
+  const { showTooltip, hideTooltip, renderEmptyState, buildStandardTooltip, MOTION } = window.BreathChartHelpers;
 
   function renderTrend(context, refs) {
     const container = refs.trendChart;
@@ -17,9 +17,10 @@
       return;
     }
 
-    const width = Math.max(360, container.clientWidth || 360);
+    const measuredWidth = container.clientWidth || 0;
+    const width = Math.max(620, Math.min(980, measuredWidth || 980));
     const height = 450;
-    const margin = { top: 22, right: 72, bottom: 46, left: 60 };
+    const margin = { top: 22, right: 84, bottom: 52, left: 68 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
     const trendLineColor = "#E67E22";
@@ -66,27 +67,46 @@
       .attr("stroke", "#EFE7DA")
       .attr("stroke-dasharray", "2,4");
 
-    if (x.domain().includes(2020) && x.domain().includes(2021)) {
-      const disruptionX = x(2020);
-      const disruptionW = x(2021) + x.bandwidth() - disruptionX;
+    const covidMarker = g.append("g")
+      .attr("class", "covid-marker")
+      .attr("transform", "translate(16,16)")
+      .style("cursor", "pointer");
 
-      g.append("rect")
-        .attr("x", disruptionX)
-        .attr("y", 0)
-        .attr("width", disruptionW)
-        .attr("height", innerHeight)
-        .attr("fill", "#F6C36B")
-        .attr("opacity", 0.18);
+    covidMarker
+      .append("circle")
+      .attr("r", 12)
+      .attr("fill", "#d6c8b8")
+      .attr("stroke", "transparent")
+      .attr("stroke-width", 1.4);
 
-      g.append("text")
-        .attr("x", disruptionX + disruptionW / 2)
-        .attr("y", 14)
-        .attr("text-anchor", "middle")
-        .attr("font-size", 12)
-        .attr("font-weight", 700)
-        .attr("fill", "#8A3F00")
-        .text("COVID disruption (2020-2021)");
-    }
+    covidMarker
+      .append("text")
+      .attr("text-anchor", "middle")
+      .attr("dominant-baseline", "middle")
+      .attr("font-size", 13)
+      .attr("font-weight", 800)
+      .attr("fill", "#5C4D3C")
+      .text("!");
+
+    covidMarker
+      .on("mousemove", (event) => {
+        showTooltip(
+          event,
+          buildStandardTooltip("Warning!", [
+            `<span style="color: white">COVID Disruption (2020-2021)</span>`,
+          ]),
+          refs,
+        );
+      })
+      .on("mouseenter", function () {
+        d3.select(this).transition().duration(120).attr("transform", "translate(16,16) scale(1.06)");
+        d3.select(this).select("circle").attr("stroke", "rgba(255,255,255,0.9)");
+      })
+      .on("mouseleave", function () {
+        d3.select(this).transition().duration(120).attr("transform", "translate(16,16) scale(1)");
+        d3.select(this).select("circle").attr("stroke", "transparent");
+        hideTooltip(refs);
+      });
 
     const trendBars = g.selectAll("rect.trend-bar")
       .data(data, (row) => row.year)
@@ -99,6 +119,8 @@
       .attr("fill", (row) =>
         context.selectedYear !== "ALL" && row.year === context.selectedYear ? "#8A6A44" : "#D4C4A8",
       )
+      .attr("stroke", "#5C4D3C")
+      .attr("stroke-width", 1)
       .attr("opacity", (row) =>
         context.selectedYear !== "ALL" && row.year !== context.selectedYear ? 0.45 : 0.92,
       )
@@ -215,20 +237,20 @@
     g.append("g")
       .attr("transform", `translate(0,${innerHeight})`)
       .call(d3.axisBottom(x).tickFormat(d3.format("d")))
-      .call((axis) => axis.selectAll("text").attr("fill", "#6B7280").attr("font-size", 12))
+      .call((axis) => axis.selectAll("text").attr("fill", "#6B7280").attr("font-size", 12).attr("font-weight", 700))
       .call((axis) => axis.selectAll("line").attr("stroke", "#D8CCBA"))
       .call((axis) => axis.select(".domain").attr("stroke", "#D8CCBA"));
 
     g.append("g")
       .call(d3.axisLeft(yLeft).ticks(5).tickFormat(formatAxisCompact))
-      .call((axis) => axis.selectAll("text").attr("fill", "#6B7280").attr("font-size", 12))
+      .call((axis) => axis.selectAll("text").attr("fill", "#6B7280").attr("font-size", 12).attr("font-weight", 700))
       .call((axis) => axis.selectAll("line").attr("stroke", "#D8CCBA"))
       .call((axis) => axis.select(".domain").attr("stroke", "#D8CCBA"));
 
     g.append("g")
       .attr("transform", `translate(${innerWidth},0)`)
       .call(d3.axisRight(yRight).ticks(5).tickFormat((value) => `${value.toFixed(1)}%`))
-      .call((axis) => axis.selectAll("text").attr("fill", trendLineDark).attr("font-size", 12))
+      .call((axis) => axis.selectAll("text").attr("fill", trendLineDark).attr("font-size", 12).attr("font-weight", 700))
       .call((axis) => axis.selectAll("line").attr("stroke", "#D8CCBA"))
       .call((axis) => axis.select(".domain").attr("stroke", "#D8CCBA"));
 
@@ -238,6 +260,7 @@
       .attr("transform", "rotate(-90)")
       .attr("text-anchor", "middle")
       .attr("font-size", 12)
+      .attr("font-weight", 700)
       .attr("fill", "#4B5563")
       .text("Total tests");
 
@@ -246,6 +269,7 @@
       .attr("y", -10)
       .attr("text-anchor", "middle")
       .attr("font-size", 12)
+      .attr("font-weight", 700)
       .attr("fill", trendLineDark)
       .text("Rate (%)");
   }
@@ -253,17 +277,15 @@
   function buildTrendTooltipHtml(row, scope, selectedYear) {
     const selectedYearNote =
       Number.isFinite(selectedYear) && row.year === selectedYear
-        ? `<div class="mt-1 text-xs font-semibold text-amber-200">Selected year focus</div>`
+        ? `<span style="color: #f1c40f">Selected year focus</span>`
         : "";
 
-    return `
-      <div class="font-semibold">${formatScopeLabel(scope)}</div>
-      <div class="mt-1 text-xs text-slate-200">Year: ${row.year}</div>
-      ${selectedYearNote}
-      <div class="mt-1">Total tests: <span class="font-semibold">${formatNumber(row.countTotal)}</span></div>
-      <div>Positive cases: <span class="font-semibold">${formatNumber(row.countPositive)}</span></div>
-      <div>Positive rate: <span class="font-semibold">${formatPercent(row.positiveRate)}</span></div>
-    `;
+    return buildStandardTooltip(`${formatScopeLabel(scope)} - ${row.year}`, [
+      selectedYearNote,
+      `<span style="color: white">Total tests: <span style="color: #f1c40f">${formatNumber(row.countTotal)}</span></span>`,
+      `<span style="color: white">Positive cases: <span style="color: #f1c40f">${formatNumber(row.countPositive)}</span></span>`,
+      `<span style="color: white">Positive rate: <span style="color: #f1c40f">${formatPercent(row.positiveRate)}</span></span>`,
+    ]);
   }
 
   window.BreathTrendChart = {

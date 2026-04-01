@@ -11,6 +11,7 @@ const app = {
   geoJson: null,
   state: {
     selectedYear: "ALL",
+    selectedLocation: "ALL",
     jurisdiction: "ALL",
     selectedState: null,
     rankingMetric: "POSITIVE_RATE",
@@ -55,7 +56,7 @@ async function initDashboard() {
 function cacheDom() {
   app.refs = {
     yearFilter: document.getElementById("year-filter"),
-    jurisdictionFilter: document.getElementById("jurisdiction-filter"),
+    locationFilter: document.getElementById("location-filter"),
     resetButton: document.getElementById("reset-button"),
     rankRateBtn: document.getElementById("rank-rate-btn"),
     rankTotalBtn: document.getElementById("rank-total-btn"),
@@ -80,10 +81,8 @@ function cacheDom() {
     tooltip: document.getElementById("chart-tooltip"),
     kpiTotalTests: document.getElementById("kpi-total-tests"),
     kpiTotalTestsYear: document.getElementById("kpi-total-tests-year"),
-    kpiTotalTestsDelta: document.getElementById("kpi-total-tests-delta"),
     kpiPositiveRate: document.getElementById("kpi-positive-rate"),
     kpiPositiveRateYear: document.getElementById("kpi-positive-rate-year"),
-    kpiPositiveRateDelta: document.getElementById("kpi-positive-rate-delta"),
     kpiPositiveCases: document.getElementById("kpi-positive-cases"),
     kpiPositiveCasesYear: document.getElementById("kpi-positive-cases-year"),
     kpiPositiveCasesDelta: document.getElementById("kpi-positive-cases-delta"),
@@ -97,22 +96,22 @@ function bindEvents() {
     renderDashboard();
   });
 
-  app.refs.jurisdictionFilter.addEventListener("change", (event) => {
+  app.refs.locationFilter.addEventListener("change", (event) => {
     const value = event.target.value;
-    app.state.jurisdiction = value;
-    app.state.selectedState = value === "ALL" ? null : value;
+    app.state.selectedLocation = value;
     renderDashboard();
   });
 
   app.refs.resetButton.addEventListener("click", () => {
     app.state.selectedYear = "ALL";
+    app.state.selectedLocation = "ALL";
     app.state.jurisdiction = "ALL";
     app.state.selectedState = null;
     app.state.rankingMetric = "POSITIVE_RATE";
     app.state.scenario3Year = 2024;
 
     app.refs.yearFilter.value = "ALL";
-    app.refs.jurisdictionFilter.value = "ALL";
+    app.refs.locationFilter.value = "ALL";
     updateRankingToggleStyles();
     updateScenario3ToggleStyles();
     renderers.hideTooltip(app.refs);
@@ -179,14 +178,11 @@ function updateScenario3ToggleStyles() {
 }
 
 function handleStateSelection(code) {
-  if (app.state.jurisdiction !== "ALL" && app.state.jurisdiction !== code) {
-    app.state.jurisdiction = code;
-    app.refs.jurisdictionFilter.value = code;
-  }
-
-  if (app.state.selectedState === code && app.state.jurisdiction === "ALL") {
+  if (app.state.selectedState === code) {
+    app.state.jurisdiction = "ALL";
     app.state.selectedState = null;
   } else {
+    app.state.jurisdiction = code;
     app.state.selectedState = code;
   }
 

@@ -46,9 +46,9 @@ const CHART_COLORS = {
   lineSoft: sharedBaseColors.primaryDark || "#c27d00",
   map: sharedBaseColors.primary || "#EE9B00",
   neutral: sharedBaseColors.neutral || "#f1e7d6",
-  effective: sharedBaseColors.effective || "#4CAF50",
-  moderate: sharedBaseColors.moderate || "#FFC107",
-  ineffective: sharedBaseColors.ineffective || "#FF5252",
+  effective: "#F6C36B",
+  moderate: "#E89A2E",
+  ineffective: "#8A3F00",
   year2023: sharedBaseColors.secondary || "#5C4D3C",
   year2024: sharedBaseColors.primary || "#EE9B00",
 };

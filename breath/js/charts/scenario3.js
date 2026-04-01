@@ -9,7 +9,7 @@
     formatStateLabel,
     escapeHtml,
   } = window.BreathDashboardUtils;
-  const { showTooltip, hideTooltip, renderEmptyState, getLocationColor, MOTION } = window.BreathChartHelpers;
+  const { showTooltip, hideTooltip, renderEmptyState, getLocationColor, buildStandardTooltip, MOTION } = window.BreathChartHelpers;
 
   function renderDetailedSection(context, refs) {
     refs.detailedSection.classList.remove("hidden");
@@ -17,7 +17,11 @@
       context.jurisdiction === "ALL"
         ? "All jurisdictions"
         : formatStateLabel(context.jurisdiction);
-    refs.scatterContextLabel.textContent = `${context.scenario3Year} - ${sectionScope}`;
+    const locationScope =
+      context.selectedLocation && context.selectedLocation !== "ALL"
+        ? ` - ${context.selectedLocation}`
+        : "";
+    refs.scatterContextLabel.textContent = `${context.scenario3Year} - ${sectionScope}${locationScope}`;
 
     if (refs.scenario3AvailabilityNote) {
       refs.scenario3AvailabilityNote.textContent = context.scenario3GlobalYearMismatch
@@ -142,7 +146,7 @@
     );
     const width = measuredWidth || parentWidth || 300;
     const height = 350;
-    const margin = { top: 12, right: 14, bottom: 44, left: 56 };
+    const margin = { top: 12, right: 14, bottom: 44, left: 72 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
     const maxValue = d3.max(chartData, (row) => row.metricValue) || 0;
@@ -212,8 +216,8 @@
         }
         return highestRows.has(row.locationCategory) ? 1 : 0.82;
       })
-      .attr("stroke", (row) => (highestRows.has(row.locationCategory) ? "#5C4D3C" : "none"))
-      .attr("stroke-width", (row) => (highestRows.has(row.locationCategory) ? 1 : 0))
+      .attr("stroke", "#5C4D3C")
+      .attr("stroke-width", 1)
       .style("cursor", "pointer")
       .on("mousemove", (event, row) => {
         showTooltip(
@@ -234,8 +238,17 @@
       .duration(MOTION.durationSlow)
       .delay((_, index) => index * 26)
       .ease(MOTION.ease)
-      .attr("y", (row) => y(row.metricValue))
-      .attr("height", (row) => innerHeight - y(row.metricValue));
+      .attr("y", (row) => {
+        if (row.metricValue <= 0) return y(0);
+        const rawY = y(row.metricValue);
+        const minBarHeight = 8;
+        return Math.min(rawY, innerHeight - minBarHeight);
+      })
+      .attr("height", (row) => {
+        if (row.metricValue <= 0) return 0;
+        const rawHeight = innerHeight - y(row.metricValue);
+        return Math.max(rawHeight, 8);
+      });
 
     g.selectAll("text.location-value")
       .data(chartData, (row) => row.locationCategory)
@@ -258,33 +271,33 @@
     g.append("g")
       .attr("transform", `translate(0,${innerHeight})`)
       .call(d3.axisBottom(x))
-      .call((axis) => axis.selectAll("text").attr("fill", "#6B7280").attr("font-size", 12))
+      .call((axis) => axis.selectAll("text").attr("fill", "#6B7280").attr("font-size", 12).attr("font-weight", 700))
       .call((axis) => axis.selectAll("line").attr("stroke", "#D8CCBA"))
       .call((axis) => axis.select(".domain").attr("stroke", "#D8CCBA"));
 
     g.append("g")
       .call(d3.axisLeft(y).ticks(5).tickFormat(yTickFormatter))
-      .call((axis) => axis.selectAll("text").attr("fill", "#6B7280").attr("font-size", 12))
+      .call((axis) => axis.selectAll("text").attr("fill", "#6B7280").attr("font-size", 12).attr("font-weight", 700))
       .call((axis) => axis.selectAll("line").attr("stroke", "#D8CCBA"))
       .call((axis) => axis.select(".domain").attr("stroke", "#D8CCBA"));
 
     g.append("text")
       .attr("x", -innerHeight / 2)
-      .attr("y", -42)
+      .attr("y", -56)
       .attr("transform", "rotate(-90)")
       .attr("text-anchor", "middle")
       .attr("font-size", 12)
+      .attr("font-weight", 700)
       .attr("fill", "#4B5563")
       .text(yAxisLabel);
   }
 
   function buildScenario3BarTooltipHtml(row, scopeLabel, metricLabel, metricFormatter) {
     if (!row.hasData) {
-      return `
-        <div class="font-semibold">${escapeHtml(row.locationCategory)}</div>
-        <div class="mt-1 text-xs text-slate-200">${escapeHtml(scopeLabel)}</div>
-        <div class="mt-1">No data available for this location type.</div>
-      `;
+      return buildStandardTooltip(escapeHtml(row.locationCategory), [
+        `<span style="color: white">${escapeHtml(scopeLabel)}</span>`,
+        `<span style="color: white">No data available for this location type.</span>`,
+      ]);
     }
 
     const regionalNote =
@@ -292,14 +305,13 @@
         ? `<div class="text-xs text-slate-200">Includes inner and outer regional areas.</div>`
         : "";
 
-    return `
-      <div class="font-semibold">${escapeHtml(row.locationCategory)}</div>
-      <div class="mt-1 text-xs text-slate-200">${escapeHtml(scopeLabel)}</div>
-      ${regionalNote}
-      <div class="mt-1">${metricLabel}: <span class="font-semibold">${metricFormatter(row.metricValue)}</span></div>
-      <div>Total tests: <span class="font-semibold">${formatNumber(row.countTotalSum)}</span></div>
-      <div>Positive rate: <span class="font-semibold">${formatPercentReadable(row.locationPositiveRate)}</span></div>
-    `;
+    return buildStandardTooltip(escapeHtml(row.locationCategory), [
+      `<span style="color: white">${escapeHtml(scopeLabel)}</span>`,
+      regionalNote ? `<span style="color: white">${regionalNote.replace(/<[^>]*>/g, "")}</span>` : "",
+      `<span style="color: white">${metricLabel}: <span style="color: #f1c40f">${metricFormatter(row.metricValue)}</span></span>`,
+      `<span style="color: white">Total tests: <span style="color: #f1c40f">${formatNumber(row.countTotalSum)}</span></span>`,
+      `<span style="color: white">Positive rate: <span style="color: #f1c40f">${formatPercentReadable(row.locationPositiveRate)}</span></span>`,
+    ]);
   }
 
   function buildScenario3InsightText(data) {

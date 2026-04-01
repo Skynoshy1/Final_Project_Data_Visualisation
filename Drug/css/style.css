@@ -190,7 +190,7 @@ body {
 
 .filter-bar {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) 160px;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) 160px;
     gap: 16px;
     align-items: end;
     padding: 14px;
@@ -484,9 +484,9 @@ body {
 }
 
 .map-label {
-    fill: var(--secondary-color);
+    fill: #131313;
     font-size: 0.72rem;
-    font-weight: 700;
+    font-weight: 800;
     text-anchor: middle;
     pointer-events: none;
 }

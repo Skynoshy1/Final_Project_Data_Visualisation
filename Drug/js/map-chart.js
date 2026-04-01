@@ -144,31 +144,35 @@ function renderDrugGeoMap(data, elementId, geoData) {
       if (!row) {
         showTooltip(
           event,
-          `<strong>${feature.properties.STATE_NAME}</strong>
-           <div>No data for current filters</div>`,
+          `<div class="tooltip-header" style="color: var(--primary-color); font-weight: bold; font-size: 1.1em;">${feature.properties.STATE_NAME}</div>
+           <div class="tooltip-body" style="color: white; font-weight: bold;">
+               <span style="color: white">No data for current filters</span>
+           </div>`
         );
         return;
       }
 
       showTooltip(
         event,
-        `<strong>${feature.properties.STATE_NAME}</strong>
-         <div>Tests: ${formatNumber(row.tests)}</div>
-         <div>Positive: ${formatNumber(row.positives)}</div>
-         <div>Rate: ${formatPercent(row.positiveRate)}</div>
-         <div>Fines: ${formatNumber(row.fines)}</div>
-         <div>Arrests: ${formatNumber(row.arrests)}</div>
-         <div>Charges: ${formatNumber(row.charges)}</div>
-         ${
-           row.topAgeGroup
-             ? `<div>Top age group: ${row.topAgeGroup.label} (${formatNumber(row.topAgeGroup.count)})</div>`
-             : ""
-         }
-         ${
-           row.topLocation
-             ? `<div>Top location: ${row.topLocation.label} (${formatNumber(row.topLocation.count)})</div>`
-             : ""
-         }`,
+        `<div class="tooltip-header" style="color: var(--primary-color); font-weight: bold; font-size: 1.1em;">${feature.properties.STATE_NAME}</div>
+         <div class="tooltip-body" style="color: white; font-weight: bold;">
+             <span style="color: white">Tests: <span style="color: #f1c40f">${formatNumber(row.tests)}</span></span><br/>
+             <span style="color: white">Positive: <span style="color: #f1c40f">${formatNumber(row.positives)}</span></span><br/>
+             <span style="color: white">Rate: <span style="color: #f1c40f">${formatPercent(row.positiveRate)}</span></span><br/>
+             <span style="color: white">Fines: <span style="color: #f1c40f">${formatNumber(row.fines)}</span></span><br/>
+             <span style="color: white">Arrests: <span style="color: #f1c40f">${formatNumber(row.arrests)}</span></span><br/>
+             <span style="color: white">Charges: <span style="color: #f1c40f">${formatNumber(row.charges)}</span></span>
+             ${
+               row.topAgeGroup
+                 ? `<br/><span style="color: white">Top age group: <span style="color: #f1c40f">${row.topAgeGroup.label} (${formatNumber(row.topAgeGroup.count)})</span></span>`
+                 : ""
+             }
+             ${
+               row.topLocation
+                 ? `<br/><span style="color: white">Top location: <span style="color: #f1c40f">${row.topLocation.label} (${formatNumber(row.topLocation.count)})</span></span>`
+                 : ""
+             }
+         </div>`
       );
     })
     .on("mousemove", moveTooltip)
@@ -201,6 +205,8 @@ function renderDrugGeoMap(data, elementId, geoData) {
       return `translate(${x + 12}, ${y + 12})`;
     })
     .text((feature) => reverseStateNameMap[feature.properties.STATE_NAME] || "")
+    .attr("fill", "#4A4A4A")
+    .style("font-weight", "bold")
     .style("cursor", "pointer")
     .on("click", function (_, feature) {
       selectJurisdictionByFeature(feature);
@@ -212,10 +218,11 @@ function renderDrugGeoMap(data, elementId, geoData) {
     .style("opacity", 1);
 
   // Color legend for map rating categories.
+  // Color legend for map rating categories.
   const legendData = [
-    { label: "Effective", color: CHART_COLORS.effective },
-    { label: "Moderate", color: CHART_COLORS.moderate },
-    { label: "Ineffective", color: CHART_COLORS.ineffective },
+    { label: "Effective (> 30%)", color: CHART_COLORS.effective },
+    { label: "Moderate (15-30%)", color: CHART_COLORS.moderate },
+    { label: "Ineffective (< 15%)", color: CHART_COLORS.ineffective },
   ];
 
   const legend = svg
@@ -254,5 +261,6 @@ function renderDrugGeoMap(data, elementId, geoData) {
     .attr("y", (_, i) => i * 20 + 10)
     .attr("fill", "#5C4D3C")
     .attr("font-size", "12px")
+    .attr("font-weight", 700)
     .text((d) => d.label);
 }

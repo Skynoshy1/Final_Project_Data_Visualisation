@@ -35,6 +35,18 @@
     refs.tooltip.classList.add("hidden");
   }
 
+  function buildStandardTooltip(title, bodyLines) {
+    const bodyHtml = (Array.isArray(bodyLines) ? bodyLines : [])
+      .filter(Boolean)
+      .join("<br/>");
+    return `
+      <div class="tooltip-header" style="color: var(--primary-color, #EE9B00); font-weight: bold; font-size: 1.1em;">${title}</div>
+      <div class="tooltip-body" style="color: white; font-weight: bold;">
+        ${bodyHtml}
+      </div>
+    `;
+  }
+
   function renderEmptyState(container, message) {
     container.innerHTML = "";
     const empty = document.createElement("div");
@@ -58,6 +70,7 @@
     MOTION,
     showTooltip,
     hideTooltip,
+    buildStandardTooltip,
     renderEmptyState,
     getLocationColor,
   };

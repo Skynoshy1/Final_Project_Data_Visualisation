@@ -29,21 +29,20 @@
     const scopeLabel = formatScopeLabel(kpiScope);
     const yearText =
       isAllYears && kpiScope === "ALL"
-        ? ""
+        ? `Across ${aggregatePeriodLabel}`
         : isAllYears
           ? `${scopeLabel} - ${context.snapshotDisplayLabel}`
           : `${scopeLabel} - ${selectedYear}`;
 
-    refs.kpiTotalTestsYear.textContent = yearText;
-    refs.kpiPositiveRateYear.textContent = yearText;
-    refs.kpiPositiveCasesYear.textContent = yearText;
+    // Keep metric labels static - don't overwrite them
+    // refs.kpiTotalTestsYear.textContent = yearText;
+    // refs.kpiPositiveRateYear.textContent = yearText;
+    // refs.kpiPositiveCasesYear.textContent = yearText;
 
     if (!kpiCurrent) {
       refs.kpiTotalTests.textContent = "N/A";
       refs.kpiPositiveRate.textContent = "N/A";
       refs.kpiPositiveCases.textContent = "N/A";
-      setDeltaText(refs.kpiTotalTestsDelta, "No previous year data", "neutral");
-      setDeltaText(refs.kpiPositiveRateDelta, "No previous year data", "neutral");
       setDeltaText(refs.kpiPositiveCasesDelta, "No previous year data", "neutral");
       return;
     }
@@ -54,8 +53,6 @@
 
     if (isAllYears) {
       const acrossText = `Across ${aggregatePeriodLabel}`;
-      setDeltaText(refs.kpiTotalTestsDelta, acrossText, "neutral");
-      setDeltaText(refs.kpiPositiveRateDelta, acrossText, "neutral");
       setDeltaText(refs.kpiPositiveCasesDelta, acrossText, "neutral");
       return;
     }
@@ -73,23 +70,13 @@
       kpiPrevious ? kpiPrevious.countPositive : null,
     );
 
-    setDeltaText(refs.kpiTotalTestsDelta, testsDelta.text, testsDelta.tone);
-    setDeltaText(refs.kpiPositiveRateDelta, rateDelta.text, rateDelta.tone);
     setDeltaText(refs.kpiPositiveCasesDelta, positiveCasesDelta.text, positiveCasesDelta.tone);
   }
 
   function setDeltaText(element, text, tone) {
     element.textContent = text;
-    element.classList.remove("text-[#B45309]", "text-[#166534]", "text-[#6B7280]");
-    if (tone === "up") {
-      element.classList.add("text-[#B45309]");
-      return;
-    }
-    if (tone === "down") {
-      element.classList.add("text-[#166534]");
-      return;
-    }
-    element.classList.add("text-[#6B7280]");
+    element.style.color = "#fffaf4";
+    element.style.fontWeight = "800";
   }
 
   function renderMap(context, refs, geoJson, onSelectState) {

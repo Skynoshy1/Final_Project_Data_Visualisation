@@ -10,7 +10,7 @@
     formatStateLabel,
     escapeHtml,
   } = window.BreathDashboardUtils;
-  const { showTooltip, hideTooltip, renderEmptyState, MOTION } = window.BreathChartHelpers;
+  const { showTooltip, hideTooltip, renderEmptyState, buildStandardTooltip, MOTION } = window.BreathChartHelpers;
 
   function renderRanking(context, refs, rankingMetric, onSelectState) {
     const container = refs.rankingChart;
@@ -115,6 +115,8 @@
       .attr("fill", (row) =>
         row.jurisdiction === context.selectedState ? metricSelected : metricColor,
       )
+      .attr("stroke", "#5C4D3C")
+      .attr("stroke-width", 1)
       .attr("opacity", (row) =>
         context.selectedState && row.jurisdiction !== context.selectedState ? 0.45 : 0.95,
       )
@@ -372,13 +374,12 @@
         ? formatPercent(row.metricValue)
         : formatNumber(row.metricValue);
 
-    return `
-      <div class="font-semibold">${escapeHtml(formatStateLabel(row.jurisdiction))}</div>
-      <div class="mt-1 text-xs text-slate-200">Period: ${periodLabel || "N/A"}</div>
-      <div class="mt-1">${metricLabel}: <span class="font-semibold">${metricValue}</span></div>
-      <div>Total tests: <span class="font-semibold">${formatNumber(row.countTotal)}</span></div>
-      <div>Positive rate: <span class="font-semibold">${formatPercent(row.positiveRate)}</span></div>
-    `;
+    return buildStandardTooltip(escapeHtml(formatStateLabel(row.jurisdiction)), [
+      `<span style="color: white">Period: <span style="color: #f1c40f">${periodLabel || "N/A"}</span></span>`,
+      `<span style="color: white">${metricLabel}: <span style="color: #f1c40f">${metricValue}</span></span>`,
+      `<span style="color: white">Total tests: <span style="color: #f1c40f">${formatNumber(row.countTotal)}</span></span>`,
+      `<span style="color: white">Positive rate: <span style="color: #f1c40f">${formatPercent(row.positiveRate)}</span></span>`,
+    ]);
   }
 
   window.BreathRankingChart = {
