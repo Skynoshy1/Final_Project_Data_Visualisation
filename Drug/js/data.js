@@ -1,4 +1,5 @@
 let drugData = [];
+let selectedJurisdiction = null;
 const { formatNumber, formatPercent, parseNumericFields } = window.SharedDashboardUtils || {};
 
 function populateDashboardFilters(data) {
@@ -71,8 +72,17 @@ function renderDashboard() {
 
   // Pass filtered data to every chart so axes rescale based on the current selection.
   drawTrendChart(trendData, "chart1");
-  drawMapChart(filteredData, "chart2");
+  drawMapChart(filteredData, "chart2", selectedJurisdiction, handleJurisdictionSelection);
   drawAgeChart(drugData, "chart3");
+}
+
+function handleJurisdictionSelection(jurisdiction) {
+  if (selectedJurisdiction === jurisdiction) {
+    selectedJurisdiction = null;
+  } else {
+    selectedJurisdiction = jurisdiction;
+  }
+  renderDashboard();
 }
 
 function bindDashboardEvents() {

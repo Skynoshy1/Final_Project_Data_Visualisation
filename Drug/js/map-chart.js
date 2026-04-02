@@ -19,24 +19,23 @@ function getTopBreakdownItem(rawValue) {
   return topItem || null;
 }
 
-function drawMapChart(data, elementId) {
+function drawMapChart(data, elementId, selectedJurisdiction, onSelectJurisdiction) {
   // The map needs GeoJSON, so we load it once and reuse it.
   if (cachedDrugGeoJson) {
-    renderDrugGeoMap(data, elementId, cachedDrugGeoJson);
+    renderDrugGeoMap(data, elementId, cachedDrugGeoJson, selectedJurisdiction, onSelectJurisdiction);
     return;
   }
 
   d3.json(geoJsonPath).then((geoData) => {
     cachedDrugGeoJson = geoData;
-    renderDrugGeoMap(data, elementId, geoData);
+    renderDrugGeoMap(data, elementId, geoData, selectedJurisdiction, onSelectJurisdiction);
   });
 }
 
-function renderDrugGeoMap(data, elementId, geoData) {
+function renderDrugGeoMap(data, elementId, geoData, selectedJurisdiction, onSelectJurisdiction) {
   const container = document.getElementById(elementId);
   const chartWidth = container.clientWidth || 420;
   const chartHeight = 450;
-  const selectedState = document.getElementById("state-select")?.value || "all";
 
   d3.select(`#${elementId}`).selectAll("*").remove();
 
@@ -76,16 +75,6 @@ function renderDrugGeoMap(data, elementId, geoData) {
     Object.entries(stateNameMap).map(([shortName, fullName]) => [fullName, shortName]),
   );
 
-  function selectJurisdictionByFeature(feature) {
-    const stateCode = reverseStateNameMap[feature.properties.STATE_NAME];
-    const stateSelect = document.getElementById("state-select");
-
-    if (!stateCode || !stateSelect) return;
-
-    stateSelect.value = stateSelect.value === stateCode ? "all" : stateCode;
-    stateSelect.dispatchEvent(new Event("change", { bubbles: true }));
-  }
-
   function getStateFill(row) {
     if (!row) return CHART_COLORS.neutral;
     if (row.rating === "Effective") return CHART_COLORS.effective;
@@ -96,14 +85,14 @@ function renderDrugGeoMap(data, elementId, geoData) {
 
   // When a specific jurisdiction is selected, we fit the projection to only
   // that state so the map "zooms in" to the chosen area.
-  // If "all" is selected, we fit the full Australia GeoJSON as usual.
-  const selectedStateName = stateNameMap[selectedState];
+  // If nothing is selected, we fit the full Australia GeoJSON as usual.
+  const selectedStateName = selectedJurisdiction ? stateNameMap[selectedJurisdiction] : null;
   const selectedFeature =
-    selectedState === "all"
-      ? null
-      : geoData.features.find(
+    selectedStateName && selectedJurisdiction !== "all"
+      ? geoData.features.find(
           (feature) => feature.properties.STATE_NAME === selectedStateName,
-        );
+        )
+      : null;
 
   const projection = d3.geoMercator();
 
@@ -181,7 +170,10 @@ function renderDrugGeoMap(data, elementId, geoData) {
       hideTooltip();
     })
     .on("click", function (_, feature) {
-      selectJurisdictionByFeature(feature);
+      const stateCode = reverseStateNameMap[feature.properties.STATE_NAME];
+      if (stateCode && onSelectJurisdiction) {
+        onSelectJurisdiction(stateCode);
+      }
     })
     .transition()
     .duration(500)
@@ -209,7 +201,10 @@ function renderDrugGeoMap(data, elementId, geoData) {
     .style("font-weight", "bold")
     .style("cursor", "pointer")
     .on("click", function (_, feature) {
-      selectJurisdictionByFeature(feature);
+      const stateCode = reverseStateNameMap[feature.properties.STATE_NAME];
+      if (stateCode && onSelectJurisdiction) {
+        onSelectJurisdiction(stateCode);
+      }
     })
     .style("opacity", 0)
     .transition()
