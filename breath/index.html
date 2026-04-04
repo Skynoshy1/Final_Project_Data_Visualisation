@@ -102,22 +102,26 @@
         font-weight: 700;
       }
       .notes-panel {
-        padding: 10px 2px 2px;
+        color: #5c4d3c;
+        font-size: 1.05rem;
+        line-height: 1.5;
       }
       .notes-panel h3 {
-        margin: 0 0 10px;
-        color: #5c4d3c;
-        font-family: Georgia, "Times New Roman", serif;
-        font-size: clamp(1.8rem, 2.6vw, 2.5rem);
-      }
-      .notes-panel p {
         margin: 0;
         color: #5c4d3c;
-        font-size: 1rem;
-        line-height: 1.6;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 2rem;
+      }
+      .notes-panel p {
+        margin: 14px 0 0;
+        color: #5c4d3c;
+        font-weight: 600;
       }
       .notes-panel p + p {
         margin-top: 14px;
+      }
+      .notes-panel strong {
+        font-weight: 800;
       }
       .scenario1-grid {
         display: grid;
@@ -134,6 +138,36 @@
         .scenario1-grid {
           grid-template-columns: 1fr;
         }
+      }
+      .site-footer {
+        margin-top: 28px;
+        background: #c27d00;
+        color: #fffaf4;
+        padding: 20px 0;
+      }
+      .footer-inner {
+        width: min(1180px, calc(100% - 40px));
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+      .footer-title {
+        margin: 0;
+        font-size: 1rem;
+        font-family: Georgia, "Times New Roman", serif;
+      }
+      .footer-note {
+        margin: 4px 0 0;
+        font-size: 0.88rem;
+        color: #ffffff;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: 400;
+      }
+      .footer-highlight {
+        font-weight: 700;
       }
     </style>
   </head>
@@ -262,8 +296,7 @@
           <button
             id="reset-button"
             class="h-[40px] self-end rounded-lg bg-[#EE9B00] px-5 text-sm font-semibold uppercase tracking-[0.03em] text-white shadow-[0_8px_18px_rgba(238,155,0,0.22)] transition hover:bg-[#C96A12]"
-          >
-            Reset view
+          ><strong>Reset view</strong>
           </button>
         </section>
 
@@ -308,10 +341,10 @@
         <section class="p-4">
           <div class="scenario1-grid">
           <aside class="notes-panel">
-            <h3>Notes</h3>
-            <p><strong>Victoria:</strong> The number of random breath tests conducted before 2019 are not reliable. From September to December 2024. Protected Industrial Axtion took place, so there were low volumes of random breath tests conducted</p>
-            <p><strong>Tasmania:</strong> Positive counts of random breath tests was not provided fromm 2020, so they have been excluded from national calculations</p>
-            <p><strong>Western Australia: </strong> there was reduced breath testing operations from 2020 and 2021 due to COVID-19 pandemic</p>
+            <h3><strong>Notes</h3></strong>
+            <p><strong>Victoria:</strong> The number of random breath tests conducted <strong>before 2019 are not reliable</strong>. From September to December 2024. Protected Industrial Axtion took place, so there were low volumes of random breath tests conducted</p>
+            <p><strong>Tasmania:</strong> Positive counts of random breath tests <strong>was not provided fromm 2020</strong>, so they have been excluded from national calculations</p>
+            <p><strong>Western Australia: </strong> there was reduced breath testing operations from 2020 and 2021 due to <strong>COVID-19 pandemic</strong></p>
 
           </aside>
 
@@ -469,15 +502,19 @@
         </section>
       </main>
 
-      <footer
-        class="rounded-b-xl bg-[#5C4D3C] px-4 py-3 text-sm text-[#f7f1e8]"
-      >
-        <p>Data Visual Project - Breath testing topic</p>
-        <p class="mt-1 text-sm text-[#eadfce]">
-          Source: Australian road safety data (2008-2024)
-        </p>
-      </footer>
     </div>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>
+          <h3 class="footer-title">RoadSafe Insights Australia</h3>
+          <div class="footer-note">
+            A visual introduction to traffic offender patterns across Australia.
+          </div>
+        </div>
+        <div class="footer-note footer-highlight">GenAi Used: AI Google Gemini 2026</div>
+      </div>
+    </footer>
 
     <div
       id="chart-tooltip"
