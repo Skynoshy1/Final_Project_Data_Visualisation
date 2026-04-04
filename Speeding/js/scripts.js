@@ -1,4 +1,4 @@
-const globalFilter = {
+﻿const globalFilter = {
     jurisdiction: "All",
     year: "All",
     location: "All"
@@ -28,7 +28,6 @@ function matchLocation(d_loc, filter_loc) {
     if (filter_loc === "All") return true;
     if (Array.isArray(filter_loc)) return filter_loc.includes(d_loc);
     
-    // Handle grouped locations
     if (filter_loc === "Regional") {
         return d_loc === "Inner Regional" || d_loc === "Outer Regional";
     }
@@ -174,7 +173,6 @@ d3.csv("data/Speeding.csv").then(function(data) {
     const yearSelect = d3.select("#yearSelect");
     uniqueYears.forEach(y => { yearSelect.append("option").text(y).attr("value", y); });
 
-    // Group locations to match other dashboards: Major Cities, Regional, Remote
     const locationGroups = new Map();
     data.forEach(d => {
         let group = d.LOCATION;
@@ -194,7 +192,6 @@ d3.csv("data/Speeding.csv").then(function(data) {
     yearSelect.on("change", function() { globalFilter.year = this.value; triggerGlobalUpdate(); });
     locSelect.on("change", function() { globalFilter.location = this.value; triggerGlobalUpdate(); });
 
-    // Reset button functionality
     const resetButton = document.getElementById("reset-button");
     if (resetButton) {
         resetButton.addEventListener("click", function() {
@@ -204,7 +201,6 @@ d3.csv("data/Speeding.csv").then(function(data) {
             globalFilter.location = "All";
             globalFilter.jurisdiction = "All";
             
-            // Clear active state from map
             svgMap.selectAll(".state").classed("active", false);
             
             triggerGlobalUpdate();
@@ -729,7 +725,6 @@ d3.csv("data/Speeding.csv").then(function(data) {
     window.updateChart2 = function() {
         const transitionTime = 800; 
         
-        // Custom grouping specifically for Treemap
         let treemapData = data.filter(d => d.LOCATION !== "All regions").map(d => {
             let newObj = {...d};
             if (newObj.LOCATION === "Remote" || newObj.LOCATION === "Very Remote") {

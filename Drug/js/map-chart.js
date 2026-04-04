@@ -1,4 +1,4 @@
-let cachedDrugGeoJson = null;
+﻿let cachedDrugGeoJson = null;
 
 function getTopBreakdownItem(rawValue) {
   if (!rawValue) return null;
@@ -20,7 +20,6 @@ function getTopBreakdownItem(rawValue) {
 }
 
 function drawMapChart(data, elementId, selectedJurisdiction, onSelectJurisdiction) {
-  // The map needs GeoJSON, so we load it once and reuse it.
   if (cachedDrugGeoJson) {
     renderDrugGeoMap(data, elementId, cachedDrugGeoJson, selectedJurisdiction, onSelectJurisdiction);
     return;
@@ -83,9 +82,6 @@ function renderDrugGeoMap(data, elementId, geoData, selectedJurisdiction, onSele
     return CHART_COLORS.neutral;
   }
 
-  // When a specific jurisdiction is selected, we fit the projection to only
-  // that state so the map "zooms in" to the chosen area.
-  // If nothing is selected, we fit the full Australia GeoJSON as usual.
   const selectedStateName = selectedJurisdiction ? stateNameMap[selectedJurisdiction] : null;
   const selectedFeature =
     selectedStateName && selectedJurisdiction !== "all"
@@ -110,7 +106,6 @@ function renderDrugGeoMap(data, elementId, geoData, selectedJurisdiction, onSele
 
   const path = d3.geoPath(projection);
 
-  // Very simple tooltip using native title to keep the code easy to edit.
   svg
     .selectAll("path")
     .data(geoData.features)
@@ -179,8 +174,6 @@ function renderDrugGeoMap(data, elementId, geoData, selectedJurisdiction, onSele
     .duration(500)
     .style("opacity", 1);
 
-  // Add a label at the visual center of each state.
-  // Using the short code keeps the map readable even for smaller regions.
   svg
     .selectAll(".map-label")
     .data(
@@ -212,8 +205,6 @@ function renderDrugGeoMap(data, elementId, geoData, selectedJurisdiction, onSele
     .duration(400)
     .style("opacity", 1);
 
-  // Color legend for map rating categories.
-  // Color legend for map rating categories.
   const legendData = [
     { label: "Effective (> 30%)", color: CHART_COLORS.effective },
     { label: "Moderate (15-30%)", color: CHART_COLORS.moderate },

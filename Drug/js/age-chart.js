@@ -1,6 +1,4 @@
-function drawAgeChart(data, elementId) {
-  // We keep the existing function name so imports and controller code stay simple.
-  // This chart now shows year-over-year change in positive rate by jurisdiction.
+﻿function drawAgeChart(data, elementId) {
   const selectedState = document.getElementById("state-select")?.value || "all";
   const selectedYear = document.getElementById("year-select")?.value || "all";
   const selectedRating = document.getElementById("rating-select")?.value || "all";
@@ -14,7 +12,6 @@ function drawAgeChart(data, elementId) {
 
   d3.select(`#${elementId}`).selectAll("*").remove();
 
-  // We need all years in memory so we can compare one year against the year before it.
   let plotData = [...data];
 
   if (selectedState !== "all") {
@@ -37,7 +34,6 @@ function drawAgeChart(data, elementId) {
     let previousRow;
 
     if (selectedYear === "all") {
-      // Use the latest available year for this state and compare it to the previous available year.
       currentRow = sortedRows[sortedRows.length - 1];
       previousRow = sortedRows[sortedRows.length - 2];
     } else {
@@ -104,7 +100,6 @@ function drawAgeChart(data, elementId) {
     .range([0, currentInnerHeight])
     .padding(0.24);
 
-  // Vertical grid lines help compare positive vs negative movement.
   svg
     .append("g")
     .attr("class", "grid")
@@ -117,7 +112,6 @@ function drawAgeChart(data, elementId) {
         .tickFormat(""),
     );
 
-  // Emphasize the zero line because the chart is about increase vs decrease.
   svg
     .append("line")
     .attr("x1", xScaleLocal(0))

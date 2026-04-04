@@ -1,4 +1,4 @@
-"use strict";
+﻿"use strict";
 
 (function setupRenderers() {
   const {
@@ -34,10 +34,6 @@
           ? `${scopeLabel} - ${context.snapshotDisplayLabel}`
           : `${scopeLabel} - ${selectedYear}`;
 
-    // Keep metric labels static - don't overwrite them
-    // refs.kpiTotalTestsYear.textContent = yearText;
-    // refs.kpiPositiveRateYear.textContent = yearText;
-    // refs.kpiPositiveCasesYear.textContent = yearText;
 
     if (!kpiCurrent) {
       refs.kpiTotalTests.textContent = "N/A";

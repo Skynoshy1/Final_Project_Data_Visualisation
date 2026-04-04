@@ -1,9 +1,7 @@
-function drawTrendChart(data, elementId) {
+﻿function drawTrendChart(data, elementId) {
   const state = document.getElementById("state-select")?.value || "all";
   const rating = document.getElementById("rating-select")?.value || "all";
 
-  // Start from the current filtered dataset.
-  // That means state / year / rating selections all affect the chart scale.
   let plotData = [...data];
 
   if (state !== "all") {
@@ -14,8 +12,6 @@ function drawTrendChart(data, elementId) {
     plotData = plotData.filter((d) => d[COLS.rating] === rating);
   }
 
-  // If all states are selected, we aggregate by year so the chart shows one
-  // bar and one point per year instead of many overlapping rows.
   if (state === "all") {
     plotData = Array.from(
       d3.rollup(
@@ -80,7 +76,6 @@ function drawTrendChart(data, elementId) {
     .nice()
     .range([currentInnerHeight, 0]);
 
-  // Highlight the top 5 bars with the highest test volume in the current view.
   const topFiveYears = new Set(
     plotData
       .slice()
@@ -89,7 +84,6 @@ function drawTrendChart(data, elementId) {
       .map((d) => d[COLS.year]),
   );
 
-  // Horizontal guide lines make the chart easier to read.
   svg
     .append("g")
     .attr("class", "grid")
@@ -101,7 +95,6 @@ function drawTrendChart(data, elementId) {
         .tickFormat(""),
     );
 
-  // Bars show total test volume.
   svg
     .selectAll(".bar")
     .data(plotData)
@@ -137,7 +130,6 @@ function drawTrendChart(data, elementId) {
     .ease(d3.easeCubicOut)
     .attr("height", (d) => currentInnerHeight - yLeftScale(d[COLS.totalTest]));
 
-  // Line shows positive rate on the right-side axis.
   const line = d3
     .line()
     .x((d) => xScaleLocal(d[COLS.year]) + xScaleLocal.bandwidth() / 2)
@@ -161,7 +153,6 @@ function drawTrendChart(data, elementId) {
     .ease(d3.easeCubicOut)
     .attr("stroke-dashoffset", 0);
 
-  // Points make each yearly value visible on top of the line.
   svg
     .selectAll(".circle")
     .data(plotData)
@@ -205,7 +196,6 @@ function drawTrendChart(data, elementId) {
     .attr("transform", "rotate(-45)")
     .style("text-anchor", "end");
 
-  // Left axis rescales automatically based on the filtered total test values.
   svg
     .append("g")
     .call(d3.axisLeft(yLeftScale).ticks(5).tickFormat(d3.format(".2s")));
@@ -213,6 +203,5 @@ function drawTrendChart(data, elementId) {
   svg
     .append("g")
     .attr("transform", `translate(${currentInnerWidth},0)`)
-    // Right axis also rescales automatically based on filtered positive rate.
     .call(d3.axisRight(yRightScale).ticks(5).tickFormat((d) => `${d}%`));
 }
