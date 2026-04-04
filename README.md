@@ -32,7 +32,7 @@ Each dashboard is designed for comparative analysis across:
 
 ### 3. Alcohol Dashboard
 
-- Entry: `breath/breath_dashboard.html`
+- Entry: `breath/index.html`
 - Focus: breath test volume vs positive rate, state risk view, ranking, and location comparison (recent years).
 - Visuals: scenario-based charts, map, ranking bars, and comparison chart.
 
@@ -80,9 +80,7 @@ Open `index.html` in a browser.
 
 From the project root, start a local static server (for example, VS Code Live Server) and open:
 
-- `http://localhost/.../index.html`
-  Or use the following link:
-- [RoadSafe Insights Australia](https://skynoshy1.github.io/Final_Project_Data_Visualisation/)
+- `http://localhost/.../index.html` Or use the following link [RoadSafe Insights Australia](https://skynoshy1.github.io/Final_Project_Data_Visualisation/)
 
 Using a local server helps avoid browser restrictions with local file loading.
 
@@ -136,7 +134,7 @@ The final submission reflects substantial human judgment and ownership.
 ## Notes
 
 - COS30045 - Data Visualization - Final Project
-- Team members:
+- Team member names and student IDs
   + Nguyen Huu Thien Khang – 105543416
   + Do Duc Duy – 105550034
   + Nguyen Hoang Long – 105556692
