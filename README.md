@@ -32,7 +32,7 @@ Each dashboard is designed for comparative analysis across:
 
 ### 3. Alcohol Dashboard
 
-- Entry: `breath/index.html`
+- Entry: `breath/breath_dashboard.html`
 - Focus: breath test volume vs positive rate, state risk view, ranking, and location comparison (recent years).
 - Visuals: scenario-based charts, map, ranking bars, and comparison chart.
 
