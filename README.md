@@ -135,8 +135,9 @@ The final submission reflects substantial human judgment and ownership.
 
 ## Notes
 
-If required by your course policy, add the following to your submission cover sheet:
-
-- Course code and assignment title
-- Team member names and student IDs
-- Submission date
+- COS30045 - Data Visualization - Final Project
+- Team members:
+  + Nguyen Huu Thien Khang – 105543416
+  + Do Duc Duy – 105550034
+  + Nguyen Hoang Long – 105556692
+- Submission date: 5/4/2026 - Swinburne Canvas
