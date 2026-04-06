@@ -96,6 +96,7 @@ function bindDashboardEvents() {
   resetButton.addEventListener("click", function () {
     yearSelect.value = "all";
     ratingSelect.value = "all";
+    selectedJurisdiction = null;
     renderDashboard();
   });
 

@@ -178,8 +178,7 @@ function renderDrugGeoMap(data, elementId, geoData, selectedJurisdiction, onSele
     .selectAll(".map-label")
     .data(
       geoData.features.filter(
-        (feature) =>
-          grouped.has(feature.properties.STATE_NAME) || selectedState === "all",
+        (feature) => Boolean(reverseStateNameMap[feature.properties.STATE_NAME]),
       ),
     )
     .enter()
@@ -193,17 +192,19 @@ function renderDrugGeoMap(data, elementId, geoData, selectedJurisdiction, onSele
     .attr("fill", "#4A4A4A")
     .style("font-weight", "bold")
     .style("cursor", "pointer")
+    .style("opacity", 0)
     .on("click", function (_, feature) {
       const stateCode = reverseStateNameMap[feature.properties.STATE_NAME];
       if (stateCode && onSelectJurisdiction) {
         onSelectJurisdiction(stateCode);
       }
     })
-    .style("opacity", 0)
     .transition()
     .delay(180)
     .duration(400)
-    .style("opacity", 1);
+    .style("opacity", (feature) =>
+      grouped.has(feature.properties.STATE_NAME) ? 1 : 0.55,
+    );
 
   const legendData = [
     { label: "Effective (> 30%)", color: CHART_COLORS.effective },
